@@ -1,5 +1,7 @@
 package MVC;
 
+import Classes.*;
+
 import java.util.ArrayList;
 
 public class Model implements Sujet{
@@ -7,8 +9,21 @@ public class Model implements Sujet{
      * Liste des observateurs
      */
     private ArrayList<Observateur> observateurs;
+    private ArrayList<String> logs;
+    private ArrayList<Classe> classes;
+    private ArrayList<Dossier> arbre;
+    public void ajoutAttribut(Classe c,  Attribut a) {
 
+    }
+    public void ajoutMethode(Classe c, Methode m){
 
+    }
+    public void ajouter_Classe_D(Classe c){
+
+    }
+    public void ajouter_Log(String s){
+
+    }
 
     /**
      * Ajoute un observateur a la liste
