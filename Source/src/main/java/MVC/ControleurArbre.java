@@ -1,11 +1,20 @@
 package MVC;
 
-import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 
-public class ControleurArbre implements EventHandler<ActionEvent> {
-    @Override
-    public void handle(ActionEvent actionEvent) {
+public class ControleurArbre implements EventHandler<MouseEvent> {
+    private Model model;
 
+    public ControleurArbre(Model m){
+        this.model = m;
+    }
+
+    @Override
+    public void handle(MouseEvent mouseEvent) {
+        //clic sur un fichier classe
+        //tant qu'il est drag il peut déplacé le fichier où il veut
+        //si le fichier est drop sur l'interface principale
+        //affiche la classe
     }
 }
