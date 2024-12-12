@@ -11,18 +11,29 @@ public class Model implements Sujet{
     private ArrayList<Observateur> observateurs;
     private ArrayList<String> logs;
     private ArrayList<Classe> classes;
-    private ArrayList<Dossier> arbre;
-    public void ajoutAttribut(Classe c,  Attribut a) {
+    private Dossier arbre;
 
+
+    public Model(){
+        logs = new ArrayList<>();
+        classes = new ArrayList<>();
+    }
+
+    public void ouvrirDossier(String path){
+        Dossier d = new Dossier(path);
+        System.out.println(d.getFile());
+    }
+    public void ajoutAttribut(Classe c,  Attribut a) {
+        //Rien
     }
     public void ajoutMethode(Classe c, Methode m){
-
+        //Rien
     }
     public void ajouter_Classe_D(Classe c){
 
     }
     public void ajouter_Log(String s){
-
+        logs.add(s);
     }
 
     /**
