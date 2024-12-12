@@ -16,15 +16,19 @@ public class Principale extends Application {
 
         //---------TOP----------
         MenuBar menu = new MenuBar();
+        ToolBar toolbar = new ToolBar();
+
         Menu fichier = new Menu("Fichier");
 
-//
-//        Button effacer = new Button("Effacer Diagramme");
-//        Button retour = new Button("Retour arrière (Ctrl+Z)");
-//        Button creer = new Button("Créer nouvelle classe");
+
+        Button effacer = new Button("Effacer Diagramme");
+        Button retour = new Button("Retour arrière (Ctrl+Z)");
+        Button creer = new Button("Créer nouvelle classe");
 
         menu.getMenus().addAll(fichier);
+        toolbar.getItems().addAll(effacer,retour,creer);
         bp.setTop(menu);
+        bp.setTop(toolbar);
 
 
         //--------BOTTOM---------
@@ -36,6 +40,8 @@ public class Principale extends Application {
 
         //---------LEFT----------
         VBox conteneur_arbre = new VBox();
+        conteneur_arbre.setPrefWidth(200);
+
 
         // Création de l'arbre
         TreeItem<String> item = new TreeItem<>("arbre de dossier");
