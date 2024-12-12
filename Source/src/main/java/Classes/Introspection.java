@@ -27,7 +27,7 @@ public class Introspection {
         return "Class";
     }
 
-    private void displayParmeter(Parameter[] parameters){
+    private void displayParameter(Parameter[] parameters){
         System.out.print(" (");
         for (int i = 0; i < parameters.length; i++) {
             System.out.print(parameters[i].getType().getSimpleName());

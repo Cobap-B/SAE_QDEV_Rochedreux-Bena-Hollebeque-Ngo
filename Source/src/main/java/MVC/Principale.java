@@ -14,7 +14,7 @@ public class Principale extends Application {
         BorderPane bp= new BorderPane();
         Scene scene = new Scene(bp,935,670);
 
-        Dossier d = new Dossier("Source/src/main/java/Classes");
+        Dossier d = new Dossier("src/main/java/Classes");
         System.out.println(d.getFile());
 
 
