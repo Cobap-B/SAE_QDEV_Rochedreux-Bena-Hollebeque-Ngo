@@ -4,6 +4,7 @@ public class Parametre {
     private String nom;
     private String type;
 
+
     public Parametre(String nom, String type) {
         this.nom = nom;
         this.type = type;

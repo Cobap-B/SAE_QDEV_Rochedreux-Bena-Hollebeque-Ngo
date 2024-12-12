@@ -1,6 +1,6 @@
 package MVC;
 
-import Classes.Dossier;
+import Classes.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,7 +15,9 @@ public class Principale extends Application {
         Scene scene = new Scene(bp,935,670);
 
         Dossier d = new Dossier("src/main/java/Classes");
-        System.out.println(d.getFile());
+        Classe c = (Classe) d.files.getFirst();
+        ClasseComplete c1 = c.getClasseComplete();
+        System.out.println(c1.getUml());
 
 
         //---------TOP----------
