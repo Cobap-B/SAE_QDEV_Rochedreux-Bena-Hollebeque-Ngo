@@ -9,4 +9,8 @@ public class Classe extends FichierComposite{
     public String getFile() {
         return '>'+getName()+"("+length()+")"+'\n';
     }
+
+    public ClasseComplete getClasseComplete(){
+        return Introspection.creerClasseComplete(this);
+    }
 }
