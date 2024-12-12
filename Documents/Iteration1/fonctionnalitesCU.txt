@@ -1,6 +1,6 @@
 Il faut décrire les fonctionnalités et les cas d’utilisations développés ;
 Le groupe a fait la structure générale de l'application
-HUGOR a fait les diagramme de classe, le Modèle MVC et est en charge de l'ouverture d'un dossier avec Arthur
-HUGOB a fait la classe Principale JavaFx et le graphe de scène
+HugoR a fait les diagramme de classe, le Modèle MVC et est en charge de l'ouverture d'un dossier avec Arthur et de l'introspection
+HugoB a fait la classe Principale JavaFX et le graphe de scène
 Arthur a fait les Vue
-Kevin a fait les Contrôleurs
+Kévin va faire les déplacement dans l'arbre
