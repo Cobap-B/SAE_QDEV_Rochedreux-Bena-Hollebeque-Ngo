@@ -1,5 +1,6 @@
 package MVC;
 
+import Classes.Dossier;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -12,6 +13,9 @@ public class Principale extends Application {
     public void start(Stage stage){
         BorderPane bp= new BorderPane();
         Scene scene = new Scene(bp,935,670);
+
+        Dossier d = new Dossier("Source/src/main/java/Classes");
+        System.out.println(d.getFile());
 
 
         //---------TOP----------
