@@ -3,7 +3,7 @@ out/
 .class
 *.iml
 Thumbs.db
-
+target/
 .vscode/
 
 .DS_Store
