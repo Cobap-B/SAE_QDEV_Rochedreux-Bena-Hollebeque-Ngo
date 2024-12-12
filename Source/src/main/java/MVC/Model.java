@@ -36,6 +36,10 @@ public class Model implements Sujet{
         logs.add(s);
     }
 
+    public Dossier getArbre(){
+        return this.arbre;
+    }
+
     /**
      * Ajoute un observateur a la liste
      */
