@@ -5,7 +5,7 @@ import java.lang.reflect.*;
 public class Introspection {
 
     public static ClasseComplete creerClasseComplete(Classe c){
-
+        return null;
     }
 
     private void displayInterface(Class[] interfaces){
@@ -16,7 +16,7 @@ public class Introspection {
         System.out.println();
     }
 
-    private void displayParmeter(Parameter[] parameters){
+    private void displayParameter(Parameter[] parameters){
         System.out.print(" (");
         for (int i = 0; i < parameters.length; i++) {
             System.out.print(parameters[i].getType().getSimpleName());
@@ -36,14 +36,14 @@ public class Introspection {
             if (Modifier.isPrivate(acces))
                 System.out.print("private ");
             System.out.print(m.getName());
-            displayParmeter(m.getParameters());
+            displayParameter(m.getParameters());
             System.out.println(" : "+m.getReturnType().getSimpleName());
         }
     }
     private void displauyConstructeur(Constructor[] constructors){
         for(Constructor c:constructors){
             System.out.print(getType(c.getName()));
-            displayParmeter(c.getParameters());
+            displayParameter(c.getParameters());
             System.out.println(" ");
         }
     }
