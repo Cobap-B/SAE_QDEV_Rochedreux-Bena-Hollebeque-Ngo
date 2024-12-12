@@ -10,7 +10,7 @@ public class Attribut {
     public Attribut(String nom, String acces, String type) {
         this.nom = nom;
         this.type = type;
-        this.access = acces;
+        this.acces = acces;
         this.visibilite = true;
     }
 
