@@ -1,19 +1,19 @@
 package Classes;
 
-public class Attribut {
+public class Dependance {
 
-    private String nom;
+    private String depend;
     private String type;
     private boolean visibilite;
 
-    public Attribut(String nom, String type) {
-        this.nom = nom;
+    public Dependance(String depend, String type) {
+        this.depend = depend;
         this.type = type;
         this.visibilite = true;
     }
 
-    public String getNom() {
-        return nom;
+    public String getDepend() {
+        return depend;
     }
 
     public String getType() {
