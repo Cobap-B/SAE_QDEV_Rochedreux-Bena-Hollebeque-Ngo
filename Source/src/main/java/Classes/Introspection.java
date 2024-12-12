@@ -90,7 +90,7 @@ public class Introspection {
     private void displauyConstructeur(Constructor[] constructors){
         for(Constructor c:constructors){
             System.out.print(getType(c.getName()));
-            displayParmeter(c.getParameters());
+            displayParameter(c.getParameters());
             System.out.println(" ");
         }
     }
