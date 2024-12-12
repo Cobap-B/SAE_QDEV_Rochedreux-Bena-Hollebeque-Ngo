@@ -1,1 +1,5 @@
 Il faut décrivre les fonctionnalités et les cas d’utilisations développés ;
+HUGOR : Modele MVC
+HUGOB : Principale JavaFx
+Arthur : Vue
+Kevin : Controleur
