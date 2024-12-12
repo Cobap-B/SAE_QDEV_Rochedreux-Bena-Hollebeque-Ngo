@@ -1,15 +1,12 @@
 package Classes;
 
-public class Attribut {
-
+public class Parametre {
     private String nom;
     private String type;
-    private boolean visibilite;
 
-    public Attribut(String nom, String type) {
+    public Parametre(String nom, String type) {
         this.nom = nom;
         this.type = type;
-        this.visibilite = true;
     }
 
     public String getNom() {
@@ -19,8 +16,5 @@ public class Attribut {
     public String getType() {
         return type;
     }
-
-    public boolean isVisibilite() {
-        return visibilite;
-    }
 }
+
