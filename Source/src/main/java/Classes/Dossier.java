@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Dossier extends FichierComposite{
 
-    protected List<FichierComposite> files =new ArrayList<>();
+    public List<FichierComposite> files =new ArrayList<>();
 
     private String getFileExtension(File file) {
         String name = file.getName();
