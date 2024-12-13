@@ -25,7 +25,7 @@ public class Model implements Sujet{
 
     public void ouvrirDossier(String path){
         Dossier d = new Dossier(path);
-        System.out.println(d.getFile());
+        arbre = d;
     }
 
 
@@ -58,9 +58,6 @@ public class Model implements Sujet{
     public Dossier getArbre(){
         return this.arbre;
     }
-
-
-
 
 
 
