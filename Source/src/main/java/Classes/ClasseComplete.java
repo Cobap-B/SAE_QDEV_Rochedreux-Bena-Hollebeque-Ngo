@@ -8,15 +8,15 @@ public class ClasseComplete {
 
     private ArrayList<Attribut> attributs;
     private ArrayList<Methode> methodes;
-    private ArrayList<Dependance> dependaces;
+    private ArrayList<Dependance> dependances;
 
 
-    public ClasseComplete(String nom, String type, ArrayList<Attribut> attributs, ArrayList<Methode> methodes, ArrayList<Dependance> dependaces){
+    public ClasseComplete(String nom, String type, ArrayList<Attribut> attributs, ArrayList<Methode> methodes, ArrayList<Dependance> dependances){
         this.nom = nom;
         this.type = type;
         this.attributs = attributs;
         this.methodes = methodes;
-        this.dependaces = dependaces;
+        this.dependances = dependances;
     }
 
 
@@ -33,7 +33,7 @@ public class ClasseComplete {
         });
 
         methodes.forEach(methode -> {
-            resultat.append(methode.getAcces() +" " + methode.getType_retour() + " "+ methode.getNom());
+            resultat.append(methode.getAcces() +" " + methode.getNom());
             resultat.append("(");
             if (methode.getParametres().size()>1){
                 //Boucle pour les paramètre
@@ -44,15 +44,17 @@ public class ClasseComplete {
                 //Retire la dernière virgule
                 resultat.delete(resultat.length()-1, resultat.length());
             }
-            resultat.append(")"+"\n");
+            resultat.append(")"+" : "+ methode.getType_retour()+"\n");
         });
 
+        resultat.append("}\n");
 
-        dependaces.forEach(dependance -> {
+
+        dependances.forEach(dependance -> {
             resultat.append(this.nom+" ");
             if(dependance.getType().equals("Extend")){
                 resultat.append("--|> ");
-            } else if (dependance.getType().equals("Interface")) {
+            } else if (dependance.getType().equals("Implement")) {
                 resultat.append("..|> ");
             } else {
                 throw new RuntimeException("Dependance pas bon ?");
@@ -60,8 +62,6 @@ public class ClasseComplete {
             resultat.append(dependance.getDepend()+"\n");
         });
 
-        resultat.append("}");
-
-        return "";
+        return resultat.toString();
     }
 }

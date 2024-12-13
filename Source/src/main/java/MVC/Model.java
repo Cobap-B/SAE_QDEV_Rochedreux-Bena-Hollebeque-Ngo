@@ -2,6 +2,10 @@ package MVC;
 
 import Classes.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Model implements Sujet{
@@ -10,35 +14,55 @@ public class Model implements Sujet{
      */
     private ArrayList<Observateur> observateurs;
     private ArrayList<String> logs;
-    private ArrayList<Classe> classes;
+    private ArrayList<ClasseComplete> diagramme;
     private Dossier arbre;
 
 
     public Model(){
         logs = new ArrayList<>();
-        classes = new ArrayList<>();
+        diagramme = new ArrayList<>();
     }
 
     public void ouvrirDossier(String path){
         Dossier d = new Dossier(path);
         System.out.println(d.getFile());
     }
-    public void ajoutAttribut(Classe c,  Attribut a) {
-        //Rien
-    }
-    public void ajoutMethode(Classe c, Methode m){
-        //Rien
-    }
-    public void ajouter_Classe_D(Classe c){
 
+
+    public void ajoutAttribut(ClasseComplete c,  Attribut a) {
+        //Rien
+    }
+    public void ajoutMethode(ClasseComplete c, Methode m){
+        //Rien
+    }
+    public void ajouter_Classe_D(ClasseComplete c){
+        diagramme.add(c);
     }
     public void ajouter_Log(String s){
         logs.add(s);
     }
 
+    public void saveUML() throws IOException{
+        File dir = new File("diagramme");
+        dir.mkdirs();
+        BufferedWriter writer = new BufferedWriter(new FileWriter("diagramme/diagramme.txt"));
+        for(ClasseComplete c : diagramme){
+            writer.write(c.getUml());
+        }
+        writer.close();
+    }
+
+
+
+
     public Dossier getArbre(){
         return this.arbre;
     }
+
+
+
+
+
 
     /**
      * Ajoute un observateur a la liste
@@ -46,7 +70,6 @@ public class Model implements Sujet{
     public void enregistrerObservateur(Observateur o) {
         this.observateurs.add(o);
     }
-
 
     /**
      * Supprime un observateur a la liste
@@ -57,7 +80,6 @@ public class Model implements Sujet{
             this.observateurs.remove(i);
         }
     }
-
 
     /**
      * Informe tous les observateurs de la liste des

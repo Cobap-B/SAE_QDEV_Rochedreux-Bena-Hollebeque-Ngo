@@ -7,8 +7,14 @@ import java.util.List;
 public class Introspection {
 
     public static ClasseComplete creerClasseComplete(Classe c){
-        Class<?> classee = c.getClass();
-        return new ClasseComplete(c.getName(), getTypeClasse(classee), displayField(classee.getFields()), displayMethod(classee.getMethods()), getDependances(classee));
+        Class classee = null;
+        try {
+            classee = Class.forName(c.getClass().getPackageName()+"."+getType(c.getName()));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ClasseComplete(classee.getSimpleName(), getTypeClasse(classee), displayField(classee.getDeclaredFields()), displayMethod(classee.getDeclaredMethods()), getDependances(classee));
     }
 
     private void displayInterface(Class[] interfaces){
@@ -19,18 +25,17 @@ public class Introspection {
 
     private static String getTypeClasse(Class c){
         if(c.isInterface()){
-            return "Interface";
+            return "interface";
         }
         if(c.getModifiers() == Modifier.ABSTRACT){
-            return "Abstract";
+            return "abstract";
         }
-        return "Class";
+        return "class";
     }
 
     private void displayParameter(Parameter[] parameters){
         System.out.print(" (");
         for (int i = 0; i < parameters.length; i++) {
-            System.out.print(parameters[i].getType().getSimpleName());
             if (i<parameters.length-1) System.out.print(", ");
         }
 
@@ -42,7 +47,6 @@ public class Introspection {
         Dependance d = null;
 
         if (c.getSuperclass() != null){
-            System.out.println("Extend : "+c.getSuperclass().getSimpleName());
             d = new Dependance(c.getSuperclass().getSimpleName(), "Extend");
             dependances.add(d);
         }
@@ -89,9 +93,7 @@ public class Introspection {
     }
     private void displauyConstructeur(Constructor[] constructors){
         for(Constructor c:constructors){
-            System.out.print(getType(c.getName()));
             displayParameter(c.getParameters());
-            System.out.println(" ");
         }
     }
 
@@ -115,10 +117,10 @@ public class Introspection {
         return attributs;
     }
 
-    private String getType(String s){
+    private static String getType(String s){
         String[] s2 = s.split("\\.");
-        if (s2.length>0)
-            return s2[s2.length-1];
+        if (s2.length>1)
+            return s2[s2.length-2];
         return "";
     }
 }

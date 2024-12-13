@@ -1,0 +1,7 @@
+class Parametre{
+- String nom
+- String type
++ getType() : String
++ getNom() : String
+}
+Parametre --|> Object
