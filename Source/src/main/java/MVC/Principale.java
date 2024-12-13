@@ -19,13 +19,13 @@ public class Principale extends Application {
         //TEST
         Model m = new Model();
 
-        Dossier d = new Dossier("src/main/java/Classes");
+        Dossier d = new Dossier("Source/src/main/java/Classes");
         Classe c = (Classe) d.files.getFirst();
         ClasseComplete c1 = c.getClasseComplete();
         m.ajouter_Classe_D(c1);
 
         m.saveUML();
-        m.ouvrirDossier("src/main/java/Classes");
+        m.ouvrirDossier("Source/src/main/java/Classes");
         System.out.println(m.getArbre().getFile());
 
 

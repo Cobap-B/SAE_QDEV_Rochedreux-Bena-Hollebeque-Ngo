@@ -64,4 +64,24 @@ public class ClasseComplete {
 
         return resultat.toString();
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public ArrayList<Attribut> getAttributs() {
+        return attributs;
+    }
+
+    public ArrayList<Methode> getMethodes() {
+        return methodes;
+    }
+
+    public ArrayList<Dependance> getDependances() {
+        return dependances;
+    }
 }
