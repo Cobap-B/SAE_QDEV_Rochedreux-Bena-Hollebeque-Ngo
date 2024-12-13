@@ -50,6 +50,13 @@ public class ClasseComplete {
         resultat.append("}\n");
 
 
+        attributs.forEach(attribut -> {
+            if (!TypePrimitif(attribut.getType())) {
+                resultat.append(this.nom + " --> " + attribut.getType() + "\n");
+            }
+        });
+
+
         dependances.forEach(dependance -> {
             resultat.append(this.nom+" ");
             if(dependance.getType().equals("Extend")){
@@ -64,6 +71,19 @@ public class ClasseComplete {
 
         return resultat.toString();
     }
+
+    //pour vérifier qu'un attribut est un type primitif de java, si ce n'est pas le cas alors il ya dépendance d'une autre classe
+    private boolean TypePrimitif(String type) {
+        String[] typesPrimitifs = {"int", "double", "float", "char", "boolean", "long", "short", "byte", "void", "String"};
+
+        for (String primitif : typesPrimitifs) {
+            if (primitif.equals(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public String getNom() {
         return nom;
