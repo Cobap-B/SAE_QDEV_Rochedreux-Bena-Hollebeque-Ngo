@@ -12,9 +12,9 @@ public class TestIntrospection {
 
     @Test
     public void testClasseComplete(){
-        ClasseComplete c = (new Classe("Source/src/main/java/MVC/Sujet").getClasseComplete());
+        ClasseComplete c = (new Classe("java/Classes/Parametre.java").getClasseComplete());
 
-        assertEquals("Sujet", c.getNom());
-        assertEquals("classe", c.getType());
+        assertEquals("Parametre", c.getNom());
+        assertEquals("class", c.getType());
     }
 }
