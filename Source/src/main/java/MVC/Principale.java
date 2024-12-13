@@ -37,14 +37,14 @@ public class Principale extends Application {
         Menu fichier = new Menu("Fichier");
 
 
-        Button effacer = new Button("Effacer Diagramme");
-        Button retour = new Button("Retour arrière (Ctrl+Z)");
-        Button creer = new Button("Créer nouvelle classe");
+//        Button effacer = new Button("Effacer Diagramme");
+//        Button retour = new Button("Retour arrière (Ctrl+Z)");
+//        Button creer = new Button("Créer nouvelle classe");
 
         menu.getMenus().addAll(fichier);
-        toolbar.getItems().addAll(effacer,retour,creer);
+//        toolbar.getItems().addAll(effacer,retour,creer);
         bp.setTop(menu);
-        bp.setTop(toolbar);
+//        bp.setTop(toolbar);
 
 
         //--------BOTTOM---------
@@ -58,14 +58,14 @@ public class Principale extends Application {
         VBox conteneur_arbre = new VBox();
         conteneur_arbre.setPrefWidth(200);
 
-
+ 
         // Création de l'arbre
         TreeItem<String> item = new TreeItem<>("arbre de dossier");
 
         item.getChildren().addAll(
-                new TreeItem<>("dossier de merde 1"),
-                new TreeItem<>("dossier de merde 2"),
-                new TreeItem<>("classe de merde 1")
+                new TreeItem<>("dossier 1"),
+                new TreeItem<>("dossier 2"),
+                new TreeItem<>("classe 1")
 
         );
 

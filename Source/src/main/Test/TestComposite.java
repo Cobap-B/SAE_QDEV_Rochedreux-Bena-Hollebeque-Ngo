@@ -7,7 +7,6 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestComposite {
-    File file;
     Dossier dossier;
 
     @BeforeEach
@@ -16,9 +15,9 @@ public class TestComposite {
     }
 
     @Test
-    public void testOuvrirFichier(){
+    public void testOuvrirPremierFichier(){
         String res = dossier.getFile();
-        String compare = "Methode.java";
+        String compare = "Parametre.java";
 
         int pos1 = res.indexOf('>');
         int pos2 = res.indexOf('(');
