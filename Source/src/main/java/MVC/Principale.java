@@ -22,10 +22,11 @@ public class Principale extends Application {
         Dossier d = new Dossier("Source/src/main/java/Classes");
         Classe c = (Classe) d.files.getFirst();
         ClasseComplete c1 = c.getClasseComplete();
-        System.out.println(c1.getUml());
         m.ajouter_Classe_D(c1);
 
         m.saveUML();
+        m.ouvrirDossier("src/main/java/Classes");
+        System.out.println(m.getArbre().getFile());
 
 
 

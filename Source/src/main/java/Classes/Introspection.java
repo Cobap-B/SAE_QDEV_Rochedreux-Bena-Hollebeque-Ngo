@@ -17,12 +17,6 @@ public class Introspection {
         return new ClasseComplete(classee.getSimpleName(), getTypeClasse(classee), displayField(classee.getDeclaredFields()), displayMethod(classee.getDeclaredMethods()), getDependances(classee));
     }
 
-    private void displayInterface(Class[] interfaces){
-        for(Class c:interfaces){
-            System.out.print(c.getSimpleName()+" ");
-        }
-    }
-
     private static String getTypeClasse(Class c){
         if(c.isInterface()){
             return "interface";
@@ -31,15 +25,6 @@ public class Introspection {
             return "abstract";
         }
         return "class";
-    }
-
-    private void displayParameter(Parameter[] parameters){
-        System.out.print(" (");
-        for (int i = 0; i < parameters.length; i++) {
-            if (i<parameters.length-1) System.out.print(", ");
-        }
-
-        System.out.print(") ");
     }
 
     private static ArrayList<Dependance> getDependances(Class c){
@@ -90,11 +75,6 @@ public class Introspection {
         }
         return methodes;
 
-    }
-    private void displauyConstructeur(Constructor[] constructors){
-        for(Constructor c:constructors){
-            displayParameter(c.getParameters());
-        }
     }
 
     private static ArrayList<Attribut> displayField(Field[] fields){
