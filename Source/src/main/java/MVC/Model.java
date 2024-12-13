@@ -65,7 +65,6 @@ public class Model implements Sujet{
      * Ajoute un observateur a la liste
      */
     public void enregistrerObservateur(Observateur o) {
-
         this.observateurs.add(o);
     }
 
