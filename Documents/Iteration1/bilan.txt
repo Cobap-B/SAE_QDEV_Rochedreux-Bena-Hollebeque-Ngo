@@ -1,4 +1,4 @@
-- Conception associé aux fonctionnalité de cette itération
+- Conception associé aux fonctionnalitées de la première itération
 - Squelette classe Principale JavaFX
 - Composite
 - Introspection (Ouverture d'un fichier)
