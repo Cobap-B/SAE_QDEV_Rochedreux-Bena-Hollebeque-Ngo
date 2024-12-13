@@ -9,7 +9,7 @@ public class Introspection {
     public static ClasseComplete creerClasseComplete(Classe c){
         Class classee = null;
         try {
-            classee = Class.forName("MVC.Model");
+            classee = Class.forName(c.getClass().getPackageName()+"."+getType(c.getName()));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
