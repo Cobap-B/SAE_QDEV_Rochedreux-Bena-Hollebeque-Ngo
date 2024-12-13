@@ -31,7 +31,6 @@ public class Principale extends Application {
         m.saveUML();
         //m.ouvrirDossier("src/main/java/Classes");
         m.ouvrirDossier("Source/src/main/java/Classes");
-        System.out.println(m.getArbre().getFile());
 
 
 
