@@ -21,11 +21,14 @@ public class Model implements Sujet{
     public Model(){
         logs = new ArrayList<>();
         diagramme = new ArrayList<>();
+        observateurs = new ArrayList<>();
+        arbre = null;
     }
 
     public void ouvrirDossier(String path){
         Dossier d = new Dossier(path);
         arbre = d;
+        notifierObservateurs();
     }
 
 
