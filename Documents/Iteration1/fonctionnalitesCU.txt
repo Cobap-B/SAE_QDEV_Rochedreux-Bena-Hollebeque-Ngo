@@ -1,6 +1,11 @@
-Il faut décrire les fonctionnalités et les cas d’utilisations développés ;
-Le groupe a fait la structure générale de l'application
-HugoR a fait les diagramme de classe, le Modèle MVC et est en charge de l'ouverture d'un dossier avec Arthur et de l'introspection
-HugoB a fait la classe Principale JavaFX et le graphe de scène
-Arthur a fait les Vue
-Kévin va faire les déplacement dans l'arbre
+Membre	            Tâches principales
+
+Tout le monde	    Mettre en place l'architecture MVC, gérer les données UML et développer la sauvegarde UML en console.
+
+HUGOB	            Créer la classe principale JavaFX et son graphe de scène, organiser la structure des zones avec des layouts, création des classes nécessaires pour l'objet Classe.
+
+Arthur	            Concevoir le squelette des vues pour l'affichage UML, implémenter l'introspection, développer 1 classe de test.
+
+Kevin	            Développer le squelette des contrôleurs, gérer la mise à jour de la vue, développer 1 classe de test.
+
+HugoR	            Implémenter le Composite pour la gestion des composants UML et diagramme de classe des fonctionnalités de l'itération 1.
