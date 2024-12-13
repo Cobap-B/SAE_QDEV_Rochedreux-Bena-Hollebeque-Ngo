@@ -19,14 +19,20 @@ public class Principale extends Application {
         //TEST
         Model m = new Model();
 
+        VueConsole vue = new VueConsole();
+        m.enregistrerObservateur(vue);
+
+        //Dossier d = new Dossier("src/main/java/Classes");
         Dossier d = new Dossier("Source/src/main/java/Classes");
         Classe c = (Classe) d.files.getFirst();
         ClasseComplete c1 = c.getClasseComplete();
         m.ajouter_Classe_D(c1);
 
         m.saveUML();
+        //m.ouvrirDossier("src/main/java/Classes");
         m.ouvrirDossier("Source/src/main/java/Classes");
         System.out.println(m.getArbre().getFile());
+
 
 
 
@@ -58,7 +64,7 @@ public class Principale extends Application {
         VBox conteneur_arbre = new VBox();
         conteneur_arbre.setPrefWidth(200);
 
- 
+
         // Création de l'arbre
         TreeItem<String> item = new TreeItem<>("arbre de dossier");
 
