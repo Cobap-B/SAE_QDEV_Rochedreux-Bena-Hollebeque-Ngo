@@ -20,6 +20,7 @@ public class Principale extends Application {
         Model m = new Model();
 
         VueConsole vue = new VueConsole();
+        VueArbre vueArbre = new VueArbre(m);
         m.enregistrerObservateur(vue);
 
         //Dossier d = new Dossier("src/main/java/Classes");
@@ -41,7 +42,7 @@ public class Principale extends Application {
 
         Menu fichier = new Menu("Fichier");
         MenuItem ouvrir = new MenuItem("Ouvrir");
-        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow()));
+        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
         fichier.getItems().add(ouvrir);
 
 
@@ -62,27 +63,28 @@ public class Principale extends Application {
         //
 
 
-        //---------LEFT----------
-        VBox conteneur_arbre = new VBox();
-        conteneur_arbre.setPrefWidth(200);
-
-
-        // Création de l'arbre
-        TreeItem<String> item = new TreeItem<>("arbre de dossier");
-
-        item.getChildren().addAll(
-                new TreeItem<>("dossier 1"),
-                new TreeItem<>("dossier 2"),
-                new TreeItem<>("classe 1")
-
-        );
-
-        // Ajout de l'arbre
-        TreeView<String> arbre = new TreeView<>(item);
-        VBox.setVgrow(arbre, Priority.ALWAYS);
-
-        conteneur_arbre.getChildren().add(arbre);
-        bp.setLeft(conteneur_arbre);
+//        //---------LEFT----------
+//        VBox conteneur_arbre = new VBox();
+//        conteneur_arbre.setPrefWidth(200);
+//
+//
+//        // Création de l'arbre
+//        TreeItem<String> item = new TreeItem<>("arbre de dossier");
+//
+//        item.getChildren().addAll(
+//                new TreeItem<>("dossier 1"),
+//                new TreeItem<>("dossier 2"),
+//                new TreeItem<>("classe 1")
+//
+//        );
+//
+//        // Ajout de l'arbre
+//        TreeView<String> arbre = new TreeView<>(item);
+//        VBox.setVgrow(arbre, Priority.ALWAYS);
+//
+//        conteneur_arbre.getChildren().add(arbre);
+//        bp.setLeft(conteneur_arbre);
+        bp.setLeft(vueArbre);
 
 
 

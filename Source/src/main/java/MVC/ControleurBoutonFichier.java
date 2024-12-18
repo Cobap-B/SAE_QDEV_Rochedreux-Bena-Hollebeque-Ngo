@@ -11,9 +11,11 @@ import java.io.File;
 
 public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
     Window w;
+    Model m;
 
-    public ControleurBoutonFichier(Window w) {
+    public ControleurBoutonFichier(Window w, Model model) {
         this.w = w;
+        this.m = model;
     }
 
 
@@ -24,7 +26,7 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
             case "Ouvrir":
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 File selectedDirectory = directoryChooser.showDialog(w);
-                if(selectedDirectory != null) {System.out.println(selectedDirectory.getAbsolutePath());}
+                if(selectedDirectory != null) {m.ouvrirDossier(selectedDirectory.getAbsolutePath());}
                 break;
         }
     }
