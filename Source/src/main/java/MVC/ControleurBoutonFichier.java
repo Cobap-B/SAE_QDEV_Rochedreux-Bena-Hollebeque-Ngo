@@ -27,7 +27,7 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
             case "Ouvrir":
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 File selectedDirectory = directoryChooser.showDialog(w);
-                if(selectedDirectory != null) {System.out.println(selectedDirectory.getAbsolutePath());}
+                if(selectedDirectory != null) {m.ouvrirDossier(selectedDirectory.getAbsolutePath());}
                 break;
             case "Exporter plantUML":
                 try {
@@ -35,9 +35,10 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             case "Exporter PNG":
                 System.out.println("exporté !!!");
-
+                break;
         }
     }
 }

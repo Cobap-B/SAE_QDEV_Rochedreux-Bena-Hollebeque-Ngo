@@ -48,6 +48,7 @@ public class Principale extends Application {
 
         MenuItem ouvrir = new MenuItem("Ouvrir");
         ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
+        exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
         fichier.getItems().add(ouvrir);
 
 
