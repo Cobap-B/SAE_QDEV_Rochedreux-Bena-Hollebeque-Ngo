@@ -46,7 +46,7 @@ public class Principale extends Application {
         fichier.getItems().addAll(exporterUML, exporterPNG);
 
         MenuItem ouvrir = new MenuItem("Ouvrir");
-        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow()));
+        //ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow()));
         fichier.getItems().add(ouvrir);
 
 
