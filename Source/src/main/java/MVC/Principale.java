@@ -40,6 +40,9 @@ public class Principale extends Application {
         ToolBar toolbar = new ToolBar();
 
         Menu fichier = new Menu("Fichier");
+        MenuItem ouvrir = new MenuItem("Ouvrir");
+        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow()));
+        fichier.getItems().add(ouvrir);
 
 
 //        Button effacer = new Button("Effacer Diagramme");
@@ -96,4 +99,5 @@ public class Principale extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
