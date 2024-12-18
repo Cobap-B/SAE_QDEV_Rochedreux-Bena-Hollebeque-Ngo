@@ -23,12 +23,13 @@ public class Principale extends Application {
         VueArbre vueArbre = new VueArbre(m);
         m.enregistrerObservateur(vue);
 
-        //Dossier d = new Dossier("src/main/java/Classes");
+        //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
         Dossier d = new Dossier("Source/src/main/java/Classes");
         Classe c = (Classe) d.files.getFirst();
         ClasseComplete c1 = c.getClasseComplete();
         m.ajouter_Classe_D(c1);
 
+        //m.ouvrirDossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
 
 //        //m.ouvrirDossier("src/main/java/Classes");
 //        m.ouvrirDossier("Source/src/main/java/Classes");

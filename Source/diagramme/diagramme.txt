@@ -1,7 +1,52 @@
-class Parametre{
-- String nom
-- String type
-+ getType() : String
-+ getNom() : String
+class Smiley{
 }
-Parametre --|> Object
+Smiley --|> Accesoire
+class ReneLaTaupe{
+}
+ReneLaTaupe --|> Dessinable
+class MyImage{
++ BufferedImage image
++ Dimension size
++ display() : void
++ paintOver(String arg0,int arg1,int arg2) : void
+# paintComponent() : void
++ textOver(String arg0,int arg1,int arg2) : void
+}
+MyImage --> BufferedImage
+MyImage --> Dimension
+MyImage --|> JPanel
+class Main{
++ main() : void
+}
+class Lunette{
+}
+Lunette --|> Accesoire
+class Dessinable{
+# String nomIm
+# double prix
++ getLogo() : MyImage
++ combienCaCoute() : double
+}
+class CrazyFrog{
+}
+CrazyFrog --|> Dessinable
+class Chapeau{
+}
+Chapeau --|> Accesoire
+class Candy{
+}
+Candy --|> Accesoire
+class AccesoireTexte{
++ getLogo() : MyImage
++ combienCaCoute() : double
+}
+AccesoireTexte --|> Accesoire
+class Accesoire{
+# Dessinable dessinable
+# int x
+# int y
++ getLogo() : MyImage
++ combienCaCoute() : double
+}
+Accesoire --> Dessinable
+Accesoire --|> Dessinable
