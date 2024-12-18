@@ -8,6 +8,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
     Window w;
@@ -26,8 +27,17 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
             case "Ouvrir":
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 File selectedDirectory = directoryChooser.showDialog(w);
-                if(selectedDirectory != null) {m.ouvrirDossier(selectedDirectory.getAbsolutePath());}
+                if(selectedDirectory != null) {System.out.println(selectedDirectory.getAbsolutePath());}
                 break;
+            case "Exporter plantUML":
+                try {
+                    m.saveUML();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            case "Exporter PNG":
+                System.out.println("exporté !!!");
+
         }
     }
 }
