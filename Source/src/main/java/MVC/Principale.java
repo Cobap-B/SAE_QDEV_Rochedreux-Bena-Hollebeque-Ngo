@@ -44,12 +44,11 @@ public class Principale extends Application {
         MenuItem exporterPNG = new MenuItem("Exporter PNG");
 
         Menu fichier = new Menu("Fichier");
-        fichier.getItems().addAll(exporterUML, exporterPNG);
 
         MenuItem ouvrir = new MenuItem("Ouvrir");
         ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
         exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
-        fichier.getItems().add(ouvrir);
+        fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG);
 
 
 //        Button effacer = new Button("Effacer Diagramme");
