@@ -23,14 +23,14 @@ public class Principale extends Application {
         m.enregistrerObservateur(vue);
 
         //Dossier d = new Dossier("src/main/java/Classes");
-        Dossier d = new Dossier("Source/src/main/java/Classes");
+        Dossier d = new Dossier("src/main/java/Classes");
         Classe c = (Classe) d.files.getFirst();
         ClasseComplete c1 = c.getClasseComplete();
         m.ajouter_Classe_D(c1);
 
         m.saveUML();
-        //m.ouvrirDossier("src/main/java/Classes");
-        m.ouvrirDossier("Source/src/main/java/Classes");
+        m.ouvrirDossier("src/main/java/Classes");
+        //m.ouvrirDossier("Source/src/main/java/Classes");
 
 
 
@@ -39,7 +39,11 @@ public class Principale extends Application {
         MenuBar menu = new MenuBar();
         ToolBar toolbar = new ToolBar();
 
+        Button exporterUML = new Button("Exporter plantUML");
+        Button exporterPNG = new Button("Exporter PNG");
+
         Menu fichier = new Menu("Fichier");
+
 
 
 //        Button effacer = new Button("Effacer Diagramme");
