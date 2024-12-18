@@ -39,10 +39,11 @@ public class Principale extends Application {
         MenuBar menu = new MenuBar();
         ToolBar toolbar = new ToolBar();
 
-        Button exporterUML = new Button("Exporter plantUML");
-        Button exporterPNG = new Button("Exporter PNG");
+        MenuItem exporterUML = new MenuItem("Exporter plantUML");
+        MenuItem exporterPNG = new MenuItem("Exporter PNG");
 
         Menu fichier = new Menu("Fichier");
+        fichier.getItems().addAll(exporterUML, exporterPNG);
 
 
 
