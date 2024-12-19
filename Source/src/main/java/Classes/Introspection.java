@@ -16,7 +16,6 @@ public class Introspection {
         try {
             // Étape 1 : Chemin vers le fichier .class
 
-
             // Vérifier que le fichier existe
             if (!c.exists() || !c.isFile()) {
                 System.err.println("Fichier .class introuvable !");
@@ -49,12 +48,6 @@ public class Introspection {
                     .replace(File.separator, ".") // Remplace "/" par "."
                     .replace(".class", ""); // Supprime l'extension .class
             // Étape 4 : Charger la classe dynamiquement
-            System.out.println(c.getAbsolutePath()
-                    .substring(repertoireRacine.getAbsolutePath().length() + 1));
-            System.out.println(cheminRelatif);
-            System.out.println(repertoireRacine.getName());
-            System.out.println(repertoireRacine.getAbsolutePath());
-            System.out.println(c.getAbsolutePath());
 
             URLClassLoader classLoader = new URLClassLoader(new URL[]{repertoireRacine.toURI().toURL()});
             classee = classLoader.loadClass(cheminRelatif);
@@ -62,9 +55,7 @@ public class Introspection {
         } catch (ClassNotFoundException | MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        for (Field declaredField : classee.getDeclaredFields()) {
-            System.out.println(declaredField.getName());
-        }
+
         return new ClasseComplete(classee.getSimpleName(), getTypeClasse(classee), displayField(classee.getDeclaredFields()), displayMethod(classee.getDeclaredMethods()), getDependances(classee));
     }
 
@@ -125,33 +116,45 @@ public class Introspection {
 
     }
 
+    /**
+     *
+     * @param fields liste des attributs
+     * @return liste des Attributs
+     */
     private static ArrayList<Attribut> displayField(Field[] fields){
         ArrayList<Attribut> attributs = new ArrayList<>();
-
+        //Boucle dans les fields
         for (Field f: fields){
             int acces = f.getModifiers();
+            //acces : public/private/protected
             String tp = f.getType().getSimpleName();
-            String ac = "+";
-
+            String ac = "+"; //public si rien
             if (Modifier.isPrivate(acces)){
                 ac = "-";
             }else if (Modifier.isProtected(acces)){
                 ac = "#";
             }
 
-            Type genericType = f.getGenericType();
+            //Ici la vérification si l'attribut est une collection
+            Type genericType = f.getGenericType(); //On prend le type generic de l'attribut
             if (genericType instanceof ParameterizedType) {
-                ParameterizedType parameterizedType = (ParameterizedType) genericType;
+                //Si collection
 
+                //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
+                ParameterizedType parameterizedType = (ParameterizedType) genericType;
                 Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                //Ici on obtien la liste de ses attributs tout simplement
                 for (Type typeArgument : typeArguments) {
                     tp = typeArgument.getTypeName().substring(typeArgument.getTypeName().indexOf('.')+1);
+                    //On prend seulement le nom car c'est ce que l'on veut
                     System.out.println("    - "+tp+"    "+f.getName());
+                    //On creer notre attribut avec un * car c'est une collection
                     attributs.add(new Attribut(f.getName(), ac, tp, "*"));
                 }
 
 
-            }else{
+            }else{ //Si non collection
+                //On creer notre attribut de base
                 attributs.add(new Attribut(f.getName(), ac,tp ,"1"));
             }
         }
