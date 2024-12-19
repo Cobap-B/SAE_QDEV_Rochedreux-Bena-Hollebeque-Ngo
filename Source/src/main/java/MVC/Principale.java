@@ -24,7 +24,7 @@ public class Principale extends Application {
         m.enregistrerObservateur(vue);
 
         //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
-        Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\QDev\\td2\\out\\production\\td2\\Ex1");
+        Dossier d = new Dossier("C:\\Users\\keken\\OneDrive\\Documents\\Cours\\Saé\\S3.01\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\diagramme");
         for (FichierComposite file : d.files) {
             if (file.isFile()){
                 Classe c = (Classe) file;
@@ -53,6 +53,7 @@ public class Principale extends Application {
         MenuItem ouvrir = new MenuItem("Ouvrir");
         ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
         exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
+        exporterPNG.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
         fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG);
 
 
