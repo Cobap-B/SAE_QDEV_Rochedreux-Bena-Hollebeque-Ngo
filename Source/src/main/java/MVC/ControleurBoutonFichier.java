@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
-    Window w;
+    private Window w;
     Model m;
 
     public ControleurBoutonFichier(Window w, Model model) {
