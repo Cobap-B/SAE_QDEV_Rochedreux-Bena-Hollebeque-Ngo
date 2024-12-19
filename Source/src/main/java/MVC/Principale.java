@@ -25,7 +25,7 @@ public class Principale extends Application {
         m.enregistrerObservateur(vueArbre);
 
         //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
-        Dossier d = new Dossier("C:\\Users\\keken\\OneDrive\\Documents\\Cours\\Saé\\S3.01\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\diagramme");
+        Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\QDev\\Td4\\out\\production\\Td4\\logo");
         for (FichierComposite file : d.files) {
             if (file.isFile()){
                 Classe c = (Classe) file;
@@ -33,7 +33,6 @@ public class Principale extends Application {
                 m.ajouter_Classe_D(c1);
             }
         }
-        m.saveUML();
 
 
 

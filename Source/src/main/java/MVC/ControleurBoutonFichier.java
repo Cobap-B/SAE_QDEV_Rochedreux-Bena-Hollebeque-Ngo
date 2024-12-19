@@ -23,6 +23,7 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         MenuItem b = (MenuItem) actionEvent.getSource();
+        System.out.println(b.getText());
         switch (b.getText()) {
             case "Ouvrir":
                 DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -37,6 +38,7 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                 }
                 break;
             case "Exporter PNG":
+                System.out.println("png");
                 m.savePNG();
                 break;
         }
