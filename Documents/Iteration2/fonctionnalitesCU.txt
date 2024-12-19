@@ -1,1 +1,11 @@
-Il faut décrire les fonctionnalités et les cas d’utilisations développés ;
+Membre	            Tâches principales
+
+Tout le monde	    Partie conception
+
+HUGOB	            Création de la VueArbre pour afficher l'arbre dans l'interface + gérer dépendances attributs
+
+Arthur	            Exportation en source PlantUML, ellaboration du drag&drop des classes dans l'interfaces + controleurs associés
+
+Kevin	            Developpement des boutons d'exportations + controleurs associés
+
+HugoR	            Gestion de l'importation d'un fichier avec des .class à partir de n'importe quel dossier de la machine + gérer dépendances de liste et Map en attribut
