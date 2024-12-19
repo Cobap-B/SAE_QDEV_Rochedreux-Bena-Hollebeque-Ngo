@@ -104,28 +104,22 @@ public class Introspection {
         Methode mtd = null;
         for (Method m:methods){
             int acces = m.getModifiers();
-            if (Modifier.isPublic(acces)){
-                ArrayList<Parametre> param = new ArrayList<>();
-                for (Parameter p : m.getParameters()) {
-                    param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
-                }
-                mtd = new Methode(m.getName(), "+", m.getReturnType().getSimpleName(), param);
-            }
+            String ac = "+";
             if (Modifier.isPrivate(acces)){
-                ArrayList<Parametre> param = new ArrayList<>();
-                for(Parameter p:m.getParameters()){
-                    param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
-                }
-                mtd = new Methode(m.getName(), "-", m.getReturnType().getSimpleName(), param);
+                ac = "-";
+            }else if (Modifier.isProtected(acces)){
+               ac = "#";
             }
-            if (Modifier.isProtected(acces)){
-                ArrayList<Parametre> param = new ArrayList<>();
-                for(Parameter p:m.getParameters()){
-                    param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
-                }
-                mtd = new Methode(m.getName(), "#", m.getReturnType().getSimpleName(), param);
+
+            ArrayList<Parametre> param = new ArrayList<>();
+            for (Parameter p : m.getParameters()) {
+                param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
             }
+            mtd = new Methode(m.getName(), "+", m.getReturnType().getSimpleName(), param);
             methodes.add(mtd);
+
+
+
         }
         return methodes;
 
@@ -133,27 +127,36 @@ public class Introspection {
 
     private static ArrayList<Attribut> displayField(Field[] fields){
         ArrayList<Attribut> attributs = new ArrayList<>();
-        Attribut att = null;
 
         for (Field f: fields){
             int acces = f.getModifiers();
+            String tp = f.getType().getSimpleName();
+            String ac = "+";
 
             if (Modifier.isPrivate(acces)){
-                att = new Attribut(f.getName(), "-",f.getType().getSimpleName());
+                ac = "-";
             }else if (Modifier.isProtected(acces)){
-                att = new Attribut(f.getName(), "#",f.getType().getSimpleName());
-            }else{//Modifier.isPublic(acces)
-                att = new Attribut(f.getName(), "+",f.getType().getSimpleName());
+                ac = "#";
             }
-            attributs.add(att);
+
+            Type genericType = f.getGenericType();
+            if (genericType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericType;
+
+                Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                for (Type typeArgument : typeArguments) {
+                    tp = typeArgument.getTypeName().substring(typeArgument.getTypeName().indexOf('.')+1);
+                    System.out.println("    - "+tp+"    "+f.getName());
+                    attributs.add(new Attribut(f.getName(), ac, tp, "*"));
+                }
+
+
+            }else{
+                attributs.add(new Attribut(f.getName(), ac,tp ,"1"));
+            }
         }
         return attributs;
     }
 
-    private static String getType(String s){
-        String[] s2 = s.split("\\.");
-        if (s2.length>1)
-            return s2[s2.length-2];
-        return "";
-    }
+
 }
