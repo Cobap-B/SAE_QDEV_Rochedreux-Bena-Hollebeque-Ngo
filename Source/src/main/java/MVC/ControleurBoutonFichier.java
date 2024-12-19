@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
-    Window w;
+    private Window w;
     Model m;
 
     public ControleurBoutonFichier(Window w, Model model) {
@@ -23,6 +23,7 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         MenuItem b = (MenuItem) actionEvent.getSource();
+        System.out.println(b.getText());
         switch (b.getText()) {
             case "Ouvrir":
                 DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -37,7 +38,9 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                 }
                 break;
             case "Exporter PNG":
+                System.out.println("PNG");
                 try {
+                    m.saveUML();
                     m.savePNG();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

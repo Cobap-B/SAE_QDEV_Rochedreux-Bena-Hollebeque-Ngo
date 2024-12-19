@@ -6,14 +6,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
 
-public class VueArbre extends VBox implements Observateur {
-    private TreeView<String> arbre;
+public class VueArbre extends TreeView<String> implements Observateur {
+    //private TreeView<String> arbre;
+    Model m;
 
     public VueArbre(Model model) {
-        arbre = new TreeView<>();
-        this.getChildren().add(arbre);
-
-        model.enregistrerObservateur(this);
+        this.m = model;
     }
 
     @Override
@@ -25,10 +23,10 @@ public class VueArbre extends VBox implements Observateur {
                 // Mettre à jour l'arborescence
                 TreeItem<String> racineItem = new TreeItem<>(racine.getName());
                 remplirArborescence(racine, racineItem);
-                arbre.setRoot(racineItem);
+                this.setRoot(racineItem);
             } else {
                 //aucun fichier
-                arbre.setRoot(new TreeItem<>("Aucun dossier chargé"));
+                this.setRoot(new TreeItem<>("Aucun dossier chargé"));
             }
         }
     }
@@ -36,12 +34,14 @@ public class VueArbre extends VBox implements Observateur {
     private void remplirArborescence(Dossier dossier, TreeItem<String> parent) {
         for (FichierComposite fichier : dossier.files) {
             // je créé un item de l'arbre pour chaque dossier/fichier
-            TreeItem<String> item = new TreeItem<>(fichier.getName());
-            parent.getChildren().add(item);
+//            TreeItem<String> item = new TreeItem<>(fichier.getName());
+            TreeItemFile tif = new TreeItemFile(fichier);
+            parent.getChildren().add(tif);
+//            parent.getChildren().add(item);
 
             if (fichier instanceof Dossier) {
                 // Appel récursif pour les sous-dossiers, le sous dossier devient le parent etc...
-                remplirArborescence((Dossier) fichier, item );
+                remplirArborescence((Dossier) fichier, tif );
             }
         }
     }

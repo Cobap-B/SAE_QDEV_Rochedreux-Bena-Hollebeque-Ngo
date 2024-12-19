@@ -1,13 +1,18 @@
 package MVC;
 
 import Classes.*;
-import net.sourceforge.plantuml.core.*;
-import net.sourceforge.plantuml.SourceStringReader;
 
-
-import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.SourceFileReader;
 public class Model implements Sujet{
     /**
      * Liste des observateurs
@@ -48,26 +53,54 @@ public class Model implements Sujet{
         File dir = new File("diagramme");
         dir.mkdirs();
         BufferedWriter writer = new BufferedWriter(new FileWriter("diagramme/diagramme.txt"));
+        writer.write("@startuml \n");
         for(ClasseComplete c : diagramme){
             writer.write(c.getUml());
         }
+        writer.write("@enduml \n");
         writer.close();
     }
 
-    public void savePNG() throws IOException {
-        OutputStream png = new FileOutputStream("diagramme/diagramme.txt");
-        String source = "@startuml\n";
 
-        for(ClasseComplete c : diagramme){
-            source += c.getUml();
+    public void savePNG(){
+        // Chemin vers le fichier texte contenant le diagramme UML
+        File fichierUml = new File("diagramme/diagramme.txt");
+
+        // Dossier où enregistrer le fichier PNG
+        File dossierSortie = new File("diagramme");
+        if (!dossierSortie.exists()) {
+
+            // Crée le dossier si nécessaire
+            boolean dossierCree = dossierSortie.mkdirs();
+            if (!dossierCree) {
+                System.err.println("Impossible de créer le dossier de sortie.");
+                return;
+            }
         }
-        source += "@enduml\n";
 
-        SourceStringReader reader = new SourceStringReader(source);
+        try {
+            // Utilisation de PlantUML pour convertir le fichier en PNG
+            SourceFileReader reader = new SourceFileReader(fichierUml);
 
-        // Write the first image to "png"
-        String desc = reader.outputImage(png).getDescription();
-        // Return a null string if no generation
+
+
+            // Parcourt les fichiers générés
+            for (GeneratedImage image : reader.getGeneratedImages()) {
+                File fichierImage = image.getPngFile();
+
+                // Définit le chemin de destination
+                File fichierDestination = new File(dossierSortie, fichierImage.getName());
+
+                // Déplace le fichier vers le dossier de sortie
+                if (fichierImage.renameTo(fichierDestination)) {
+                    System.out.println("Image générée : " + fichierDestination.getAbsolutePath());
+                } else {
+                    System.err.println("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la génération de l'image UML : " + e.getMessage());
+        }
     }
 
 

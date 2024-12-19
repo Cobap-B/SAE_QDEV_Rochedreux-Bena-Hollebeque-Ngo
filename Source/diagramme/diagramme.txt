@@ -1,0 +1,81 @@
+@startuml 
+class Parametre{
+- String nom
+- String type
++ getType() : String
++ getNom() : String
+}
+class Methode{
+- String nom
+- String acces
+- String type_retour
+- boolean visibilite
++ getAcces() : String
++ getNom() : String
++ isVisibilite() : boolean
++ getType_retour() : String
++ getParametres() : ArrayList
+}
+Methode"1" --> "*"Parametre : parametres
+class Introspection{
++ creerClasseComplete() : ClasseComplete
++ getTypeClasse() : String
++ displayMethod() : ArrayList
++ displayField() : ArrayList
++ getDependances() : ArrayList
+}
+class FichierComposite{
++ getFile() : String
+}
+FichierComposite --|> File
+class Dossier{
++ getFile() : String
++ getFileExtension() : String
+}
+Dossier"1" --> "*"FichierComposite : files
+Dossier --|> FichierComposite
+class Dependance{
+- String depend
+- String type
+- boolean visibilite
++ getType() : String
++ getDepend() : String
++ isVisibilite() : boolean
+}
+class ClasseComplete{
+- String nom
+- String type
++ getType() : String
++ getUml() : String
++ getNom() : String
++ getDependances() : ArrayList
++ lambda$getUml$3(StringBuilder arg0,Attribut arg1) : void
++ lambda$getUml$1(StringBuilder arg0,Parametre arg1) : void
++ TypePrimitif() : boolean
++ lambda$getUml$0(StringBuilder arg0,Attribut arg1) : void
++ lambda$getUml$2(StringBuilder arg0,Methode arg1) : void
++ getAttributs() : ArrayList
++ getMethodes() : ArrayList
++ lambda$getUml$4(StringBuilder arg0,Dependance arg1) : void
+}
+ClasseComplete"1" --> "*"Attribut : attributs
+ClasseComplete"1" --> "*"Methode : methodes
+ClasseComplete"1" --> "*"Dependance : dependances
+class Classe{
++ getFile() : String
++ getClasseComplete() : ClasseComplete
+}
+Classe --|> FichierComposite
+class Attribut{
+- String nom
+- String type
+- String acces
+- String nombre
+- boolean visibilite
++ getType() : String
++ getNombre() : String
++ getAcces() : String
++ getNom() : String
++ isVisibilite() : boolean
+}
+@enduml 
