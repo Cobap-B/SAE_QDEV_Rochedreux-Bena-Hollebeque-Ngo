@@ -2,6 +2,9 @@ package MVC;
 
 import Classes.*;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -52,6 +55,25 @@ public class Model implements Sujet{
             writer.write(c.getUml());
         }
         writer.close();
+    }
+
+    public void savePNG(){
+        try {
+            Robot robot = new Robot();
+            //Dimension de l'écran
+            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            //capture d'écran
+            BufferedImage bi = robot.createScreenCapture(new Rectangle(dimension.width, dimension.height));
+            //enregistrer l'image
+            File dir = new File("diagramme.png");
+            dir.mkdirs();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("diagramme/diagramme.png"));
+            ImageIO.write(bi, "png", dir);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

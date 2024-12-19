@@ -29,7 +29,9 @@ public class ClasseComplete {
         resultat.append("class "+nom+"{\n");
 
         attributs.forEach(attribut -> {
-            resultat.append(attribut.getAcces() +" " + attribut.getType() + " "+ attribut.getNom()+"\n");
+            if (TypePrimitif(attribut.getType())) {
+                resultat.append(attribut.getAcces() + " " + attribut.getType() + " " + attribut.getNom() + "\n");
+            }
         });
 
         methodes.forEach(methode -> {
@@ -52,7 +54,7 @@ public class ClasseComplete {
 
         attributs.forEach(attribut -> {
             if (!TypePrimitif(attribut.getType())) {
-                resultat.append(this.nom + " --> " + attribut.getType() + "\n");
+                resultat.append(this.nom + "\"1\" --> " +"\""+ attribut.getNombre() +"\"" + attribut.getType() +" : "+attribut.getNom() +"\n");
             }
         });
 
