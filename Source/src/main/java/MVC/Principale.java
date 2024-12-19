@@ -29,7 +29,6 @@ public class Principale extends Application {
         ClasseComplete c1 = c.getClasseComplete();
         m.ajouter_Classe_D(c1);
 
-        m.saveUML();
         //m.ouvrirDossier("src/main/java/Classes");
         m.ouvrirDossier("Source/src/main/java/Classes");
 
