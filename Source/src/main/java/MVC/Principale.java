@@ -22,6 +22,7 @@ public class Principale extends Application {
         VueConsole vue = new VueConsole();
         VueArbre vueArbre = new VueArbre(m);
         m.enregistrerObservateur(vue);
+        m.enregistrerObservateur(vueArbre);
 
         //Dossier d = new Dossier("src/main/java/Classes");
         Dossier d = new Dossier("Source/src/main/java/Classes");
@@ -90,6 +91,7 @@ public class Principale extends Application {
 //        conteneur_arbre.getChildren().add(arbre);
 //        bp.setLeft(conteneur_arbre);
         bp.setLeft(vueArbre);
+        vueArbre.setOnMouseClicked(new ControleurArbre(m));
 
 
 
