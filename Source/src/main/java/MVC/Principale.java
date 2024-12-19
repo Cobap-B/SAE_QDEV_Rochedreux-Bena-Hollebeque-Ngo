@@ -24,15 +24,15 @@ public class Principale extends Application {
         m.enregistrerObservateur(vue);
         m.enregistrerObservateur(vueArbre);
 
-        //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
-        Dossier d = new Dossier("C:\\Users\\keken\\OneDrive\\Documents\\Cours\\Saé\\S3.01\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\diagramme");
-        for (FichierComposite file : d.files) {
-            if (file.isFile()){
-                Classe c = (Classe) file;
-                ClasseComplete c1 = c.getClasseComplete();
-                m.ajouter_Classe_D(c1);
-            }
-        }
+//        //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
+//        Dossier d = new Dossier("C:\\Users\\arthu\\OneDrive\\Documents\\Cours\\Saé\\S3.01\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\diagramme");
+//        for (FichierComposite file : d.files) {
+//            if (file.isFile()){
+//                Classe c = (Classe) file;
+//                ClasseComplete c1 = c.getClasseComplete();
+//                m.ajouter_Classe_D(c1);
+//            }
+//        }
         m.saveUML();
 
 

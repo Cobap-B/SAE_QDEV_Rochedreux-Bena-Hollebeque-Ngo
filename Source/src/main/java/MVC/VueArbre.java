@@ -34,12 +34,14 @@ public class VueArbre extends TreeView<String> implements Observateur {
     private void remplirArborescence(Dossier dossier, TreeItem<String> parent) {
         for (FichierComposite fichier : dossier.files) {
             // je créé un item de l'arbre pour chaque dossier/fichier
-            TreeItem<String> item = new TreeItem<>(fichier.getName());
-            parent.getChildren().add(item);
+//            TreeItem<String> item = new TreeItem<>(fichier.getName());
+            TreeItemFile tif = new TreeItemFile(fichier);
+            parent.getChildren().add(tif);
+//            parent.getChildren().add(item);
 
             if (fichier instanceof Dossier) {
                 // Appel récursif pour les sous-dossiers, le sous dossier devient le parent etc...
-                remplirArborescence((Dossier) fichier, item );
+                remplirArborescence((Dossier) fichier, tif );
             }
         }
     }
