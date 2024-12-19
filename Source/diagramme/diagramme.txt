@@ -1,81 +1,51 @@
 @startuml 
-class Parametre{
-- String nom
-- String type
-+ getType() : String
-+ getNom() : String
+class Smiley{
 }
-class Methode{
-- String nom
-- String acces
-- String type_retour
-- boolean visibilite
-+ getAcces() : String
-+ getNom() : String
-+ isVisibilite() : boolean
-+ getType_retour() : String
-+ getParametres() : ArrayList
+Smiley --|> Accesoire
+class ReneLaTaupe{
 }
-Methode"1" --> "*"Parametre : parametres
-class Introspection{
-+ creerClasseComplete() : ClasseComplete
-+ getTypeClasse() : String
-+ displayMethod() : ArrayList
-+ displayField() : ArrayList
-+ getDependances() : ArrayList
+ReneLaTaupe --|> Dessinable
+class MyImage{
++ display() : void
++ textOver(String arg0,int arg1,int arg2) : void
++ paintOver(String arg0,int arg1,int arg2) : void
++ paintComponent() : void
 }
-class FichierComposite{
-+ getFile() : String
+MyImage"1" --> "1"BufferedImage : image
+MyImage"1" --> "1"Dimension : size
+MyImage --|> JPanel
+class Main{
++ main() : void
 }
-FichierComposite --|> File
-class Dossier{
-+ getFile() : String
-+ getFileExtension() : String
+class Lunette{
 }
-Dossier"1" --> "*"FichierComposite : files
-Dossier --|> FichierComposite
-class Dependance{
-- String depend
-- String type
-- boolean visibilite
-+ getType() : String
-+ getDepend() : String
-+ isVisibilite() : boolean
+Lunette --|> Accesoire
+class Dessinable{
+# String nomIm
+# double prix
++ getLogo() : MyImage
++ combienCaCoute() : double
 }
-class ClasseComplete{
-- String nom
-- String type
-+ getType() : String
-+ getUml() : String
-+ getNom() : String
-+ getDependances() : ArrayList
-+ lambda$getUml$3(StringBuilder arg0,Attribut arg1) : void
-+ lambda$getUml$1(StringBuilder arg0,Parametre arg1) : void
-+ TypePrimitif() : boolean
-+ lambda$getUml$0(StringBuilder arg0,Attribut arg1) : void
-+ lambda$getUml$2(StringBuilder arg0,Methode arg1) : void
-+ getAttributs() : ArrayList
-+ getMethodes() : ArrayList
-+ lambda$getUml$4(StringBuilder arg0,Dependance arg1) : void
+class CrazyFrog{
 }
-ClasseComplete"1" --> "*"Attribut : attributs
-ClasseComplete"1" --> "*"Methode : methodes
-ClasseComplete"1" --> "*"Dependance : dependances
-class Classe{
-+ getFile() : String
-+ getClasseComplete() : ClasseComplete
+CrazyFrog --|> Dessinable
+class Chapeau{
 }
-Classe --|> FichierComposite
-class Attribut{
-- String nom
-- String type
-- String acces
-- String nombre
-- boolean visibilite
-+ getType() : String
-+ getNombre() : String
-+ getAcces() : String
-+ getNom() : String
-+ isVisibilite() : boolean
+Chapeau --|> Accesoire
+class Candy{
 }
+Candy --|> Accesoire
+class AccesoireTexte{
++ getLogo() : MyImage
++ combienCaCoute() : double
+}
+AccesoireTexte --|> Accesoire
+class Accesoire{
+# int x
+# int y
++ getLogo() : MyImage
++ combienCaCoute() : double
+}
+Accesoire"1" --> "1"Dessinable : dessinable
+Accesoire --|> Dessinable
 @enduml 
