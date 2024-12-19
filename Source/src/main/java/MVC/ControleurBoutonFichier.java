@@ -38,8 +38,13 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                 }
                 break;
             case "Exporter PNG":
-                System.out.println("png");
-                m.savePNG();
+                System.out.println("PNG");
+                try {
+                    m.saveUML();
+                    m.savePNG();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }
