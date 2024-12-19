@@ -5,12 +5,21 @@ public class Attribut {
     private String nom;
     private String type;
     private String acces;
+    private String nombre;
     private boolean visibilite;
 
     public Attribut(String nom, String acces, String type) {
         this.nom = nom;
         this.type = type;
         this.acces = acces;
+        this.visibilite = true;
+    }
+
+    public Attribut(String nom, String acces, String type, String nb) {
+        this.nom = nom;
+        this.type = type;
+        this.acces = acces;
+        this.nombre = nb;
         this.visibilite = true;
     }
 
@@ -28,5 +37,9 @@ public class Attribut {
 
     public String getAcces() {
         return acces;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

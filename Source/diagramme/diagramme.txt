@@ -1,52 +1,29 @@
-class Smiley{
+class Personne{
++ String nom
++ String prenom
++ equals() : boolean
++ toString() : String
++ hashCode() : int
++ compareTo() : int
++ compareTo() : int
 }
-Smiley --|> Accesoire
-class ReneLaTaupe{
-}
-ReneLaTaupe --|> Dessinable
-class MyImage{
-+ BufferedImage image
-+ Dimension size
-+ display() : void
-+ paintOver(String arg0,int arg1,int arg2) : void
-# paintComponent() : void
-+ textOver(String arg0,int arg1,int arg2) : void
-}
-MyImage --> BufferedImage
-MyImage --> Dimension
-MyImage --|> JPanel
+Personne ..|> Comparable
 class Main{
 + main() : void
 }
-class Lunette{
+class AnnuaireComp{
++ acces(String arg0,String arg1) : String
++ suppresion(String arg0,String arg1) : void
++ domaine() : void
++ adjonction(String arg0,String arg1,String arg2) : void
++ changement(String arg0,String arg1,String arg2) : void
 }
-Lunette --|> Accesoire
-class Dessinable{
-# String nomIm
-# double prix
-+ getLogo() : MyImage
-+ combienCaCoute() : double
+AnnuaireComp --|> HashMap
+class Annuaire{
++ acces() : String
++ suppresion() : void
++ domaine() : void
++ adjonction(String arg0,String arg1) : void
++ changement(String arg0,String arg1) : void
 }
-class CrazyFrog{
-}
-CrazyFrog --|> Dessinable
-class Chapeau{
-}
-Chapeau --|> Accesoire
-class Candy{
-}
-Candy --|> Accesoire
-class AccesoireTexte{
-+ getLogo() : MyImage
-+ combienCaCoute() : double
-}
-AccesoireTexte --|> Accesoire
-class Accesoire{
-# Dessinable dessinable
-# int x
-# int y
-+ getLogo() : MyImage
-+ combienCaCoute() : double
-}
-Accesoire --> Dessinable
-Accesoire --|> Dessinable
+Annuaire --|> HashMap

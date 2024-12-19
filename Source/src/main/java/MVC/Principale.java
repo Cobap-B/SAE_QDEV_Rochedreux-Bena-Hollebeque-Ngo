@@ -24,10 +24,17 @@ public class Principale extends Application {
         m.enregistrerObservateur(vue);
 
         //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
-        Dossier d = new Dossier("C:\\\\Users\\\\Smash_player123\\\\OneDrive\\\\Documents\\\\Cours\\\\BUT2\\\\SAE\\\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\\\Source\\\\target\\\\classes\\\\Classes");
-        Classe c = (Classe) d.files.getFirst();
-        ClasseComplete c1 = c.getClasseComplete();
-        m.ajouter_Classe_D(c1);
+        Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\QDev\\td2\\out\\production\\td2\\Ex1");
+        for (FichierComposite file : d.files) {
+            if (file.isFile()){
+                Classe c = (Classe) file;
+                ClasseComplete c1 = c.getClasseComplete();
+                m.ajouter_Classe_D(c1);
+            }
+        }
+        m.saveUML();
+
+
 
         //m.ouvrirDossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
 
