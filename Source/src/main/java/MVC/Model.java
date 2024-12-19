@@ -1,14 +1,11 @@
 package MVC;
 
 import Classes.*;
+import net.sourceforge.plantuml.core.*;
+import net.sourceforge.plantuml.SourceStringReader;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class Model implements Sujet{
@@ -57,23 +54,20 @@ public class Model implements Sujet{
         writer.close();
     }
 
-    public void savePNG(){
-        try {
-            Robot robot = new Robot();
-            //Dimension de l'écran
-            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-            //capture d'écran
-            BufferedImage bi = robot.createScreenCapture(new Rectangle(dimension.width, dimension.height));
-            //enregistrer l'image
-            File dir = new File("diagramme.png");
-            dir.mkdirs();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("diagramme/diagramme.png"));
-            ImageIO.write(bi, "png", dir);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void savePNG() throws IOException {
+        OutputStream png = new FileOutputStream("diagramme/diagramme.txt");
+        String source = "@startuml\n";
+
+        for(ClasseComplete c : diagramme){
+            source += c.getUml();
         }
+        source += "@enduml\n";
+
+        SourceStringReader reader = new SourceStringReader(source);
+
+        // Write the first image to "png"
+        String desc = reader.outputImage(png).getDescription();
+        // Return a null string if no generation
     }
 
 
