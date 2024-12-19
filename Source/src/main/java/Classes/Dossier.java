@@ -22,7 +22,7 @@ public class Dossier extends FichierComposite{
 
         for(File f: Objects.requireNonNull(listFiles())){
             if (f.isDirectory()) files.addLast(new Dossier(f.getPath()));
-            else if (getFileExtension(f).equals(".java") && f.isFile()) files.addFirst(new Classe(f.getPath()));
+            else if (getFileExtension(f).equals(".class") && f.isFile()) files.addFirst(new Classe(f.getPath()));
         }
     }
 

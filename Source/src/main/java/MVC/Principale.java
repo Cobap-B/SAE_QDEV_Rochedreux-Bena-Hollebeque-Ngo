@@ -20,17 +20,24 @@ public class Principale extends Application {
         Model m = new Model();
 
         VueConsole vue = new VueConsole();
+        VueArbre vueArbre = new VueArbre(m);
         m.enregistrerObservateur(vue);
+        m.enregistrerObservateur(vueArbre);
 
-        //Dossier d = new Dossier("src/main/java/Classes");
-        Dossier d = new Dossier("Source/src/main/java/Classes");
-        Classe c = (Classe) d.files.getFirst();
-        ClasseComplete c1 = c.getClasseComplete();
-        m.ajouter_Classe_D(c1);
-
+        //Dossier d = new Dossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
+        Dossier d = new Dossier("C:\\Users\\keken\\OneDrive\\Documents\\Cours\\Saé\\S3.01\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\diagramme");
+        for (FichierComposite file : d.files) {
+            if (file.isFile()){
+                Classe c = (Classe) file;
+                ClasseComplete c1 = c.getClasseComplete();
+                m.ajouter_Classe_D(c1);
+            }
+        }
         m.saveUML();
-        //m.ouvrirDossier("src/main/java/Classes");
-        m.ouvrirDossier("Source/src/main/java/Classes");
+
+
+
+        //m.ouvrirDossier("C:\\Users\\Smash_player123\\OneDrive\\Documents\\Cours\\BUT2\\SAE\\SAE_QDEV_Rochedreux-Bena-Hollebeque-Ngo\\Source\\target\\classes\\Classes");
 
 
 
@@ -39,10 +46,16 @@ public class Principale extends Application {
         MenuBar menu = new MenuBar();
         ToolBar toolbar = new ToolBar();
 
+        MenuItem exporterUML = new MenuItem("Exporter plantUML");
+        MenuItem exporterPNG = new MenuItem("Exporter PNG");
+
         Menu fichier = new Menu("Fichier");
+
         MenuItem ouvrir = new MenuItem("Ouvrir");
-        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow()));
-        fichier.getItems().add(ouvrir);
+        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
+        exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
+        exporterPNG.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
+        fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG);
 
 
 //        Button effacer = new Button("Effacer Diagramme");
@@ -62,27 +75,29 @@ public class Principale extends Application {
         //
 
 
-        //---------LEFT----------
-        VBox conteneur_arbre = new VBox();
-        conteneur_arbre.setPrefWidth(200);
-
-
-        // Création de l'arbre
-        TreeItem<String> item = new TreeItem<>("arbre de dossier");
-
-        item.getChildren().addAll(
-                new TreeItem<>("dossier 1"),
-                new TreeItem<>("dossier 2"),
-                new TreeItem<>("classe 1")
-
-        );
-
-        // Ajout de l'arbre
-        TreeView<String> arbre = new TreeView<>(item);
-        VBox.setVgrow(arbre, Priority.ALWAYS);
-
-        conteneur_arbre.getChildren().add(arbre);
-        bp.setLeft(conteneur_arbre);
+//        //---------LEFT----------
+//        VBox conteneur_arbre = new VBox();
+//        conteneur_arbre.setPrefWidth(200);
+//
+//
+//        // Création de l'arbre
+//        TreeItem<String> item = new TreeItem<>("arbre de dossier");
+//
+//        item.getChildren().addAll(
+//                new TreeItem<>("dossier 1"),
+//                new TreeItem<>("dossier 2"),
+//                new TreeItem<>("classe 1")
+//
+//        );
+//
+//        // Ajout de l'arbre
+//        TreeView<String> arbre = new TreeView<>(item);
+//        VBox.setVgrow(arbre, Priority.ALWAYS);
+//
+//        conteneur_arbre.getChildren().add(arbre);
+//        bp.setLeft(conteneur_arbre);
+        bp.setLeft(vueArbre);
+        vueArbre.setOnMouseClicked(new ControleurArbre(m));
 
 
 
