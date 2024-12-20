@@ -32,6 +32,8 @@ public class Model implements Sujet{
 
     public void ouvrirDossier(String path){
         arbre = new Dossier(path);
+        logs.add("Ouverture du dossier " + path);
+
         notifierObservateurs();
     }
 
@@ -42,9 +44,19 @@ public class Model implements Sujet{
     public void ajoutMethode(ClasseComplete c, Methode m){
         //Rien
     }
-    public void ajouter_Classe_D(ClasseComplete c){
+    public void ajouter_Classe_D(ClasseComplete c, double x, double y){
+        c.setCo(x, y);
         diagramme.add(c);
+        logs.add("Ajout de la classe " + c.getNom());
+        notifierObservateurs();
     }
+
+    public void effacer_D(){
+        if(!diagramme.isEmpty()){diagramme = new ArrayList<>();}
+        logs.add("Diagramme effacé");
+        notifierObservateurs();
+    }
+
     public void ajouter_Log(String s){
         logs.add(s);
     }
@@ -59,6 +71,8 @@ public class Model implements Sujet{
         }
         writer.write("@enduml \n");
         writer.close();
+        logs.add("Le diagramme a été exporté en format source PlantUML");
+        notifierObservateurs();
     }
 
 
@@ -73,7 +87,7 @@ public class Model implements Sujet{
             // Crée le dossier si nécessaire
             boolean dossierCree = dossierSortie.mkdirs();
             if (!dossierCree) {
-                System.err.println("Impossible de créer le dossier de sortie.");
+                logs.add("Impossible de créer le dossier de sortie.");
                 return;
             }
         }
@@ -93,14 +107,15 @@ public class Model implements Sujet{
 
                 // Déplace le fichier vers le dossier de sortie
                 if (fichierImage.renameTo(fichierDestination)) {
-                    System.out.println("Image générée : " + fichierDestination.getAbsolutePath());
+                    logs.add("\n Le diagramme a été exporté en format PNG\n" + "Image générée : " + fichierDestination.getAbsolutePath());
                 } else {
-                    System.err.println("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
+                    logs.add("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
                 }
             }
         } catch (IOException e) {
-            System.err.println("Erreur lors de la génération de l'image UML : " + e.getMessage());
+            logs.add("Erreur lors de la génération de l'image UML : " + e.getMessage());
         }
+        notifierObservateurs();
     }
 
 
@@ -111,6 +126,12 @@ public class Model implements Sujet{
     }
 
 
+    public ArrayList<String> getLogs() {
+        return logs;
+    }
+    public ArrayList<ClasseComplete> getDiagramme() {
+        return diagramme;
+    }
 
     /**
      * Ajoute un observateur a la liste

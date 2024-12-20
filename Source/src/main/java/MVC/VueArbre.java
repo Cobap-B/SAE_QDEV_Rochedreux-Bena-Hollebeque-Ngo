@@ -7,16 +7,16 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
 
 public class VueArbre extends TreeView<String> implements Observateur {
-    //private TreeView<String> arbre;
     Model m;
 
     public VueArbre(Model model) {
         this.m = model;
+        this.setRoot(new TreeItem<>("Aucun dossier chargé"));
     }
 
     @Override
     public void actualiser(Sujet s) {
-        if (s instanceof Model) {
+        if (s instanceof Model && this.getRoot().getChildren().isEmpty()) {
             Dossier racine = ((Model)s).getArbre();
             //si le dossier n'est pas vide
             if (racine != null) {
@@ -34,10 +34,8 @@ public class VueArbre extends TreeView<String> implements Observateur {
     private void remplirArborescence(Dossier dossier, TreeItem<String> parent) {
         for (FichierComposite fichier : dossier.files) {
             // je créé un item de l'arbre pour chaque dossier/fichier
-//            TreeItem<String> item = new TreeItem<>(fichier.getName());
             TreeItemFile tif = new TreeItemFile(fichier);
             parent.getChildren().add(tif);
-//            parent.getChildren().add(item);
 
             if (fichier instanceof Dossier) {
                 // Appel récursif pour les sous-dossiers, le sous dossier devient le parent etc...

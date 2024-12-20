@@ -37,4 +37,21 @@ public class Methode {
     public ArrayList<Parametre> getParametres() {
         return parametres;
     }
+
+    @Override
+    public String toString() {
+        String s = (getAcces() +" " + getNom());
+        s+= "(";
+        if (getParametres().size()>1){
+            //Boucle pour les paramètre
+            for (Parametre parametre : getParametres()) {
+                s+=(parametre.getType() +" "+parametre.getNom());
+                s+=",";
+            }
+            s= s.substring(0, s.length()-1);
+        }
+        s+=(")"+" : "+ getType_retour()+"\n");
+        return s;
+    }
+
 }

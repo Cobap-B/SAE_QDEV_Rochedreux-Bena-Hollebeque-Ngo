@@ -5,6 +5,6 @@ public class VueConsole implements Observateur{
 
     @Override
     public void actualiser(Sujet s){
-        System.out.println(((Model)s).getArbre().getFile());
+//        System.out.println(((Model)s).getArbre().getFile());
     }
 }

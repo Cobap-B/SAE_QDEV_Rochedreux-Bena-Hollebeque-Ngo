@@ -42,4 +42,9 @@ public class Attribut {
     public String getNombre() {
         return nombre;
     }
+
+    @Override
+    public String toString() {
+        return (getAcces() + " " + getType() + " " + getNom() + "\n");
+    }
 }
