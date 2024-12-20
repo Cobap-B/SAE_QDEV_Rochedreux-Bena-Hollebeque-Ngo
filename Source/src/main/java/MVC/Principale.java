@@ -2,9 +2,15 @@ package MVC;
 
 import Classes.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -62,35 +68,19 @@ public class Principale extends Application {
 
 
 //        //---------LEFT----------
-//        VBox conteneur_arbre = new VBox();
-//        conteneur_arbre.setPrefWidth(200);
-//
-//
-//        // Création de l'arbre
-//        TreeItem<String> item = new TreeItem<>("arbre de dossier");
-//
-//        item.getChildren().addAll(
-//                new TreeItem<>("dossier 1"),
-//                new TreeItem<>("dossier 2"),
-//                new TreeItem<>("classe 1")
-//
-//        );
-//
-//        // Ajout de l'arbre
-//        TreeView<String> arbre = new TreeView<>(item);
-//        VBox.setVgrow(arbre, Priority.ALWAYS);
-//
-//        conteneur_arbre.getChildren().add(arbre);
-//        bp.setLeft(conteneur_arbre);
         bp.setLeft(vueArbre);
-        vueArbre.setOnMouseClicked(new ControleurArbre(m));
+        vueArbre.setOnDragDetected(new ControleurArbre(m));
 
 
 
         //----------CENTER----------
         Pane diagramme_interface = new Pane();
+        ControleurDiagrammeDrag cdd = new ControleurDiagrammeDrag(m);
+        diagramme_interface.setOnDragOver(cdd);
+        diagramme_interface.setOnDragDropped(cdd);
     //    diagramme_interface.setBorder();
         bp.setCenter(diagramme_interface);
+
 
         stage.setTitle("MVC");
         stage.setScene(scene);
