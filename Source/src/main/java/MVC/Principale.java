@@ -24,6 +24,9 @@ public class Principale extends Application {
         m.enregistrerObservateur(vue);
         m.enregistrerObservateur(vueArbre);
 
+        VueLog log = new VueLog(m);
+        m.enregistrerObservateur(log);
+
 
         //---------TOP----------
         MenuBar menu = new MenuBar();
@@ -52,8 +55,8 @@ public class Principale extends Application {
 
 
         //--------BOTTOM---------
-        TextArea log = new TextArea("Log");
         log.setPrefHeight(100);
+        log.setEditable(false);
         bp.setBottom(log);
         //
 
