@@ -44,7 +44,8 @@ public class Model implements Sujet{
     public void ajoutMethode(ClasseComplete c, Methode m){
         //Rien
     }
-    public void ajouter_Classe_D(ClasseComplete c){
+    public void ajouter_Classe_D(ClasseComplete c, double x, double y){
+        c.setCo(x, y);
         diagramme.add(c);
         logs.add("Ajout de la classe " + c.getNom());
         notifierObservateurs();
@@ -127,6 +128,9 @@ public class Model implements Sujet{
 
     public ArrayList<String> getLogs() {
         return logs;
+    }
+    public ArrayList<ClasseComplete> getDiagramme() {
+        return diagramme;
     }
 
     /**

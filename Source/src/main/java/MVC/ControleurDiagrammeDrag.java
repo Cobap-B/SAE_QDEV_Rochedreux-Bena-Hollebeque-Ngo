@@ -27,7 +27,7 @@ public class ControleurDiagrammeDrag implements EventHandler<DragEvent> {
             boolean success = false;
             if (db.hasString()) {
                 Classe c = new Classe(db.getString());
-                model.ajouter_Classe_D(c.getClasseComplete());
+                model.ajouter_Classe_D(c.getClasseComplete(), event.getX(), event.getY());
                 success = true;
             }
             /* let the source know whether the string was successfully

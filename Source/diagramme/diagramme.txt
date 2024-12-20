@@ -1,51 +1,20 @@
 @startuml 
-class Smiley{
-}
-Smiley --|> Accesoire
-class ReneLaTaupe{
-}
-ReneLaTaupe --|> Dessinable
 class MyImage{
 + display() : void
-+ textOver(String arg0,int arg1,int arg2) : void
-+ paintOver(String arg0,int arg1,int arg2) : void
 + paintComponent() : void
++ paintOver(String arg0,int arg1,int arg2) : void
++ textOver(String arg0,int arg1,int arg2) : void
 }
 MyImage"1" --> "1"BufferedImage : image
 MyImage"1" --> "1"Dimension : size
 MyImage --|> JPanel
-class Main{
-+ main() : void
+class ReneLaTaupe{
 }
-class Lunette{
-}
-Lunette --|> Accesoire
+ReneLaTaupe --|> Dessinable
 class Dessinable{
 # String nomIm
 # double prix
-+ getLogo() : MyImage
 + combienCaCoute() : double
-}
-class CrazyFrog{
-}
-CrazyFrog --|> Dessinable
-class Chapeau{
-}
-Chapeau --|> Accesoire
-class Candy{
-}
-Candy --|> Accesoire
-class AccesoireTexte{
 + getLogo() : MyImage
-+ combienCaCoute() : double
 }
-AccesoireTexte --|> Accesoire
-class Accesoire{
-# int x
-# int y
-+ getLogo() : MyImage
-+ combienCaCoute() : double
-}
-Accesoire"1" --> "1"Dessinable : dessinable
-Accesoire --|> Dessinable
 @enduml 

@@ -6,6 +6,8 @@ public class ClasseComplete {
     private String nom;
     private String type;
 
+    private double X, Y;
+
     private ArrayList<Attribut> attributs;
     private ArrayList<Methode> methodes;
     private ArrayList<Dependance> dependances;
@@ -30,24 +32,12 @@ public class ClasseComplete {
 
         attributs.forEach(attribut -> {
             if (TypePrimitif(attribut.getType())) {
-                resultat.append(attribut.getAcces() + " " + attribut.getType() + " " + attribut.getNom() + "\n");
+                resultat.append(attribut.toString());
             }
         });
 
-        methodes.forEach(methode -> {
-            resultat.append(methode.getAcces() +" " + methode.getNom());
-            resultat.append("(");
-            if (methode.getParametres().size()>1){
-                //Boucle pour les paramètre
-                methode.getParametres().forEach(parametre ->{
-                    resultat.append(parametre.getType() +" "+parametre.getNom());
-                    resultat.append(",");
-                });
-                //Retire la dernière virgule
-                resultat.delete(resultat.length()-1, resultat.length());
-            }
-            resultat.append(")"+" : "+ methode.getType_retour()+"\n");
-        });
+        resultat.append(getTextMethode());
+
 
         resultat.append("}\n");
 
@@ -87,6 +77,23 @@ public class ClasseComplete {
     }
 
 
+    public String getTextAttribut(){
+        String s = "";
+        for (Attribut attribut : attributs) {
+            s += (attribut.toString());
+        }
+        return s;
+    }
+
+    public String getTextMethode(){
+        String s = "";
+        for (Methode m : methodes) {
+            s += (m.toString());
+        }
+        return s;
+    }
+
+
     public String getNom() {
         return nom;
     }
@@ -105,5 +112,18 @@ public class ClasseComplete {
 
     public ArrayList<Dependance> getDependances() {
         return dependances;
+    }
+
+    public double getX() {
+        return X;
+    }
+
+    public double getY() {
+        return Y;
+    }
+
+    public void setCo(double x, double y){
+        X = x;
+        Y = y;
     }
 }

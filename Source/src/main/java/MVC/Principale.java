@@ -75,11 +75,13 @@ public class Principale extends Application {
 
 
         //----------CENTER----------
-        Pane diagramme_interface = new Pane();
+        VueDiagramme diagramme_interface = new VueDiagramme(m);
         ControleurDiagrammeDrag cdd = new ControleurDiagrammeDrag(m);
         diagramme_interface.setOnDragOver(cdd);
         diagramme_interface.setOnDragDropped(cdd);
     //    diagramme_interface.setBorder();
+        m.enregistrerObservateur(diagramme_interface);
+
         bp.setCenter(diagramme_interface);
 
 
