@@ -48,8 +48,14 @@ public class Model implements Sujet{
         diagramme.add(c);
         logs.add("Ajout de la classe " + c.getNom());
         notifierObservateurs();
-
     }
+
+    public void effacer_D(){
+        if(!diagramme.isEmpty()){diagramme = new ArrayList<>();}
+        logs.add("Diagramme effacé");
+        notifierObservateurs();
+    }
+
     public void ajouter_Log(String s){
         logs.add(s);
     }

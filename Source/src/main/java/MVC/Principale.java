@@ -49,15 +49,16 @@ public class Principale extends Application {
         exporterPNG.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
         fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG);
 
-
-//        Button effacer = new Button("Effacer Diagramme");
-//        Button retour = new Button("Retour arrière (Ctrl+Z)");
-//        Button creer = new Button("Créer nouvelle classe");
+        ControleurOption option = new ControleurOption(m);
+        Button effacer = new Button("Effacer Diagramme");
+        effacer.setOnAction(option);
+        Button retour = new Button("Retour arrière (Ctrl+Z)");
+        Button creer = new Button("Créer nouvelle classe");
 
         menu.getMenus().addAll(fichier);
-//        toolbar.getItems().addAll(effacer,retour,creer);
-        bp.setTop(menu);
-//        bp.setTop(toolbar);
+        toolbar.getItems().addAll(menu, effacer,retour,creer);
+//        bp.setTop(menu);
+        bp.setTop(toolbar);
 
 
         //--------BOTTOM---------
