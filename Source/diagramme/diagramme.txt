@@ -1,20 +1,2 @@
 @startuml 
-class MyImage{
-+ display() : void
-+ paintComponent() : void
-+ paintOver(String arg0,int arg1,int arg2) : void
-+ textOver(String arg0,int arg1,int arg2) : void
-}
-MyImage"1" --> "1"BufferedImage : image
-MyImage"1" --> "1"Dimension : size
-MyImage --|> JPanel
-class ReneLaTaupe{
-}
-ReneLaTaupe --|> Dessinable
-class Dessinable{
-# String nomIm
-# double prix
-+ combienCaCoute() : double
-+ getLogo() : MyImage
-}
 @enduml 

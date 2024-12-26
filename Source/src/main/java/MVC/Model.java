@@ -45,10 +45,15 @@ public class Model implements Sujet{
         //Rien
     }
     public void ajouter_Classe_D(ClasseComplete c, double x, double y){
-        c.setCo(x, y);
-        diagramme.add(c);
-        logs.add("Ajout de la classe " + c.getNom());
+        if (!diagramme.contains(c)){
+            c.setCo(x, y);
+            diagramme.add(c);
+            logs.add("Ajout de la classe " + c.getNom());
+        }else{
+            logs.add("Déjà dans le diagramme " + c.getNom());
+        }
         notifierObservateurs();
+
     }
 
     public void effacer_D(){

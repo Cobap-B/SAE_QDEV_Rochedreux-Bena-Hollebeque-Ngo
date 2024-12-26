@@ -126,4 +126,11 @@ public class ClasseComplete {
         X = x;
         Y = y;
     }
+
+    //Verifie si la classe est déjà dans le diagramme
+    @Override
+    public boolean equals(Object obj) {
+        ClasseComplete c = (ClasseComplete) obj;
+        return nom.equals(c.nom);
+    }
 }
