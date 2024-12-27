@@ -16,5 +16,6 @@ public class VueLog extends TextArea implements Observateur{
         for (String log : m.getLogs()) {
             this.setText(this.getText()+log+"\n");
         }
+        this.setScrollTop(Double.MAX_VALUE);
     }
 }
