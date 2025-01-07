@@ -84,6 +84,10 @@ public class Principale extends Application {
 
         bp.setCenter(diagramme_interface);
 
+        ControleurBoutonDroit boutondroit = new ControleurBoutonDroit(m);
+        diagramme_interface.setOnMouseClicked(boutondroit);
+
+
 
         stage.setTitle("MVC");
         stage.setScene(scene);

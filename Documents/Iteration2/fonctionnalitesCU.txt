@@ -2,9 +2,9 @@ Membre	            Tâches principales
 
 Tout le monde	    Partie conception
 
-HUGOB	            Création de la VueArbre pour afficher l'arbre dans l'interface + gérer dépendances attributs + classe de test introspection
+HUGOB	            Création de la VueArbre pour afficher l'arbre dans l'interface + gérer dépendances attributs + finalisation de la classe de test introspection
 
-Arthur	            Exportation en source PlantUML, ellaboration du drag&drop des classes dans l'interfaces + controleurs associés
+Arthur	            Exportation en source PlantUML, ellaboration du drag&drop des classes dans l'interface + controleurs associés
 
 Kevin	            Developpement des boutons d'exportations + controleurs associés
 

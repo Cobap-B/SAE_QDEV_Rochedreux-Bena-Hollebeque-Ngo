@@ -1,1 +1,11 @@
-Il faut décrire les fonctionnalités et les cas d’utilisations développés ;
+Membre	            Tâches principales
+
+Tout le monde	    Partie conception
+
+HUGOB	            Vue Log + controleur clic droit
+
+Arthur	            effacer diagramme + finalisation du drag and drop
+
+Kevin               bouton
+
+HugoR
