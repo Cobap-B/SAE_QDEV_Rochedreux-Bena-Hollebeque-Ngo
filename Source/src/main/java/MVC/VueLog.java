@@ -12,6 +12,10 @@ public class VueLog extends TextArea implements Observateur{
 
     @Override
     public void actualiser(Sujet s) {
-        this.setText(this.getText() + m.getLogs().getLast() + "\n");
+        this.clear();
+        for (String log : m.getLogs()) {
+            this.setText(this.getText()+log+"\n");
+        }
+        this.setScrollTop(Double.MAX_VALUE);
     }
 }

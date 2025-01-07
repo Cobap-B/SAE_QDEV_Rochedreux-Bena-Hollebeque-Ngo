@@ -125,5 +125,14 @@ public class ClasseComplete {
     public void setCo(double x, double y){
         X = x;
         Y = y;
+        if (X < 0) X = 0;
+        if (Y < 0) Y = 0;
+    }
+
+    //Verifie si la classe est déjà dans le diagramme
+    @Override
+    public boolean equals(Object obj) {
+        ClasseComplete c = (ClasseComplete) obj;
+        return nom.equals(c.nom);
     }
 }

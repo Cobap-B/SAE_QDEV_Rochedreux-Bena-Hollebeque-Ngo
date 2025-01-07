@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 
 public class VueDiagramme extends Pane implements Observateur{
 
+
     public VueDiagramme(Model m){};
     @Override
     public void actualiser(Sujet s) {
@@ -13,6 +14,13 @@ public class VueDiagramme extends Pane implements Observateur{
         for (ClasseComplete classeComplete : m.getDiagramme()) {
             VueClasse vue = new VueClasse(classeComplete);
             vue.relocate(classeComplete.getX(), classeComplete.getY());
+            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(m, classeComplete, vue);
+
+            vue.setOnMousePressed(controleurClasseDrag);
+            vue.setOnMouseReleased(controleurClasseDrag);
+            vue.setOnMouseDragged(controleurClasseDrag);
+
+
             this.getChildren().add(vue);
         }
     }
