@@ -78,7 +78,7 @@ public class Principale extends Application {
         VueDiagramme diagramme_interface = new VueDiagramme(m);
         ControleurDiagrammeDrag cdd = new ControleurDiagrammeDrag(m);
 
-        ControleurBoutonDroit cbd = new ControleurBoutonDroit(m, bp);
+        ControleurBoutonDroit cbd = new ControleurBoutonDroit(m);
 
         diagramme_interface.setOnDragOver(cdd);
         diagramme_interface.setOnDragDropped(cdd);
