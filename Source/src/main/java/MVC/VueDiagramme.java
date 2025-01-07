@@ -15,7 +15,7 @@ public class VueDiagramme extends Pane implements Observateur{
             vue.relocate(classeComplete.getX(), classeComplete.getY());
             this.getChildren().add(vue);
 
-            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(m, classeComplete, vue);
+            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(m, classeComplete);
 
             vue.setOnMousePressed(controleurClasseDrag);
             vue.setOnMouseReleased(controleurClasseDrag);
