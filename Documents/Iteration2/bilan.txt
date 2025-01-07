@@ -1,5 +1,5 @@
 
-- Conception associé aux fonctionnalitées (1 diagramme de séquence, 1 diagramme de classe
+- Conception associé aux fonctionnalitées (1 diagramme de séquence, 1 diagramme de classe)
 
 - Vue arbre finalisée qui permet l'affichage de l'arborescence dans l'application
 
@@ -7,7 +7,7 @@
 
 - Exportation au format PlantUML ET PNG
 
-- Ouvrir un dossier depuis un autre package depuis n'importe quel endroit du pc
+- Ouvrir un dossier depuis un autre package à n'importe quel endroit du pc
 
 - classes de tests pour valider les fonctionnalités
 

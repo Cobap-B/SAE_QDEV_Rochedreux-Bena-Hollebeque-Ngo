@@ -6,6 +6,6 @@ HUGOB	            Vue Log + controleur clic droit
 
 Arthur	            effacer diagramme + finalisation du drag and drop
 
-Kevin               bouton
+Kevin               bouton clic droit + diagramme de classe
 
-HugoR
+HugoR               drag des classes + affichages des classes sur le diagramme
