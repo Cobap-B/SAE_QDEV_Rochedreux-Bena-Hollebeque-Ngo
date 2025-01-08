@@ -15,6 +15,7 @@ import static javafx.geometry.Pos.CENTER;
 
 public class VueClasse extends VBox implements Observateur{
 
+
     private ClasseComplete classeComplete;
 
     public ClasseComplete getClasseComplete() {
@@ -54,4 +55,6 @@ public class VueClasse extends VBox implements Observateur{
     public void actualiser(Sujet s) {
 
     }
+
+
 }

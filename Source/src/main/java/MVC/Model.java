@@ -44,7 +44,7 @@ public class Model implements Sujet{
     }
     public void ajouter_Classe_D(ClasseComplete c, double x, double y){
         if (!diagramme.contains(c)){
-            c.setCo(x, y);
+            c.setCo(x, y, 10000, 10000);
             diagramme.add(c);
             logs.add("Ajout de la classe " + c.getNom());
         }else{
@@ -121,8 +121,20 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    public ArrayList<ClasseComplete> getDependances(ClasseComplete c){
+        ArrayList<ClasseComplete> dep = new ArrayList<>();
+
+        for (Dependance dependance : c.getDependances()) {
+            for (ClasseComplete classeComplete : diagramme) {
+                if (dependance.getDepend().equals(classeComplete.getNom())){
+                    dep.add(classeComplete);
+                }
+            }
+        }
 
 
+        return dep;
+    }
 
     public Dossier getArbre(){
         return this.arbre;
