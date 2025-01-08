@@ -63,7 +63,7 @@ public class Introspection {
         if(c.isInterface()){
             return "interface";
         }
-        if(c.getModifiers() == Modifier.ABSTRACT){
+        if(Modifier.isAbstract(c.getModifiers())){
             return "abstract";
         }
         return "class";
