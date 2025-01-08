@@ -14,6 +14,11 @@ import javafx.scene.text.TextAlignment;
 public class VueClasse extends VBox implements Observateur{
 
     private ClasseComplete classeComplete;
+
+    public ClasseComplete getClasseComplete() {
+        return classeComplete;
+    }
+
     public VueClasse(ClasseComplete c){
         classeComplete = c;
         Text label = new Text(classeComplete.getNom());

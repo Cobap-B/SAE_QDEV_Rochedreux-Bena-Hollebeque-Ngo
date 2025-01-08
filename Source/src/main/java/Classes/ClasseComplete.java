@@ -80,7 +80,9 @@ public class ClasseComplete {
     public String getTextAttribut(){
         String s = "";
         for (Attribut attribut : attributs) {
-            s += (attribut.toString());
+            if(attribut.isVisibilite()) {
+                s += (attribut.toString());
+            }
         }
         return s;
     }
@@ -88,7 +90,9 @@ public class ClasseComplete {
     public String getTextMethode(){
         String s = "";
         for (Methode m : methodes) {
-            s += (m.toString());
+            if(m.isVisibilite()) {
+                s += (m.toString());
+            }
         }
         return s;
     }
@@ -113,6 +117,42 @@ public class ClasseComplete {
     public ArrayList<Dependance> getDependances() {
         return dependances;
     }
+
+    public void setVisible_Attributs(boolean b){
+        for(Attribut attribut : attributs) {
+            attribut.setVisibilite(b);
+
+        }
+    }
+
+    public void setVisible_Methodes(boolean b){
+        for(Methode methode : methodes) {
+            methode.setVisibilite(b);
+
+        }
+    }
+
+    public boolean isVisible_Attributs() {
+        for (Attribut attribut : attributs) {
+            if (attribut.isVisibilite()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isVisible_Methodes() {
+        for (Methode methode : methodes) {
+            if (methode.isVisibilite()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
 
     public double getX() {
         return X;

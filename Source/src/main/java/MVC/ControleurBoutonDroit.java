@@ -1,5 +1,6 @@
 package MVC;
 
+import Classes.ClasseComplete;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckMenuItem;
@@ -7,57 +8,75 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
-//Quand on clic sur le Pane de l'interface avec un clic droit, un menu textuel s'ffiche
 public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
     private ContextMenu contextMenu;
 
-
     public ControleurBoutonDroit(Model model) {
-        this.contextMenu = new ContextMenu(); // Initialise ici
+        this.contextMenu = new ContextMenu();
 
-        //--------menu pour les attributs---------
+        // --------menu pour les attributs---------
+
+        //afficher les attributs
         Menu attributs = new Menu("Attributs");
         CheckMenuItem afficherAttributs = new CheckMenuItem("Afficher les Attributs");
-        afficherAttributs.setSelected(true);
 
-        //
-        // ACTION
-        //
-        //
+        afficherAttributs.setOnAction(e -> {
+            if (contextMenu.getOwnerNode() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
 
+                classeComplete.setVisible_Attributs(afficherAttributs.isSelected());
+                model.notifierObservateurs();
+            }
+        });
 
+        //ajouter un attribut
         MenuItem ajouterAttribut = new MenuItem("Ajouter un Attribut");
+
+        //ACTION a implémenter
+        //
         ajouterAttribut.setOnAction(e -> System.out.println("Ajouter un Attribut"));
+        //
+        //
 
         attributs.getItems().addAll(afficherAttributs, ajouterAttribut);
 
-        //--------menu pour les méthodes---------
+
+
+        // --------menu pour les méthodes---------
+
+        //afficher les méthodes
         Menu methodes = new Menu("Méthodes");
         CheckMenuItem afficherMethodes = new CheckMenuItem("Afficher les Méthodes");
-        afficherMethodes.setSelected(true);
 
-        //
-        // ACTION
-        //
-        //
+        afficherMethodes.setOnAction(e -> {
+            if (contextMenu.getOwnerNode() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
 
+                classeComplete.setVisible_Methodes(afficherMethodes.isSelected());
+                model.notifierObservateurs();
+            }
+        });
+
+        //Ajouter une méthode
         MenuItem ajouterMethodes = new MenuItem("Ajouter une Méthode");
-        ajouterMethodes.setOnAction(e -> System.out.println("Ajouter une Méthode"));
+
+        //ACTION a implémenter
+        //
+        ajouterAttribut.setOnAction(e -> System.out.println("Ajouter une méthode"));
+        //
+        //
 
         methodes.getItems().addAll(afficherMethodes, ajouterMethodes);
 
-        //--------menu pour les dépendances---------
+
+
+        // --------menu pour les dépendances---------
         Menu dependances = new Menu("Dépendances");
         CheckMenuItem afficherDependances = new CheckMenuItem("Afficher les Dépendances");
         afficherDependances.setSelected(true);
-
-        //
-        // ACTION
-        //
-        //
 
         dependances.getItems().add(afficherDependances);
 
@@ -65,18 +84,27 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
         contextMenu.getItems().addAll(attributs, methodes, dependances);
     }
 
-
     @Override
     public void handle(MouseEvent mouseEvent) {
         if (mouseEvent.getButton().name().equals("SECONDARY")) {
-            if(mouseEvent.getSource().getClass().equals(VueClasse.class))
+            if (mouseEvent.getSource() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) mouseEvent.getSource();
+
+                // Mise à jour de l'état de "Afficher les Attributs"
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
+                CheckMenuItem afficherAttributs = (CheckMenuItem) ((Menu) contextMenu.getItems().get(0)).getItems().get(0);
+                afficherAttributs.setSelected(classeComplete.isVisible_Attributs());
+
+                // Mise à jour de l'état de "Afficher les Méthodes"
+                CheckMenuItem afficherMethodes = (CheckMenuItem) ((Menu) contextMenu.getItems().get(1)).getItems().get(0);
+                afficherMethodes.setSelected(classeComplete.isVisible_Methodes());
+
                 contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
+            }
         }
 
         if (mouseEvent.getButton().name().equals("PRIMARY")) {
             contextMenu.hide();
         }
-
     }
-
 }

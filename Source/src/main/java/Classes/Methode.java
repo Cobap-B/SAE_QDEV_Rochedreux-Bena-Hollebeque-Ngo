@@ -30,12 +30,17 @@ public class Methode {
         return type_retour;
     }
 
+
     public boolean isVisibilite() {
         return visibilite;
     }
 
     public ArrayList<Parametre> getParametres() {
         return parametres;
+    }
+
+    public void setVisibilite(boolean visibilite) {
+        this.visibilite = visibilite;
     }
 
     @Override

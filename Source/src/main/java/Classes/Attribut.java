@@ -27,6 +27,26 @@ public class Attribut {
         return nom;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setAcces(String acces) {
+        this.acces = acces;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setVisibilite(boolean visibilite) {
+        this.visibilite = visibilite;
+    }
+
     public String getType() {
         return type;
     }
