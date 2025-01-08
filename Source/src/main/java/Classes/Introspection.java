@@ -112,16 +112,18 @@ public class Introspection {
             if (returnType instanceof ParameterizedType) {
                 //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
                 ParameterizedType parameterizedType = (ParameterizedType) returnType;
-                StringBuilder typeString = new StringBuilder(typeRetour + "<");
+                String typeString = typeRetour + "<";
                 Type[] typeArguments = parameterizedType.getActualTypeArguments();
                 //Ici on obtient la liste de ses attributs tout simplement
-                for (Type typeArgument : typeArguments) {
-                    String typeName = typeArgument.getTypeName();
-                    typeString.append(typeName.substring(typeName.lastIndexOf('.') + 1)).append(", ");
+                for (int i = 0; i < typeArguments.length ; i++) {
+                    String typeName = typeArguments[i].getTypeName();
+                    typeString += typeName.substring(typeName.lastIndexOf('.') + 1);
+                    if (i < typeArguments.length - 1) {
+                        typeString += ", ";
+                    }
                 }
-                typeString.setLength(typeString.length() - 2);
-                typeString.append(">");
-                typeRetour = typeString.toString();
+                typeString += ">";
+                typeRetour = typeString;
             }
             //On creer notre attribut avec un * car c'est une collection
             Methode mtd = new Methode(m.getName(), ac, typeRetour, param);
