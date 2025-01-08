@@ -121,8 +121,20 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    public ArrayList<ClasseComplete> getDependances(ClasseComplete c){
+        ArrayList<ClasseComplete> dep = new ArrayList<>();
+
+        for (Dependance dependance : c.getDependances()) {
+            for (ClasseComplete classeComplete : diagramme) {
+                if (dependance.getDepend().equals(classeComplete.getNom())){
+                    dep.add(classeComplete);
+                }
+            }
+        }
 
 
+        return dep;
+    }
 
     public Dossier getArbre(){
         return this.arbre;
