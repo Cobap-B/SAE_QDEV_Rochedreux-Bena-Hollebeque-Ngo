@@ -162,11 +162,13 @@ public class ClasseComplete {
         return Y;
     }
 
-    public void setCo(double x, double y){
+    public void setCo(double x, double y, double mx, double my) {
         X = x;
         Y = y;
         if (X < 0) X = 0;
         if (Y < 0) Y = 0;
+        if (X > mx) X = mx;
+        if (Y > my) Y = my;
     }
 
     //Verifie si la classe est déjà dans le diagramme
