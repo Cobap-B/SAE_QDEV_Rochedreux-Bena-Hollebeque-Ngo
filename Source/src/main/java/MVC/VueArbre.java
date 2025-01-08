@@ -8,14 +8,21 @@ import javafx.scene.layout.VBox;
 
 public class VueArbre extends TreeView<String> implements Observateur {
     Model m;
+    String nomArbre;
 
     public VueArbre(Model model) {
         this.m = model;
         this.setRoot(new TreeItem<>("Aucun dossier chargé"));
+        this.nomArbre = "";
     }
 
     @Override
     public void actualiser(Sujet s) {
+        if(m.getArbre() != null){
+            if(!this.nomArbre.equals(((Model)s).getArbre().getName())){
+                this.getRoot().getChildren().clear();
+            }
+        }
         if (s instanceof Model && this.getRoot().getChildren().isEmpty()) {
             Dossier racine = ((Model)s).getArbre();
             //si le dossier n'est pas vide
@@ -24,6 +31,7 @@ public class VueArbre extends TreeView<String> implements Observateur {
                 TreeItem<String> racineItem = new TreeItem<>(racine.getName());
                 remplirArborescence(racine, racineItem);
                 this.setRoot(racineItem);
+                this.nomArbre = racine.getName();
             } else {
                 //aucun fichier
                 this.setRoot(new TreeItem<>("Aucun dossier chargé"));
