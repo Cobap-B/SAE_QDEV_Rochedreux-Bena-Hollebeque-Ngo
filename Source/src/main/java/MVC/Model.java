@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.WritableImage;
 import net.sourceforge.plantuml.GeneratedImage;
@@ -136,15 +137,15 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
-    public ArrayList<ClasseComplete> getDependances(ClasseComplete c){
-        ArrayList<ClasseComplete> dep = new ArrayList<>();
+    public ArrayList<DependanceFleche> getDependances(ClasseComplete c){
+        ArrayList<DependanceFleche> dep = new ArrayList<>();
 
         //Ajout des dependance de base Heritage et Implementation
         for (Dependance dependance : c.getDependances()) {
             if (dependance.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
                     if (dependance.getDepend().equals(classeComplete.getNom())){
-                        dep.add(classeComplete);
+                        dep.add(new DependanceFleche(classeComplete, dependance.getType()));
                     }
                 }
             }
@@ -154,12 +155,11 @@ public class Model implements Sujet{
             if (att.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
                     if (att.getType().equals(classeComplete.getNom())){
-                        dep.add(classeComplete);
+                        dep.add(new DependanceFleche(classeComplete, "Base"));
                     }
                 }
             }
         }
-
 
         return dep;
     }

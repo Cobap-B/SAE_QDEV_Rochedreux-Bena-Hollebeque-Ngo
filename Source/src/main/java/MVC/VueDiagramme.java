@@ -2,6 +2,8 @@ package MVC;
 
 import Classes.ClasseComplete;
 import Classes.Dependance;
+import Classes.DependanceFleche;
+import Classes.Fleche;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
@@ -44,11 +46,11 @@ public class VueDiagramme extends Pane implements Observateur{
         gc.setLineWidth(1);
 
 
-
+        ArrayList<Fleche> fleches = new ArrayList<>();
         for (ClasseComplete classeComplete : model.getDiagramme()) {
 
-            ArrayList<ClasseComplete> dependances = model.getDependances(classeComplete);
-            createFleches(classeComplete,dependances, gc);
+            ArrayList<DependanceFleche> dependances = model.getDependances(classeComplete);
+            fleches.addAll(createFleches(classeComplete,dependances, gc));
 
             VueClasse vue = new VueClasse(classeComplete);
             vue.relocate(classeComplete.getX(), classeComplete.getY());
@@ -60,7 +62,6 @@ public class VueDiagramme extends Pane implements Observateur{
                 classeComplete.setTailleY(newBounds.getHeight());
             });
 
-
             ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(model, classeComplete, this);
 
             vue.setOnMousePressed(controleurClasseDrag);
@@ -69,12 +70,39 @@ public class VueDiagramme extends Pane implements Observateur{
 
             vue.setOnMouseClicked(new ControleurBoutonDroit(model));
         }
+        for (Fleche flech1 : fleches) {
+            for (Fleche flech2 : fleches) {
+                if (flech1.getDepartX() >= flech2.getDepartX()-2 && flech1.getDepartX() <= flech2.getDepartX()+2 &&
+                        flech1.getDepartY() >= flech2.getDepartY()-2 && flech1.getDepartY() <= flech2.getDepartY()+2){
+                    flech1.setDepartX(10);
+                    flech1.setDepartY(10);
+                    flech2.setDepartX(-10);
+                    flech2.setDepartY(-10);
+                }
+                if (flech1.getFinX() >= flech2.getFinX()-2 && flech1.getFinX() <= flech2.getFinX()+2 &&
+                        flech1.getFinY() >= flech2.getFinY()-2 && flech1.getFinY() <= flech2.getFinY()+2){
+                    flech1.setFinX(10);
+                    flech1.setFinY(10);
+                    flech2.setFinX(-10);
+                    flech2.setFinY(-10);
+                }
+                if (flech1.getFinX() >= flech2.getDepartX()-2 && flech1.getFinX() <= flech2.getDepartX()+2 &&
+                        flech1.getFinY() >= flech2.getDepartY()-2 && flech1.getFinY() <= flech2.getDepartY()+2){
+                    flech1.setFinX(15);
+                    flech1.setFinY(15);
+                    flech2.setDepartX(-15);
+                    flech2.setDepartY(-15);
+                }
+            }
+            flech1.draw(gc);
+        }
     }
 
-    public void createFleches(ClasseComplete c, ArrayList<ClasseComplete> dep, GraphicsContext gc){
+    public ArrayList<Fleche> createFleches(ClasseComplete c, ArrayList<DependanceFleche> dep, GraphicsContext gc){
+        ArrayList<Fleche> fleches = new ArrayList<>();
 
-        for (ClasseComplete classeComplete : dep) {
-
+        for (DependanceFleche dependanceFleche : dep) {
+            ClasseComplete classeComplete = dependanceFleche.getClasseComplete();
             double c1x = c.getX()+(c.getTailleX()/2);
             double c1y = c.getY()+(c.getTailleY()/2);
 
@@ -91,107 +119,16 @@ public class VueDiagramme extends Pane implements Observateur{
             //Angle de c à classComplete au niveau de 0
             double angle = Math.atan2(dify,difx);
 
-            c2x = c1x + distance * Math.cos(angle);
-            c2y = c1y + distance * Math.sin(angle);
 
-            while (c2x>classeComplete.getX() && c2x<classeComplete.getX()+classeComplete.getTailleX() &&
-                    c2y>classeComplete.getY() && c2y<classeComplete.getY()+classeComplete.getTailleY()){
-                distance-=1;
-                c2x = c1x + distance * Math.cos(angle);
-                c2y = c1y + distance * Math.sin(angle);
-            }
-
-
-            //Obtenir le type la dependance
-            String type = "Base";
-            for (Dependance dependance : c.getDependances()) {
-                if (dependance.getDepend().equals(classeComplete.getNom())){
-                    type = dependance.getType();
-                }
-            }
-            switch (type) {
-                case "Extend":
-                    drawHeritage(gc, angle, distance, c1x, c1y, c2x, c2y, 10);
-                    break;
-                case "Implement":
-                    drawInterface(gc, angle, distance, c1x, c1y, c2x, c2y, 10);
-                    break;
-                case "Base":
-                    drawFleche(gc, angle, c1x, c1y, c2x, c2y, 10);
-                    break;
-            }
+            fleches.add(new Fleche(dependanceFleche.getString(), c1x, c1y, c2x, c2y,distance, angle, classeComplete));
 
 
         }
 
+        return fleches;
+
     }
 
-    private void drawHeritage(GraphicsContext gc, double angle, double distance, double startX, double startY, double endX, double endY, double size) {
 
-        gc.strokeLine(startX, startY, startX + (distance-10) * Math.cos(angle),startY + (distance-10) * Math.sin(angle));
-
-
-        // Position de la pointe (sommet avant)
-        double tipX = endX;
-        double tipY = endY;
-
-        // Positions des sommets arrière (base du triangle)
-        double baseLeftX = endX - size * Math.cos(angle) - (size / 2) * Math.sin(angle);
-        double baseLeftY = endY - size * Math.sin(angle) + (size / 2) * Math.cos(angle);
-
-        double baseRightX = endX - size * Math.cos(angle) + (size / 2) * Math.sin(angle);
-        double baseRightY = endY - size * Math.sin(angle) - (size / 2) * Math.cos(angle);
-
-        gc.strokePolygon(
-                new double[]{tipX, baseLeftX, baseRightX},
-                new double[]{tipY, baseLeftY, baseRightY},
-                3
-        );
-    }
-
-    private void drawInterface(GraphicsContext gc, double angle, double distance, double startX, double startY, double endX, double endY, double size) {
-
-        gc.setLineDashes(10, 5);
-        gc.strokeLine(startX, startY, startX + (distance-10) * Math.cos(angle),startY + (distance-10) * Math.sin(angle));
-        gc.setLineDashes(null);
-        // Position de la pointe (sommet avant)
-        double tipX = endX;
-        double tipY = endY;
-
-        // Positions des sommets arrière (base du triangle)
-        double baseLeftX = endX - size * Math.cos(angle) - (size / 2) * Math.sin(angle);
-        double baseLeftY = endY - size * Math.sin(angle) + (size / 2) * Math.cos(angle);
-
-        double baseRightX = endX - size * Math.cos(angle) + (size / 2) * Math.sin(angle);
-        double baseRightY = endY - size * Math.sin(angle) - (size / 2) * Math.cos(angle);
-
-        gc.strokePolygon(
-                new double[]{tipX, baseLeftX, baseRightX},
-                new double[]{tipY, baseLeftY, baseRightY},
-                3
-        );
-    }
-
-    private void drawFleche(GraphicsContext gc, double angle, double startX, double startY, double endX, double endY, double size) {
-
-        gc.strokeLine(startX, startY, endX, endY);
-
-        // Position de la pointe (sommet avant)
-        double tipX = endX;
-        double tipY = endY;
-
-        double leftX = endX - size * Math.cos(angle - Math.PI / 6); // Angle ajusté pour la "branche" gauche
-        double leftY = endY - size * Math.sin(angle - Math.PI / 6);
-
-        double rightX = endX - size * Math.cos(angle + Math.PI / 6); // Angle ajusté pour la "branche" droite
-        double rightY = endY - size * Math.sin(angle + Math.PI / 6);
-
-
-        gc.strokeLine(startX, startY, endX, endY);
-
-        // Dessiner les deux côtés de la flèche
-        gc.strokeLine(tipX, tipY, leftX, leftY); // Branche gauche
-        gc.strokeLine(tipX, tipY, rightX, rightY); // Branche droite
-    }
 
 }
