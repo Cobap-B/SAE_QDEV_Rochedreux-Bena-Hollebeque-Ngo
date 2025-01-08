@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 public class ControleurClasseDrag implements EventHandler<MouseEvent> {
     private Model model;
     private ClasseComplete classeComplete;
-    private VueClasse vueClasse;
+    //private VueClasse vueClasse;
     private VueDiagramme vd;
 
     //double startx, starty;

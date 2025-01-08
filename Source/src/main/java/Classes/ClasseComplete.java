@@ -7,6 +7,7 @@ public class ClasseComplete {
     private String type;
 
     private double X, Y;
+    private double tailleX, tailleY;
 
     private ArrayList<Attribut> attributs;
     private ArrayList<Methode> methodes;
@@ -169,6 +170,22 @@ public class ClasseComplete {
         if (Y < 0) Y = 0;
         if (X > mx) X = mx;
         if (Y > my) Y = my;
+    }
+
+    public double getTailleX() {
+        return tailleX;
+    }
+
+    public void setTailleX(double tailleX) {
+        this.tailleX = tailleX;
+    }
+
+    public double getTailleY() {
+        return tailleY;
+    }
+
+    public void setTailleY(double tailleY) {
+        this.tailleY = tailleY;
     }
 
     //Verifie si la classe est déjà dans le diagramme
