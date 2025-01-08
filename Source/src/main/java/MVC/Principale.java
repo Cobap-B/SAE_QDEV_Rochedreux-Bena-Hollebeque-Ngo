@@ -14,6 +14,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Principale extends Application {
     @Override
@@ -33,6 +34,7 @@ public class Principale extends Application {
 
         VueLog log = new VueLog(m);
         m.enregistrerObservateur(log);
+
 
 
         //---------TOP----------
@@ -90,6 +92,22 @@ public class Principale extends Application {
 
         ControleurBoutonDroit boutondroit = new ControleurBoutonDroit(m);
         diagramme_interface.setOnMouseClicked(boutondroit);
+
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            ArrayList<ClasseComplete> classes = m.getDiagramme();
+            for (ClasseComplete c : classes) {
+                c.setCo(c.getX(), c.getY(), diagramme_interface.getWidth() - c.getTailleX(), diagramme_interface.getHeight() - c.getTailleY());
+            }
+            m.notifierObservateurs();
+        });
+
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            ArrayList<ClasseComplete> classes = m.getDiagramme();
+            for (ClasseComplete c : classes) {
+                c.setCo(c.getX(), c.getY(), diagramme_interface.getWidth() - c.getTailleX(), diagramme_interface.getHeight() - c.getTailleY());
+            }
+            m.notifierObservateurs();
+        });
 
 
 

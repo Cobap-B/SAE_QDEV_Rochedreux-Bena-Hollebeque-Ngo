@@ -16,6 +16,11 @@ public class VueDiagramme extends Pane implements Observateur{
     public VueDiagramme(Model m){
         c = new Canvas(1000, 1000);
         model = m;
+        this.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
+            //OBLIGATOIRE pour obtenir la taille
+            this.setWidth(newBounds.getWidth());
+            this.setHeight(newBounds.getHeight());
+        });
 
     };
     @Override
@@ -51,7 +56,7 @@ public class VueDiagramme extends Pane implements Observateur{
             });
 
 
-            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(m, classeComplete);
+            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(m, classeComplete, this);
 
             vue.setOnMousePressed(controleurClasseDrag);
             vue.setOnMouseReleased(controleurClasseDrag);
