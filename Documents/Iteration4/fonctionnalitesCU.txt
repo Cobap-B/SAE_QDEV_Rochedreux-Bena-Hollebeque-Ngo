@@ -1,1 +1,13 @@
-Il faut décrire les fonctionnalités et les cas d’utilisations développés ;
+Membre	            Tâches principales
+
+Tout le monde	    Partie conception
+
+HUGOB	            Gestion de la visibilité des attributs/methodes/dependances des classes
+                    + finalisation de l'arborescence + suppression d'une classe sur le diagramme
+
+Arthur	            Diagramme de classe + gestion du panneau du diagramme pour limiter sa zone
+                    + deplacement dynamique des classes
+
+Kevin               Finalisation bouton clic droit + gestion des arrayList en attribut
+
+HugoR                Fleches de dépendances dynamique dans le diagramme : dessin sur canvas et gérer les différentes fleches de dépendances

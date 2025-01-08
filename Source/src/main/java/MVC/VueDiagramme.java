@@ -23,6 +23,8 @@ public class VueDiagramme extends Pane implements Observateur{
             this.setHeight(newBounds.getHeight());
             c.setHeight(getHeight());
             c.setWidth(getWidth());
+
+
         });
 
 
@@ -33,7 +35,7 @@ public class VueDiagramme extends Pane implements Observateur{
         GraphicsContext gc = c.getGraphicsContext2D();
 
         this.getChildren().clear();
-        Model m = (Model) s;
+        model = (Model) s;
 
         this.getChildren().add(c);
         gc.clearRect(0, 0, c.getWidth(), c.getHeight());
@@ -45,7 +47,7 @@ public class VueDiagramme extends Pane implements Observateur{
 
 
 
-        for (ClasseComplete classeComplete : m.getDiagramme()) {
+        for (ClasseComplete classeComplete : model.getDiagramme()) {
 
             ArrayList<ClasseComplete> dependances = model.getDependances(classeComplete);
             createFleches(classeComplete,dependances, gc);
@@ -61,13 +63,13 @@ public class VueDiagramme extends Pane implements Observateur{
             });
 
 
-            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(m, classeComplete, this);
+            ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(model, classeComplete, this);
 
             vue.setOnMousePressed(controleurClasseDrag);
             vue.setOnMouseReleased(controleurClasseDrag);
             vue.setOnMouseDragged(controleurClasseDrag);
 
-            vue.setOnMouseClicked(new ControleurBoutonDroit(m));
+            vue.setOnMouseClicked(new ControleurBoutonDroit(model));
         }
     }
 
