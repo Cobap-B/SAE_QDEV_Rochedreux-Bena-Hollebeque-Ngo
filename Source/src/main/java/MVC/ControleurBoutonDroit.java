@@ -54,7 +54,6 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
             if (contextMenu.getOwnerNode() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
-
                 classeComplete.setVisible_Methodes(afficherMethodes.isSelected());
                 model.notifierObservateurs();
             }
@@ -82,6 +81,28 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
         // Ajout des menus au contextMenu
         contextMenu.getItems().addAll(attributs, methodes, dependances);
+
+
+        //Supprimer la classe courante du diagramme
+
+        MenuItem supprimer_classe = new MenuItem("Supprimer la classe");
+
+        supprimer_classe.setOnAction(e -> {
+            if (contextMenu.getOwnerNode() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
+                if(model.getDiagramme().contains(classeComplete)){
+                    model.getDiagramme().remove(classeComplete);
+                }
+                model.notifierObservateurs();
+            }
+        });
+
+
+
+        contextMenu.getItems().add(supprimer_classe);
+
+
     }
 
     @Override
