@@ -12,12 +12,14 @@ import java.util.Objects;
 
 public class VueArbre extends TreeView<String> implements Observateur {
     Model m;
+    String nomArbre;
     private final Image image_dossier = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/dossier.png")));
     private final Image image_classe = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/classe.png")));
 
     public VueArbre(Model model) {
         this.m = model;
         this.setRoot(new TreeItem<>("Aucun dossier chargé"));
+        this.nomArbre = "";
     }
 
     private ImageView Image_resize(Image image) {
@@ -30,6 +32,11 @@ public class VueArbre extends TreeView<String> implements Observateur {
 
     @Override
     public void actualiser(Sujet s) {
+        if(m.getArbre() != null){
+            if(!this.nomArbre.equals(((Model)s).getArbre().getName())){
+                this.getRoot().getChildren().clear();
+            }
+        }
         if (s instanceof Model && this.getRoot().getChildren().isEmpty()) {
             Dossier racine = ((Model)s).getArbre();
             //si le dossier n'est pas vide
@@ -39,6 +46,7 @@ public class VueArbre extends TreeView<String> implements Observateur {
                 racineItem.setGraphic(Image_resize(image_dossier));
                 remplirArborescence(racine, racineItem);
                 this.setRoot(racineItem);
+                this.nomArbre = racine.getName();
             } else {
                 //aucun fichier
                 this.setRoot(new TreeItem<>("Aucun dossier chargé"));
@@ -92,5 +100,4 @@ public class VueArbre extends TreeView<String> implements Observateur {
             parent.getChildren().removeIf(item -> item.getValue().equals(dossier.getName()));
         }
     }
-
 }
