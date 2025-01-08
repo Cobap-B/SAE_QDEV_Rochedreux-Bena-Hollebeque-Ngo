@@ -91,29 +91,42 @@ public class Introspection {
 
 
     private static ArrayList<Methode> displayMethod(Method[] methods){
-        ArrayList<Methode> methodes = new ArrayList<Methode>();
-        Methode mtd = null;
-        for (Method m:methods){
+        ArrayList<Methode> methodes = new ArrayList<>();
+        for (Method m : methods) {
             int acces = m.getModifiers();
             String ac = "+";
-            if (Modifier.isPrivate(acces)){
+            if (Modifier.isPrivate(acces)) {
                 ac = "-";
-            }else if (Modifier.isProtected(acces)){
-               ac = "#";
+            } else if (Modifier.isProtected(acces)) {
+                ac = "#";
             }
 
             ArrayList<Parametre> param = new ArrayList<>();
             for (Parameter p : m.getParameters()) {
                 param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
             }
-            mtd = new Methode(m.getName(), "+", m.getReturnType().getSimpleName(), param);
+
+            // Gestion du type de retour
+            String typeRetour = m.getReturnType().getSimpleName();
+            Type returnType = m.getGenericReturnType();
+            if (returnType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) returnType;
+                StringBuilder typeString = new StringBuilder(typeRetour + "<");
+                Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                for (Type typeArgument : typeArguments) {
+                    String typeName = typeArgument.getTypeName();
+                    typeString.append(typeName.substring(typeName.lastIndexOf('.') + 1)).append(", ");
+                }
+                // Remove the last comma and space
+                typeString.setLength(typeString.length() - 2);
+                typeString.append(">");
+                typeRetour = typeString.toString();
+            }
+
+            Methode mtd = new Methode(m.getName(), ac, typeRetour, param);
             methodes.add(mtd);
-
-
-
         }
         return methodes;
-
     }
 
     /**

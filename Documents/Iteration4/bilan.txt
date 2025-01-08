@@ -1,1 +1,12 @@
+L'application affiche un arbre de dossier que l'on génère via un dossier racine,
+les fichiers d'extension .class peuvent être glissé sur la zone de diagramme.
 
+Les classes sont affichées avec leurs type (classe, classe abstraite, interface..) dans une boite qui représente une classe du projet.
+Leurs attributs, méthodes et dépendances sont visibles, ces dernières sont décrite par des flèches (héritage, implémentation etc..).
+
+Via un clic droit sur une classe du diagramme, il est possible de modifier la visibilité des attributs, méthodes et
+flèches de dépendances (visibles ou non), ou retirer la classe courante du diagramme.
+
+Il est possible de déplacer une classe en la faisant glisser avec la souris.
+
+On peut effacer le diagramme en entier, et en charger un autre à tout moment, l'arbre est mis à jour lorsque l'on change de dossier racine
