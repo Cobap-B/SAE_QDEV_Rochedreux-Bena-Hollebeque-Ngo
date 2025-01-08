@@ -106,23 +106,24 @@ public class Introspection {
                 param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
             }
 
-            // Gestion du type de retour
+            //Vérifier si l'attribut est une collection
             String typeRetour = m.getReturnType().getSimpleName();
             Type returnType = m.getGenericReturnType();
             if (returnType instanceof ParameterizedType) {
+                //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
                 ParameterizedType parameterizedType = (ParameterizedType) returnType;
                 StringBuilder typeString = new StringBuilder(typeRetour + "<");
                 Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                //Ici on obtient la liste de ses attributs tout simplement
                 for (Type typeArgument : typeArguments) {
                     String typeName = typeArgument.getTypeName();
                     typeString.append(typeName.substring(typeName.lastIndexOf('.') + 1)).append(", ");
                 }
-                // Remove the last comma and space
                 typeString.setLength(typeString.length() - 2);
                 typeString.append(">");
                 typeRetour = typeString.toString();
             }
-
+            //On creer notre attribut avec un * car c'est une collection
             Methode mtd = new Methode(m.getName(), ac, typeRetour, param);
             methodes.add(mtd);
         }
@@ -156,7 +157,7 @@ public class Introspection {
                 //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
                 ParameterizedType parameterizedType = (ParameterizedType) genericType;
                 Type[] typeArguments = parameterizedType.getActualTypeArguments();
-                //Ici on obtien la liste de ses attributs tout simplement
+                //Ici on obtient la liste de ses attributs tout simplement
                 for (Type typeArgument : typeArguments) {
                     tp = typeArgument.getTypeName().substring(typeArgument.getTypeName().indexOf('.')+1);
                     //On prend seulement le nom car c'est ce que l'on veut
