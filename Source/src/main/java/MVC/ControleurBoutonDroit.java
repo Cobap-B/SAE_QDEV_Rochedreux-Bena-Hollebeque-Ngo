@@ -130,7 +130,7 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 afficherMethodes.setSelected(classeComplete.isVisible_Methodes());
 
                 // Mise à jour de l'état de "Afficher les Méthodes"
-                CheckMenuItem afficherDependances = (CheckMenuItem) ((Menu) contextMenu.getItems().get(1)).getItems().get(0);
+                CheckMenuItem afficherDependances = (CheckMenuItem) ((Menu) contextMenu.getItems().get(2)).getItems().get(0);
                 afficherDependances.setSelected(classeComplete.isVisible_Dependances());
 
                 contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
