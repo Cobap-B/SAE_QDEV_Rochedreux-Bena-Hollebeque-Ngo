@@ -44,6 +44,7 @@ public class ClasseComplete {
 
 
         attributs.forEach(attribut -> {
+            //Non type primitif donc un objet
             if (!TypePrimitif(attribut.getType())) {
                 resultat.append(this.nom + "\"1\" --> " +"\""+ attribut.getNombre() +"\"" + attribut.getType() +" : "+attribut.getNom() +"\n");
             }

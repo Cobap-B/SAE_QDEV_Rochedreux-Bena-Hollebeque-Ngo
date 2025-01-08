@@ -124,9 +124,18 @@ public class Model implements Sujet{
     public ArrayList<ClasseComplete> getDependances(ClasseComplete c){
         ArrayList<ClasseComplete> dep = new ArrayList<>();
 
+        //Ajout des dependance de base Heritage et Implementation
         for (Dependance dependance : c.getDependances()) {
             for (ClasseComplete classeComplete : diagramme) {
                 if (dependance.getDepend().equals(classeComplete.getNom())){
+                    dep.add(classeComplete);
+                }
+            }
+        }
+        //Ajout des dependance d'attribut
+        for (Attribut att : c.getAttributs()) {
+            for (ClasseComplete classeComplete : diagramme) {
+                if (att.getType().equals(classeComplete.getNom())){
                     dep.add(classeComplete);
                 }
             }

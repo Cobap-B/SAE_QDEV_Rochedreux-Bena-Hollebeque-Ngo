@@ -6,7 +6,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class VueDiagramme extends Pane implements Observateur{
@@ -14,13 +16,16 @@ public class VueDiagramme extends Pane implements Observateur{
     Canvas c;
     Model model;
     public VueDiagramme(Model m){
-        c = new Canvas(1000, 1000);
+        c = new Canvas();
         model = m;
         this.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
-            //OBLIGATOIRE pour obtenir la taille
             this.setWidth(newBounds.getWidth());
             this.setHeight(newBounds.getHeight());
+            c.setHeight(getHeight());
+            c.setWidth(getWidth());
         });
+
+
 
     };
     @Override
@@ -69,21 +74,124 @@ public class VueDiagramme extends Pane implements Observateur{
     public void createFleches(ClasseComplete c, ArrayList<ClasseComplete> dep, GraphicsContext gc){
 
         for (ClasseComplete classeComplete : dep) {
-            gc.strokeLine(c.getX()+(c.getTailleX()/2), c.getY()+(c.getTailleY()/2),
-                    classeComplete.getX()+(classeComplete.getTailleX()/2), classeComplete.getY()+(classeComplete.getTailleY()/2));
 
-            double difx = c.getX()+(c.getTailleX()/2)-classeComplete.getX()+(classeComplete.getTailleX()/2);
-            double dify = c.getY()+(c.getTailleY()/2)-classeComplete.getY()+(classeComplete.getTailleY()/2);
-            double angle = Math.toDegrees(Math.atan(difx/dify));
-            System.out.println(angle);
-            angle = Math.toDegrees(Math.atan(difx/dify));
-            System.out.println(angle);
+            double c1x = c.getX()+(c.getTailleX()/2);
+            double c1y = c.getY()+(c.getTailleY()/2);
+
+            double c2x = classeComplete.getX()+(classeComplete.getTailleX()/2);
+            double c2y = classeComplete.getY()+(classeComplete.getTailleY()/2);
+
+            //Distance entre les deux centres x et y comme un triangle
+            double difx = c2x-c1x;
+            double dify = c2y-c1y;
+
+            //Ici on calcule donc la distance entre les deux centres
+            double distance = Math.sqrt((difx*difx)+(dify*dify));
+
+            //Angle de c à classComplete au niveau de 0
+            double angle = Math.atan2(dify,difx);
+
+            c2x = c1x + distance * Math.cos(angle);
+            c2y = c1y + distance * Math.sin(angle);
+
+            while (c2x>classeComplete.getX() && c2x<classeComplete.getX()+classeComplete.getTailleX() &&
+                    c2y>classeComplete.getY() && c2y<classeComplete.getY()+classeComplete.getTailleY()){
+                distance-=1;
+                c2x = c1x + distance * Math.cos(angle);
+                c2y = c1y + distance * Math.sin(angle);
+            }
+
+
+            //Obtenir le type la dependance
+            String type = "Base";
+            for (Dependance dependance : c.getDependances()) {
+                if (dependance.getDepend().equals(classeComplete.getNom())){
+                    type = dependance.getType();
+                }
+            }
+            switch (type) {
+                case "Extend":
+                    drawHeritage(gc, angle, distance, c1x, c1y, c2x, c2y, 10);
+                    break;
+                case "Implement":
+                    drawInterface(gc, angle, distance, c1x, c1y, c2x, c2y, 10);
+                    break;
+                case "Base":
+                    drawFleche(gc, angle, c1x, c1y, c2x, c2y, 10);
+                    break;
+            }
+
+
         }
 
+    }
+
+    private void drawHeritage(GraphicsContext gc, double angle, double distance, double startX, double startY, double endX, double endY, double size) {
+
+        gc.strokeLine(startX, startY, startX + (distance-10) * Math.cos(angle),startY + (distance-10) * Math.sin(angle));
 
 
+        // Position de la pointe (sommet avant)
+        double tipX = endX;
+        double tipY = endY;
+
+        // Positions des sommets arrière (base du triangle)
+        double baseLeftX = endX - size * Math.cos(angle) - (size / 2) * Math.sin(angle);
+        double baseLeftY = endY - size * Math.sin(angle) + (size / 2) * Math.cos(angle);
+
+        double baseRightX = endX - size * Math.cos(angle) + (size / 2) * Math.sin(angle);
+        double baseRightY = endY - size * Math.sin(angle) - (size / 2) * Math.cos(angle);
+
+        gc.strokePolygon(
+                new double[]{tipX, baseLeftX, baseRightX},
+                new double[]{tipY, baseLeftY, baseRightY},
+                3
+        );
+    }
+
+    private void drawInterface(GraphicsContext gc, double angle, double distance, double startX, double startY, double endX, double endY, double size) {
+
+        gc.setLineDashes(10, 5);
+        gc.strokeLine(startX, startY, startX + (distance-10) * Math.cos(angle),startY + (distance-10) * Math.sin(angle));
+        gc.setLineDashes(null);
+        // Position de la pointe (sommet avant)
+        double tipX = endX;
+        double tipY = endY;
+
+        // Positions des sommets arrière (base du triangle)
+        double baseLeftX = endX - size * Math.cos(angle) - (size / 2) * Math.sin(angle);
+        double baseLeftY = endY - size * Math.sin(angle) + (size / 2) * Math.cos(angle);
+
+        double baseRightX = endX - size * Math.cos(angle) + (size / 2) * Math.sin(angle);
+        double baseRightY = endY - size * Math.sin(angle) - (size / 2) * Math.cos(angle);
+
+        gc.strokePolygon(
+                new double[]{tipX, baseLeftX, baseRightX},
+                new double[]{tipY, baseLeftY, baseRightY},
+                3
+        );
+    }
+
+    private void drawFleche(GraphicsContext gc, double angle, double startX, double startY, double endX, double endY, double size) {
+
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Position de la pointe (sommet avant)
+        double tipX = endX;
+        double tipY = endY;
+
+        double leftX = endX - size * Math.cos(angle - Math.PI / 6); // Angle ajusté pour la "branche" gauche
+        double leftY = endY - size * Math.sin(angle - Math.PI / 6);
+
+        double rightX = endX - size * Math.cos(angle + Math.PI / 6); // Angle ajusté pour la "branche" droite
+        double rightY = endY - size * Math.sin(angle + Math.PI / 6);
 
 
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Dessiner les deux côtés de la flèche
+        gc.strokeLine(tipX, tipY, leftX, leftY); // Branche gauche
+        gc.strokeLine(tipX, tipY, rightX, rightY); // Branche droite
     }
 
 }
