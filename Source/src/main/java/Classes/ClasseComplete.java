@@ -134,6 +134,12 @@ public class ClasseComplete {
         }
     }
 
+    public void setVisible_Dependances(boolean b) {
+        for(Dependance dependance : dependances) {
+            dependance.setVisibilite(b);
+        }
+    }
+
     public boolean isVisible_Attributs() {
         for (Attribut attribut : attributs) {
             if (attribut.isVisibilite()) {
@@ -153,6 +159,14 @@ public class ClasseComplete {
     }
 
 
+    public boolean isVisible_Dependances() {
+        for (Dependance dependance : dependances) {
+            if (dependance.isVisibilite()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
@@ -195,4 +209,6 @@ public class ClasseComplete {
         ClasseComplete c = (ClasseComplete) obj;
         return nom.equals(c.nom);
     }
+
+
 }

@@ -23,4 +23,8 @@ public class Dependance {
     public boolean isVisibilite() {
         return visibilite;
     }
+
+    public void setVisibilite(boolean visibilite) {
+        this.visibilite = visibilite;
+    }
 }
