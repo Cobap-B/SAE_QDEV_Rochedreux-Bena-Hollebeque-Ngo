@@ -56,7 +56,7 @@ public class Introspection {
             throw new RuntimeException(e);
         }
 
-        return new ClasseComplete(classee.getSimpleName(), getTypeClasse(classee), displayField(classee.getDeclaredFields()), displayMethod(classee.getDeclaredMethods()), getDependances(classee));
+        return new ClasseComplete(classee.getSimpleName(), getTypeClasse(classee), displayField(classee.getDeclaredFields()), displayMethod(classee.getDeclaredMethods(), classee.getDeclaredConstructors()), getDependances(classee));
     }
 
     private static String getTypeClasse(Class c){
@@ -90,46 +90,70 @@ public class Introspection {
     }
 
 
-    private static ArrayList<Methode> displayMethod(Method[] methods){
+    private static ArrayList<Methode> displayMethod(Method[] methods, Constructor[] constructors){
         ArrayList<Methode> methodes = new ArrayList<>();
         for (Method m : methods) {
-            int acces = m.getModifiers();
-            String ac = "+";
-            if (Modifier.isPrivate(acces)) {
-                ac = "-";
-            } else if (Modifier.isProtected(acces)) {
-                ac = "#";
-            }
-
-            ArrayList<Parametre> param = new ArrayList<>();
-            for (Parameter p : m.getParameters()) {
-                param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
-            }
-
-            //Vérifier si l'attribut est une collection
-            String typeRetour = m.getReturnType().getSimpleName();
-            Type returnType = m.getGenericReturnType();
-            if (returnType instanceof ParameterizedType) {
-                //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
-                ParameterizedType parameterizedType = (ParameterizedType) returnType;
-                String typeString = typeRetour + "<";
-                Type[] typeArguments = parameterizedType.getActualTypeArguments();
-                //Ici on obtient la liste de ses attributs tout simplement
-                for (int i = 0; i < typeArguments.length ; i++) {
-                    String typeName = typeArguments[i].getTypeName();
-                    typeString += typeName.substring(typeName.lastIndexOf('.') + 1);
-                    if (i < typeArguments.length - 1) {
-                        typeString += ", ";
-                    }
-                }
-                typeString += ">";
-                typeRetour = typeString;
-            }
-            //On creer notre attribut avec un * car c'est une collection
-            Methode mtd = new Methode(m.getName(), ac, typeRetour, param);
-            methodes.add(mtd);
+            methodes.add(getMethod(m));
+        }
+        for (Constructor c : constructors){
+            methodes.add(getContructeur(c));
         }
         return methodes;
+    }
+    private static Methode getMethod(Method m){
+        int acces = m.getModifiers();
+        String ac = "+";
+        if (Modifier.isPrivate(acces)) {
+            ac = "-";
+        } else if (Modifier.isProtected(acces)) {
+            ac = "#";
+        }
+
+        ArrayList<Parametre> param = new ArrayList<>();
+        for (Parameter p : m.getParameters()) {
+            param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
+        }
+
+        //Vérifier si l'attribut est une collection
+        String typeRetour = m.getReturnType().getSimpleName();
+        Type returnType = m.getGenericReturnType();
+        if (returnType instanceof ParameterizedType) {
+            //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
+            ParameterizedType parameterizedType = (ParameterizedType) returnType;
+            String typeString = typeRetour + "<";
+            Type[] typeArguments = parameterizedType.getActualTypeArguments();
+            //Ici on obtient la liste de ses attributs tout simplement
+            for (int i = 0; i < typeArguments.length ; i++) {
+                String typeName = typeArguments[i].getTypeName();
+                typeString += typeName.substring(typeName.lastIndexOf('.') + 1);
+                if (i < typeArguments.length - 1) {
+                    typeString += ", ";
+                }
+            }
+            typeString += ">";
+            typeRetour = typeString;
+        }
+        //On creer notre attribut avec un * car c'est une collection
+        Methode mtd = new Methode(m.getName(), ac, typeRetour, param);
+        return mtd;
+    }
+
+    private static Methode getContructeur(Constructor m){
+        int acces = m.getModifiers();
+        String ac = "+";
+        if (Modifier.isPrivate(acces)) {
+            ac = "-";
+        } else if (Modifier.isProtected(acces)) {
+            ac = "#";
+        }
+        ArrayList<Parametre> param = new ArrayList<>();
+        for (Parameter p : m.getParameters()) {
+            param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
+        }
+
+        //On creer notre attribut avec un * car c'est une collection
+        Methode mtd = new Methode(getSimpleName(m.getName()), ac, "void", param);
+        return mtd;
     }
 
     /**
@@ -177,5 +201,10 @@ public class Introspection {
         return attributs;
     }
 
-
+    public static String getSimpleName(String s){
+        String[] s2 = s.split("\\.");
+        if (s2.length>0)
+            return s2[s2.length-1];
+        return "";
+    }
 }

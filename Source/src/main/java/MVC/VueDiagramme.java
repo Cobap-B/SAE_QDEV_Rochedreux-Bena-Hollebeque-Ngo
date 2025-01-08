@@ -45,8 +45,6 @@ public class VueDiagramme extends Pane implements Observateur{
 
 
 
-
-
         for (ClasseComplete classeComplete : model.getDiagramme()) {
 
             ArrayList<ClasseComplete> dependances = model.getDependances(classeComplete);
