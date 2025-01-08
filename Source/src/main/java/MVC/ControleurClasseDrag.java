@@ -30,8 +30,7 @@ public class ControleurClasseDrag implements EventHandler<MouseEvent> {
                 classeComplete.setCo(mouseEvent.getSceneX()-250-difx , mouseEvent.getSceneY()-40-dify);
             }else if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_DRAGGED)){
                 //Lorsque drag
-                //vueClasse.setTranslateX(mouseEvent.getSceneX() - startx);
-                //vueClasse.setTranslateY(mouseEvent.getSceneY() - starty);
+                classeComplete.setCo(mouseEvent.getSceneX()- 250 -difx, mouseEvent.getSceneY()- 40 -dify);
             }else if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)){
                 //startx = mouseEvent.getSceneX() - vueClasse.getTranslateX();
                 //starty = mouseEvent.getSceneY() - vueClasse.getTranslateY();

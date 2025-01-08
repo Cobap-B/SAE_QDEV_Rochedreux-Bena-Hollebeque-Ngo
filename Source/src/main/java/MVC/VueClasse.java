@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import static javafx.geometry.Pos.CENTER;
+
 public class VueClasse extends VBox implements Observateur{
 
     private ClasseComplete classeComplete;
@@ -21,7 +23,9 @@ public class VueClasse extends VBox implements Observateur{
 
     public VueClasse(ClasseComplete c){
         classeComplete = c;
-        Text label = new Text(classeComplete.getNom());
+        String nomClasse = "<<"+ classeComplete.getType() + ">>" + '\n' + classeComplete.getNom();
+        Text label = new Text(nomClasse);
+        label.setTextAlignment(TextAlignment.CENTER);
         Text attribut = new Text(c.getTextAttribut());
         Text methode = new Text(c.getTextMethode());
 
