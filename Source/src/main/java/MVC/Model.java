@@ -8,9 +8,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 public class Model implements Sujet{
     /**
      * Liste des observateurs
@@ -75,6 +80,16 @@ public class Model implements Sujet{
         writer.write("@enduml \n");
         writer.close();
         logs.add("Le diagramme a été exporté en format source PlantUML");
+        notifierObservateurs();
+    }
+
+    public void saveDiagramme(VueDiagramme v) throws IOException{
+        File dir = new File("diagramme");
+        dir.mkdirs();
+        WritableImage image = v.snapshot(null, null);
+        File file = new File("diagramme/output.png");
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        logs.add("Le diagramme a été exporté en PNG");
         notifierObservateurs();
     }
 

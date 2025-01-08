@@ -12,11 +12,13 @@ import java.io.IOException;
 
 public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
     private Window w;
-    Model m;
+    private Model m;
+    private VueDiagramme v;
 
-    public ControleurBoutonFichier(Window w, Model model) {
+    public ControleurBoutonFichier(Window w, Model model, VueDiagramme v) {
         this.w = w;
         this.m = model;
+        this.v = v;
     }
 
 
@@ -40,6 +42,13 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                 try {
                     m.saveUML();
                     m.savePNG();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "Exporter Diagramme":
+                try {
+                    m.saveDiagramme(v);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
