@@ -75,7 +75,16 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
         // --------menu pour les dépendances---------
         Menu dependances = new Menu("Dépendances");
         CheckMenuItem afficherDependances = new CheckMenuItem("Afficher les Dépendances");
-        afficherDependances.setSelected(true);
+
+        afficherDependances.setOnAction(e -> {
+            if (contextMenu.getOwnerNode() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
+                classeComplete.setVisible_Dependances(afficherDependances.isSelected());
+                model.notifierObservateurs();
+            }
+        });
+
 
         dependances.getItems().add(afficherDependances);
 
@@ -119,6 +128,10 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 // Mise à jour de l'état de "Afficher les Méthodes"
                 CheckMenuItem afficherMethodes = (CheckMenuItem) ((Menu) contextMenu.getItems().get(1)).getItems().get(0);
                 afficherMethodes.setSelected(classeComplete.isVisible_Methodes());
+
+                // Mise à jour de l'état de "Afficher les Méthodes"
+                CheckMenuItem afficherDependances = (CheckMenuItem) ((Menu) contextMenu.getItems().get(1)).getItems().get(0);
+                afficherDependances.setSelected(classeComplete.isVisible_Dependances());
 
                 contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
             }
