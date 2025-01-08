@@ -3,10 +3,7 @@ package MVC;
 import Classes.*;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -61,8 +58,10 @@ public class Model implements Sujet{
     }
 
     public void effacer_D(){
+        save();
         if(!diagramme.isEmpty()){diagramme = new ArrayList<>();}
         logs.add("Diagramme effacé");
+        load();
         notifierObservateurs();
     }
 
@@ -135,6 +134,35 @@ public class Model implements Sujet{
             logs.add("Erreur lors de la génération de l'image UML : " + e.getMessage());
         }
         notifierObservateurs();
+    }
+
+    public void save(){
+        try{
+            File dir = new File("diagramme");
+            dir.mkdirs();
+            FileOutputStream fileOutputStream
+                    = new FileOutputStream("diagramme/save.pipotam");
+            ObjectOutputStream objectOutputStream
+                    = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(diagramme);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void load(){
+        try{
+            FileInputStream fileInputStream
+                    = new FileInputStream("diagramme/save.pipotam");
+            ObjectInputStream objectInputStream
+                    = new ObjectInputStream(fileInputStream);
+            diagramme = (ArrayList<ClasseComplete>) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ArrayList<DependanceFleche> getDependances(ClasseComplete c){

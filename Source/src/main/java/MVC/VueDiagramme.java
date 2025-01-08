@@ -88,10 +88,10 @@ public class VueDiagramme extends Pane implements Observateur{
                 }
                 if (flech1.getFinX() >= flech2.getDepartX()-2 && flech1.getFinX() <= flech2.getDepartX()+2 &&
                         flech1.getFinY() >= flech2.getDepartY()-2 && flech1.getFinY() <= flech2.getDepartY()+2){
-                    flech1.setFinX(15);
-                    flech1.setFinY(15);
-                    flech2.setDepartX(-15);
-                    flech2.setDepartY(-15);
+                    flech1.setFinX(10);
+                    flech1.setFinY(10);
+                    flech2.setDepartX(-10);
+                    flech2.setDepartY(-10);
                 }
             }
             flech1.draw(gc);

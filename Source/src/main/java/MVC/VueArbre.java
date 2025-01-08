@@ -6,11 +6,9 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-
 import java.util.Objects;
 
-public class VueArbre extends TreeView<String> implements Observateur {
+public class VueArbre extends TreeView<String> implements Observateur{
     Model m;
     String nomArbre;
     private final Image image_dossier = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/dossier.png")));

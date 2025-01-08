@@ -1,9 +1,10 @@
 package Classes;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Methode {
+public class Methode implements Serializable {
     private String nom;
     private String acces;
     private String type_retour;

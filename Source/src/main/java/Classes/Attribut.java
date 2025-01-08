@@ -1,6 +1,8 @@
 package Classes;
 
-public class Attribut {
+import java.io.Serializable;
+
+public class Attribut implements Serializable {
 
     private String nom;
     private String type;

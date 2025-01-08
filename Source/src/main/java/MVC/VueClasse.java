@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.io.Serializable;
+
 import static javafx.geometry.Pos.CENTER;
 
 public class VueClasse extends VBox implements Observateur{
