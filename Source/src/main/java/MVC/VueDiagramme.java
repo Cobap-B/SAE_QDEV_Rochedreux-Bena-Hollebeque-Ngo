@@ -78,31 +78,57 @@ public class VueDiagramme extends Pane implements Observateur{
 
             vue.setOnMouseClicked(new ControleurBoutonDroit(model));
         }
-        for (Fleche flech1 : fleches) {
-            for (Fleche flech2 : fleches) {
-                if (flech1.getDepartX() >= flech2.getDepartX()-2 && flech1.getDepartX() <= flech2.getDepartX()+2 &&
-                        flech1.getDepartY() >= flech2.getDepartY()-2 && flech1.getDepartY() <= flech2.getDepartY()+2){
-                    flech1.setDepartX(10);
-                    flech1.setDepartY(10);
-                    flech2.setDepartX(-10);
-                    flech2.setDepartY(-10);
+
+        //J'ai pas le courage d'expliquer tous les calculs....... my bad
+        boolean pas_fin = true;
+        while (pas_fin) {
+            pas_fin = false;
+            for (Fleche flech1 : fleches) {
+                for (Fleche flech2 : fleches) {
+                    if (((flech1.getDepart() == flech2.getDepart() && flech1.getDestination() == flech2.getDestination()) ||
+                            (flech1.getDestination() == flech2.getDepart() && flech1.getDepart() == flech2.getDestination())) &&
+                            ! flech1.equals(flech2)){
+
+                        if (flech1.getDepartX() >= flech2.getDepartX()-4 && flech1.getDepartX() <= flech2.getDepartX()+4 &&
+                                flech1.getDepartY() >= flech2.getDepartY()-4 && flech1.getDepartY() <= flech2.getDepartY()+4){
+                            flech1.setDepartX(10);
+                            flech1.setDepartY(10);
+                            flech2.setDepartX(-10);
+                            flech2.setDepartY(-10);
+                            pas_fin = true;
+                        }
+                        if (flech1.getFinX() >= flech2.getFinX()-4 && flech1.getFinX() <= flech2.getFinX()+4 &&
+                                flech1.getFinY() >= flech2.getFinY()-4 && flech1.getFinY() <= flech2.getFinY()+4){
+                            flech1.setFinX(10);
+                            flech1.setFinY(10);
+                            flech2.setFinX(-10);
+                            flech2.setFinY(-10);
+                            pas_fin = true;
+                        }
+                        if (flech1.getFinX() >= flech2.getDepartX()-4 && flech1.getFinX() <= flech2.getDepartX()+4 &&
+                                flech1.getFinY() >= flech2.getDepartY()-4 && flech1.getFinY() <= flech2.getDepartY()+4){
+                            flech1.setFinX(10);
+                            flech1.setFinY(10);
+                            flech2.setDepartX(-10);
+                            flech2.setDepartY(-10);
+                            pas_fin = true;
+                        }
+                        if (flech1.getDepartX() >= flech2.getFinX()-4 && flech1.getDepartX() <= flech2.getFinX()+4 &&
+                                flech1.getDepartY() >= flech2.getFinY()-4 && flech1.getDepartY() <= flech2.getFinY()+4){
+                            flech1.setDepartX(-10);
+                            flech1.setDepartY(-10);
+                            flech2.setFinX(10);
+                            flech2.setFinY(10);
+                            pas_fin = true;
+                        }
+
+                    }
                 }
-                if (flech1.getFinX() >= flech2.getFinX()-2 && flech1.getFinX() <= flech2.getFinX()+2 &&
-                        flech1.getFinY() >= flech2.getFinY()-2 && flech1.getFinY() <= flech2.getFinY()+2){
-                    flech1.setFinX(10);
-                    flech1.setFinY(10);
-                    flech2.setFinX(-10);
-                    flech2.setFinY(-10);
-                }
-                if (flech1.getFinX() >= flech2.getDepartX()-2 && flech1.getFinX() <= flech2.getDepartX()+2 &&
-                        flech1.getFinY() >= flech2.getDepartY()-2 && flech1.getFinY() <= flech2.getDepartY()+2){
-                    flech1.setFinX(10);
-                    flech1.setFinY(10);
-                    flech2.setDepartX(-10);
-                    flech2.setDepartY(-10);
-                }
+
             }
-            flech1.draw(gc);
+            for (Fleche flech : fleches) {
+                flech.draw(gc);
+            }
         }
     }
 
@@ -128,7 +154,7 @@ public class VueDiagramme extends Pane implements Observateur{
             double angle = Math.atan2(dify,difx);
 
 
-            fleches.add(new Fleche(dependanceFleche.getString(), c1x, c1y, c2x, c2y,distance, angle, classeComplete));
+            fleches.add(new Fleche(dependanceFleche.getString(), c1x, c1y, c2x, c2y,distance, angle, classeComplete, c));
 
 
         }
