@@ -82,6 +82,9 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
                 classeComplete.setVisible_Dependances(afficherDependances.isSelected());
                 model.notifierObservateurs();
+                System.out.println("Affichage des dependances : " + classeComplete.isVisible_Dependances());
+                System.out.println(afficherDependances.isSelected());
+
             }
         });
 
@@ -120,16 +123,16 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
             if (mouseEvent.getSource() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) mouseEvent.getSource();
 
-                // Mise à jour de l'état de "Afficher les Attributs"
+                // Mise à jour "Afficher les Attributs"
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
                 CheckMenuItem afficherAttributs = (CheckMenuItem) ((Menu) contextMenu.getItems().get(0)).getItems().get(0);
                 afficherAttributs.setSelected(classeComplete.isVisible_Attributs());
 
-                // Mise à jour de l'état de "Afficher les Méthodes"
+                // Mise à jour "Afficher les Méthodes"
                 CheckMenuItem afficherMethodes = (CheckMenuItem) ((Menu) contextMenu.getItems().get(1)).getItems().get(0);
                 afficherMethodes.setSelected(classeComplete.isVisible_Methodes());
 
-                // Mise à jour de l'état de "Afficher les Méthodes"
+                // Mise à jour de "Afficher les "
                 CheckMenuItem afficherDependances = (CheckMenuItem) ((Menu) contextMenu.getItems().get(2)).getItems().get(0);
                 afficherDependances.setSelected(classeComplete.isVisible_Dependances());
 
