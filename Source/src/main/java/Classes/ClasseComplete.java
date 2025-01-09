@@ -1,11 +1,13 @@
 package Classes;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ClasseComplete implements Serializable {
     private String nom;
     private String type;
+    private Color color;
 
     private double X, Y;
     private double tailleX, tailleY;
@@ -21,6 +23,7 @@ public class ClasseComplete implements Serializable {
         this.attributs = attributs;
         this.methodes = methodes;
         this.dependances = dependances;
+        this.color = Color.WHITE;
     }
 
 
@@ -77,6 +80,14 @@ public class ClasseComplete implements Serializable {
             }
         }
         return false;
+    }
+
+    public void setColor(Color color){
+        this.color = color;
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 
 
