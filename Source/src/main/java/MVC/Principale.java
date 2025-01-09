@@ -101,8 +101,8 @@ public class Principale extends Application {
 
         bp.setCenter(diagramme_interface);
 
-        ControleurBoutonDroit boutondroit = new ControleurBoutonDroit(m);
-        diagramme_interface.setOnMouseClicked(boutondroit);
+        //ControleurBoutonDroit boutondroit = new ControleurBoutonDroit(m);
+        //diagramme_interface.setOnMouseClicked(boutondroit);
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<ClasseComplete> classes = m.getDiagramme();

@@ -34,7 +34,7 @@ public class VueDiagramme extends Pane implements Observateur{
 
         // Ajouter le contrôleur pour gérer le clic droit
         Controleur_Classe_Boutton controleurCanvas = new Controleur_Classe_Boutton(model);
-        this.setOnMousePressed(controleurCanvas);
+        canvas.setOnMousePressed(controleurCanvas);
 
 
 
