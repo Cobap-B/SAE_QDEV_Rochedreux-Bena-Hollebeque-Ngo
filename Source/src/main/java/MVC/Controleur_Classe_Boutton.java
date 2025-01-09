@@ -36,48 +36,65 @@ public class Controleur_Classe_Boutton implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (event.isSecondaryButtonDown()) {
-            // menu contextuel
-            contextMenu.show((javafx.scene.Node) event.getSource(), event.getScreenX(), event.getScreenY());
+        if (event.isPrimaryButtonDown()) {
+            if (!(event.getSource() instanceof VueClasse)) {
+                // Afficher le menu contextuel pour ajouter une classe
+                contextMenu.show((javafx.scene.Node) event.getSource(), event.getScreenX(), event.getScreenY());
 
-            // Convertir les coordonnées globales en coordonnées locales
-            Node source = (javafx.scene.Node) event.getSource();
-            Point2D localPoint = source.sceneToLocal(event.getSceneX(), event.getSceneY());
+                // Convertir les coordonnées globales en coordonnées locales
+                Node source = (javafx.scene.Node) event.getSource();
+                Point2D localPoint = source.sceneToLocal(event.getSceneX(), event.getSceneY());
 
-            // Sauvegarder pour positionner la classe
-            X_menu = localPoint.getX();
-            Y_menu = localPoint.getY();
-        } else if (event.isPrimaryButtonDown()) {
+                // Sauvegarder les coordonnées pour positionner la nouvelle classe
+                X_menu = localPoint.getX();
+                Y_menu = localPoint.getY();
+            }
+        }
+
+        if (event.getButton().name().equals("PRIMARY")) {
             contextMenu.hide();
         }
     }
 
     private void ajouterClasse() {
-        //formulaire pour la saisie
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Ajouter une classe");
-        dialog.setHeaderText("Entrez le nom de la classe");
-        dialog.setContentText("Nom de la classe:");
-        dialog.setContentText("Nom de la classe:");
+        // Formulaire pour la saisie du nom de la classe
+        TextInputDialog dialogNom = new TextInputDialog();
+        dialogNom.setTitle("Ajouter une classe");
+        dialogNom.setHeaderText("Entrez le nom de la classe");
+        dialogNom.setContentText("Nom de la classe:");
 
+        Optional<String> resultNom = dialogNom.showAndWait();
+        resultNom.ifPresent(nom -> {
+            // Formulaire pour sélectionner le type de la classe
+            TextInputDialog dialogType = new TextInputDialog();
+            dialogType.setTitle("Type de la classe");
+            dialogType.setHeaderText("Entrez le type de la classe");
+            dialogType.setContentText("Type (class, abstract, interface):");
 
-        // Récupérer le nom de la classe
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(nom -> {
+            Optional<String> resultType = dialogType.showAndWait();
+            resultType.ifPresent(type -> {
+                if (!type.equals("class") && !type.equals("abstract") && !type.equals("interface")) {
+                    System.err.println("Type invalide : " + type);
+                }
 
-            // Créer les listes d'attributs/methodes et dependances vide pour la classe
-            ArrayList<Attribut> attributs = new ArrayList<>();
-            ArrayList<Methode> methodes = new ArrayList<>();
-            ArrayList<Dependance> dependances = new ArrayList<>();
+                // Créer les listes d'attributs/méthodes et dépendances vides pour la classe
+                ArrayList<Attribut> attributs = new ArrayList<>();
+                ArrayList<Methode> methodes = new ArrayList<>();
+                ArrayList<Dependance> dependances = new ArrayList<>();
 
-            // Ajouter la classe au modèle
-            model.ajouter_squelette_Classe(nom, "class", attributs, methodes, dependances, X_menu , Y_menu);
-            try {
-                GenerateurFichierClasse.genererFichierClasse(nom, "class", "Source/classGenerer");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                // Ajouter la classe au modèle avec les coordonnées sauvegardées
+                model.ajouter_squelette_Classe(nom, type, attributs, methodes, dependances, X_menu, Y_menu);
+
+                // Générer un fichier Java pour la classe
+                try {
+                    GenerateurFichierClasse.genererFichierClasse(nom, type, "Source/classGenerer");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         });
     }
+
+
 
 }

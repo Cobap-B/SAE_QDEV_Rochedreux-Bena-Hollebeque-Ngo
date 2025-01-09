@@ -87,8 +87,6 @@ public class Principale extends Application {
         //----------CENTER----------
         ControleurDiagrammeDrag cdd = new ControleurDiagrammeDrag(m);
 
-        ControleurBoutonDroit cbd = new ControleurBoutonDroit(m);
-
         diagramme_interface.setOnDragOver(cdd);
         diagramme_interface.setOnDragDropped(cdd);
     //    diagramme_interface.setBorder();
@@ -117,7 +115,7 @@ public class Principale extends Application {
 
 
 
-        stage.setTitle("MVC");
+        stage.setTitle("Pipogramme");
         stage.setScene(scene);
         stage.show();
     }

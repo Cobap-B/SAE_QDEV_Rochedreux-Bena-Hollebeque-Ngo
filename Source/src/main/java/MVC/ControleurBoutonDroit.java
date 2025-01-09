@@ -122,20 +122,19 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
         if (mouseEvent.getButton().name().equals("SECONDARY")) {
             if (mouseEvent.getSource() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) mouseEvent.getSource();
-
-                // Mise à jour "Afficher les Attributs"
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
+
+                // Mise à jour de l'état des options du menu contextuel en fonction des attributs de la classe
                 CheckMenuItem afficherAttributs = (CheckMenuItem) ((Menu) contextMenu.getItems().get(0)).getItems().get(0);
                 afficherAttributs.setSelected(classeComplete.isVisible_Attributs());
 
-                // Mise à jour "Afficher les Méthodes"
                 CheckMenuItem afficherMethodes = (CheckMenuItem) ((Menu) contextMenu.getItems().get(1)).getItems().get(0);
                 afficherMethodes.setSelected(classeComplete.isVisible_Methodes());
 
-                // Mise à jour de "Afficher les "
                 CheckMenuItem afficherDependances = (CheckMenuItem) ((Menu) contextMenu.getItems().get(2)).getItems().get(0);
                 afficherDependances.setSelected(classeComplete.isVisible_Dependances());
 
+                // Afficher le menu contextuel
                 contextMenu.show((Node) mouseEvent.getSource(), mouseEvent.getScreenX(), mouseEvent.getScreenY());
             }
         }
@@ -144,4 +143,5 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
             contextMenu.hide();
         }
     }
+
 }
