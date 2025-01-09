@@ -21,16 +21,13 @@ public class VueDiagramme extends Pane implements Observateur{
         model.enregistrerObservateur(this);
 
 
-        TwoTimeChangeListener<Bounds> oneTimeListener = new TwoTimeChangeListener<>((observable, oldBounds, newBounds) -> {
+        this.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
             this.setWidth(newBounds.getWidth());
             this.setHeight(newBounds.getHeight());
             canvas.setHeight(getHeight());
             canvas.setWidth(getWidth());
-        },()->{
-            //Rien ici
         });
 
-        this.layoutBoundsProperty().addListener(oneTimeListener);
 
         // Ajouter le contrôleur pour gérer le clic droit
         Controleur_Classe_Boutton controleurCanvas = new Controleur_Classe_Boutton(model);
