@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Principale extends Application {
     @Override
@@ -63,9 +64,13 @@ public class Principale extends Application {
         Button effacer = new Button("Effacer Diagramme");
         effacer.setOnAction(option);
         Button retour = new Button("Retour arrière (Ctrl+Z)");
+        retour.setOnAction(option);
         Button creer = new Button("Créer nouvelle classe");
         ColorPicker colorPicker = new ColorPicker(Color.web("ccffcc"));
         colorPicker.setOnAction(option);
+
+        //Pour les events de Key
+        scene.setOnKeyPressed(new ControleurKeyEvent(m));
 
         menu.getMenus().addAll(fichier);
         toolbar.getItems().addAll(menu, effacer,retour,creer, colorPicker);
