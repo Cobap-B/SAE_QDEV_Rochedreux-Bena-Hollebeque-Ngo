@@ -1,11 +1,12 @@
 package Classes;
 
+import java.io.Serializable;
 import net.sourceforge.plantuml.argon2.blake2.Blake2b;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Methode {
+public class Methode implements Serializable {
     private String nom;
     private String acces;
     private String type_retour;
@@ -59,6 +60,7 @@ public class Methode {
                 }
 
             }
+            s= s.substring(0, s.length()-1);
         }
         s+=(")"+" : "+ getType_retour()+"\n");
         return s;

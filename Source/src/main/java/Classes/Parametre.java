@@ -1,6 +1,8 @@
 package Classes;
 
-public class Parametre {
+import java.io.Serializable;
+
+public class Parametre implements Serializable {
     private String nom;
     private String type;
 

@@ -26,6 +26,7 @@ public class Principale extends Application {
 
         //TEST
         Model m = new Model();
+        VueDiagramme diagramme_interface  = new VueDiagramme(m);
 
         VueConsole vue = new VueConsole();
         VueArbre vueArbre = new VueArbre(m);
@@ -43,14 +44,16 @@ public class Principale extends Application {
 
         MenuItem exporterUML = new MenuItem("Exporter plantUML");
         MenuItem exporterPNG = new MenuItem("Exporter PNG");
+        MenuItem exporterDiagramme = new MenuItem("Exporter Diagramme");
 
         Menu fichier = new Menu("Fichier");
 
         MenuItem ouvrir = new MenuItem("Ouvrir");
-        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
-        exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
-        exporterPNG.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m));
-        fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG);
+        ouvrir.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
+        exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
+        exporterPNG.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
+        exporterDiagramme.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
+        fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG, exporterDiagramme);
 
         ControleurOption option = new ControleurOption(m);
         Button effacer = new Button("Effacer Diagramme");
@@ -78,7 +81,6 @@ public class Principale extends Application {
 
 
         //----------CENTER----------
-        VueDiagramme diagramme_interface = new VueDiagramme(m);
         ControleurDiagrammeDrag cdd = new ControleurDiagrammeDrag(m);
 
         ControleurBoutonDroit cbd = new ControleurBoutonDroit(m);

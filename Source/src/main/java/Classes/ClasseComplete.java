@@ -1,8 +1,9 @@
 package Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ClasseComplete {
+public class ClasseComplete implements Serializable {
     private String nom;
     private String type;
 
