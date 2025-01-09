@@ -2,11 +2,15 @@ package MVC;
 
 import Classes.Attribut;
 import Classes.ClasseComplete;
+import Classes.Methode;
+import Classes.Parametre;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
     private ContextMenu contextMenu;
@@ -33,8 +37,6 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
         //ajouter un attribut
         MenuItem ajouterAttribut = new MenuItem("Ajouter un Attribut");
 
-        //ACTION a implémenter
-        //
         ajouterAttribut.setOnAction(e -> {
             if (contextMenu.getOwnerNode() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
@@ -44,30 +46,26 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 Dialog<Attribut> dialog = new Dialog<>();
                 dialog.setTitle("Ajouter un Attribut");
                 dialog.setHeaderText("Entrez les détails de l'attribut");
-
-                // Créer les champs de saisie
-                TextField nomField = new TextField();
-                nomField.setPromptText("Nom de l'attribut");
-
-                TextField typeField = new TextField();
-                typeField.setPromptText("Type de l'attribut");
-
-                CheckBox accessibleCheckBox = new CheckBox("Accessible");
-
-                // Créer un layout
-                VBox vbox = new VBox(nomField, typeField, accessibleCheckBox);
+                TextField nomAttribut = new TextField();
+                nomAttribut.setPromptText("Nom de l'attribut");
+                TextField nomType = new TextField();
+                nomType.setPromptText("Type de l'attribut");
+                CheckBox accessible = new CheckBox("Accessible");
+                VBox vbox = new VBox(nomAttribut, nomType, accessible);
                 dialog.getDialogPane().setContent(vbox);
-
-                // Ajouter les boutons
                 ButtonType ajouterButtonType = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
                 dialog.getDialogPane().getButtonTypes().addAll(ajouterButtonType, ButtonType.CANCEL);
 
                 // Gestion de l'événement pour le bouton "Ajouter"
                 dialog.setResultConverter(dialogButton -> {
                     if (dialogButton == ajouterButtonType) {
-                        String nom = nomField.getText();
-                        String type = typeField.getText();
-                        String acces = accessibleCheckBox.isSelected() ? "+" : "-";
+                        String nom = nomAttribut.getText();
+                        String type = nomType.getText();
+                        String acces = "";
+                        if(accessible.isSelected())
+                            acces = "+";
+                        else
+                            acces = "-";
                         return new Attribut(nom, acces, type);
                     }
                     return null;
@@ -76,12 +74,10 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 // Afficher la boîte de dialogue et récupérer le résultat
                 dialog.showAndWait().ifPresent(nouvelAttribut -> {
                     classeComplete.ajoutAttribut(nouvelAttribut);
-                    model.notifierObservateurs(); // Notifier les observateurs après ajout
+                    model.notifierObservateurs();
                 });
             }
         });
-        //
-        //
 
         attributs.getItems().addAll(afficherAttributs, ajouterAttribut);
 
@@ -103,15 +99,71 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
         });
 
         //Ajouter une méthode
-        MenuItem ajouterMethodes = new MenuItem("Ajouter une Méthode");
+        MenuItem ajouterMethode = new MenuItem("Ajouter une Méthode");
 
-        //ACTION a implémenter
-        //
-        ajouterMethodes.setOnAction(e -> System.out.println("Ajouter une méthode"));
-        //
-        //
+        ajouterMethode.setOnAction(e -> {
+            if (contextMenu.getOwnerNode() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
 
-        methodes.getItems().addAll(afficherMethodes, ajouterMethodes);
+                // Créer la boîte de dialogue pour ajouter une méthode
+                Dialog<Methode> dialog = new Dialog<>();
+                dialog.setTitle("Ajouter une Méthode");
+                dialog.setHeaderText("Entrez les détails de la méthode");
+                TextField nomMethode = new TextField();
+                nomMethode.setPromptText("Nom de la méthode");
+                TextField nomTypeRetour = new TextField();
+                nomTypeRetour.setPromptText("Type de retour");
+                TextField parametres = new TextField();
+                parametres.setPromptText("Paramètres, ex: int a, String b");
+                CheckBox accessible = new CheckBox("Accessible");
+                VBox vbox = new VBox(nomMethode, nomTypeRetour, parametres, accessible);
+                dialog.getDialogPane().setContent(vbox);
+                ButtonType ajouterButtonType = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
+                dialog.getDialogPane().getButtonTypes().addAll(ajouterButtonType, ButtonType.CANCEL);
+
+                // Gestion de l'événement pour le bouton "Ajouter"
+                dialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == ajouterButtonType) {
+                        String nom = nomMethode.getText();
+                        String typeRetour = nomTypeRetour.getText();
+                        String param = parametres.getText();
+                        String acces = "";
+                        if(accessible.isSelected())
+                            acces = "+";
+                        else
+                            acces = "-";
+                        ArrayList<Parametre> listeParametres = new ArrayList<>();
+
+
+                        if (!param.trim().isEmpty()) {
+                            String[] parametresArray = param.split(","); // Séparer par des virgules
+                            for (String p : parametresArray) {
+                                String[] parts = p.trim().split(" "); // Séparer le type et le nom
+                                if (parts.length == 2) {
+                                    String typeParam = parts[0]; // Type du paramètre
+                                    String nomParam = parts[1]; // Nom du paramètre
+                                    listeParametres.add(new Parametre(nomParam, typeParam)); // Créer un nouvel objet Parametre
+                                } else {
+                                    System.out.println("Format de paramètre incorrect : " + param);
+                                }
+                            }
+                        }
+
+                        return new Methode(nom, acces, typeRetour, listeParametres);
+                    }
+                    return null;
+                });
+
+                // Afficher la boîte de dialogue et récupérer le résultat
+                dialog.showAndWait().ifPresent(nouvelleMethode -> {
+                    classeComplete.ajoutMethode(nouvelleMethode);
+                    model.notifierObservateurs();
+                });
+            }
+        });
+
+        methodes.getItems().addAll(afficherMethodes, ajouterMethode);
 
 
 
