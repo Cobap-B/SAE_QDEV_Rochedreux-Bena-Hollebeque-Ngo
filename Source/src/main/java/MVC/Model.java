@@ -149,10 +149,8 @@ public class Model implements Sujet{
     }
 
 
-    public void save(){
+    public void save(String dir){
         try{
-            File dir = new File("diagramme");
-            dir.mkdirs();
             FileOutputStream fileOutputStream
                     = new FileOutputStream(dir);
             ObjectOutputStream objectOutputStream

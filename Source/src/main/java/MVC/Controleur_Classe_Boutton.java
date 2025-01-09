@@ -1,9 +1,6 @@
 package MVC;
 
-import Classes.Attribut;
-import Classes.ClasseComplete;
-import Classes.Dependance;
-import Classes.Methode;
+import Classes.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -12,6 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -74,6 +72,11 @@ public class Controleur_Classe_Boutton implements EventHandler<MouseEvent> {
 
             // Ajouter la classe au modèle
             model.ajouter_squelette_Classe(nom, "class", attributs, methodes, dependances, X_menu , Y_menu);
+            try {
+                GenerateurFichierClasse.genererFichierClasse(nom, "class", "Source/classGenerer");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
