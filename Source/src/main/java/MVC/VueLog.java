@@ -2,6 +2,8 @@ package MVC;
 
 import javafx.scene.control.TextArea;
 
+import java.io.Serializable;
+
 public class VueLog extends TextArea implements Observateur{
 
     Model m;

@@ -3,14 +3,17 @@ package MVC;
 import Classes.*;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 public class Model implements Sujet{
     /**
      * Liste des observateurs
@@ -78,6 +81,16 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    public void saveDiagramme(VueDiagramme v) throws IOException{
+        File dir = new File("diagramme");
+        dir.mkdirs();
+        WritableImage image = v.snapshot(null, null);
+        File file = new File("diagramme/output.png");
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        logs.add("Le diagramme a été exporté en PNG");
+        notifierObservateurs();
+    }
+
 
     public void savePNG(){
         // Chemin vers le fichier texte contenant le diagramme UML
@@ -110,7 +123,7 @@ public class Model implements Sujet{
 
                 // Déplace le fichier vers le dossier de sortie
                 if (fichierImage.renameTo(fichierDestination)) {
-                    logs.add("\n Le diagramme a été exporté en format PNG\n" + "Image générée : " + fichierDestination.getAbsolutePath());
+                    logs.add("\n Le diagramme a été exporté en format PNG plantUML\n" + "Image générée : " + fichierDestination.getAbsolutePath());
                 } else {
                     logs.add("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
                 }
@@ -136,6 +149,34 @@ public class Model implements Sujet{
     }
 
 
+    public void save(){
+        try{
+            File dir = new File("diagramme");
+            dir.mkdirs();
+            FileOutputStream fileOutputStream
+                    = new FileOutputStream("diagramme/save.pipotam");
+            ObjectOutputStream objectOutputStream
+                    = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(diagramme);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void load(){
+        try{
+            FileInputStream fileInputStream
+                    = new FileInputStream("diagramme/save.pipotam");
+            ObjectInputStream objectInputStream
+                    = new ObjectInputStream(fileInputStream);
+            diagramme = (ArrayList<ClasseComplete>) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
@@ -144,15 +185,16 @@ public class Model implements Sujet{
 
 
 
-    public ArrayList<ClasseComplete> getDependances(ClasseComplete c){
-        ArrayList<ClasseComplete> dep = new ArrayList<>();
+
+    public ArrayList<DependanceFleche> getDependances(ClasseComplete c){
+        ArrayList<DependanceFleche> dep = new ArrayList<>();
 
         //Ajout des dependance de base Heritage et Implementation
         for (Dependance dependance : c.getDependances()) {
             if (dependance.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
                     if (dependance.getDepend().equals(classeComplete.getNom())){
-                        dep.add(classeComplete);
+                        dep.add(new DependanceFleche(classeComplete, dependance.getType()));
                     }
                 }
             }
@@ -162,7 +204,7 @@ public class Model implements Sujet{
             if (att.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
                     if (att.getType().equals(classeComplete.getNom())){
-                        dep.add(classeComplete);
+                        dep.add(new DependanceFleche(classeComplete, "Base"));
                     }
                 }
             }

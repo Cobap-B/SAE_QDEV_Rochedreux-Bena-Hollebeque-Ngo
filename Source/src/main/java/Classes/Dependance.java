@@ -1,6 +1,8 @@
 package Classes;
 
-public class Dependance {
+import java.io.Serializable;
+
+public class Dependance implements Serializable {
 
     private String depend;
     private String type;

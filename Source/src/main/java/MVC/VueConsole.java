@@ -1,5 +1,7 @@
 package MVC;
 
+import java.io.Serializable;
+
 public class VueConsole implements Observateur{
     public VueConsole(){}
 
