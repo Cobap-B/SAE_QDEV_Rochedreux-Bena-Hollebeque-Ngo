@@ -45,6 +45,8 @@ public class Principale extends Application {
         MenuItem exporterUML = new MenuItem("Exporter plantUML");
         MenuItem exporterPNG = new MenuItem("Exporter PNG plantUML");
         MenuItem exporterDiagramme = new MenuItem("Exporter Diagramme");
+        MenuItem save = new MenuItem("Save");
+        MenuItem load = new MenuItem("Load");
 
         Menu fichier = new Menu("Fichier");
 
@@ -53,7 +55,9 @@ public class Principale extends Application {
         exporterUML.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
         exporterPNG.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
         exporterDiagramme.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
-        fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG, exporterDiagramme);
+        save.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
+        load.setOnAction(new ControleurBoutonFichier(scene.getWindow(), m, diagramme_interface));
+        fichier.getItems().addAll(ouvrir, exporterUML, exporterPNG, exporterDiagramme, save, load);
 
         ControleurOption option = new ControleurOption(m);
         Button effacer = new Button("Effacer Diagramme");

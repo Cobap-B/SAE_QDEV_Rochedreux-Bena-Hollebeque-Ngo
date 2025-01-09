@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.File;
@@ -50,6 +51,37 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                 try {
                     m.saveDiagramme(v);
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "Save":
+                try {
+                    FileChooser fileChooser = new FileChooser();
+                    FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("pipotam", "*.pipotam");
+                    fileChooser.getExtensionFilters().add(filter);
+                    fileChooser.setSelectedExtensionFilter(filter);
+                    File saveFile = fileChooser.showSaveDialog(w);
+                    if(saveFile != null) {
+                        m.save(saveFile.getAbsolutePath());
+                    }
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "Load":
+                try {
+                    FileChooser fileChooser = new FileChooser();
+                    File f = fileChooser.showOpenDialog(w);
+                    if(f != null) {
+                        // on regarde l'extension
+                        String[] s = f.getName().split("\\.");
+                        if(s[1].equals("pipotam")){
+                            m.load(f.getAbsolutePath());
+                        }
+                    }
+                }
+                catch (Exception e) {
                     throw new RuntimeException(e);
                 }
                 break;
