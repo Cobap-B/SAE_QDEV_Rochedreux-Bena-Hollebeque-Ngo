@@ -204,7 +204,6 @@ public class Introspection {
                 for (Type typeArgument : typeArguments) {
                     tp = typeArgument.getTypeName().substring(typeArgument.getTypeName().indexOf('.')+1);
                     //On prend seulement le nom car c'est ce que l'on veut
-                    System.out.println("    - "+tp+"    "+f.getName());
                     //On creer notre attribut avec un * car c'est une collection
                     attributs.add(new Attribut(f.getName(), ac, tp, "*"));
                 }

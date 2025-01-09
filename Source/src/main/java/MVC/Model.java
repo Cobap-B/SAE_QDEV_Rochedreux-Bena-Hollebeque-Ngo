@@ -211,7 +211,7 @@ public class Model implements Sujet{
             if (att.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
                     if (att.getType().equals(classeComplete.getNom())){
-                        dep.add(new DependanceFleche(classeComplete, "Base"));
+                        dep.add(new DependanceFleche(classeComplete, "Base", "1",att.getNombre(),att.getNom()));
                     }
                 }
             }
