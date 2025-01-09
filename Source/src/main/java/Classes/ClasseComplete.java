@@ -26,6 +26,10 @@ public class ClasseComplete implements Serializable {
         this.color = Color.WHITE;
     }
 
+    public void ajoutAttribut(Attribut a){
+        attributs.add(a);
+    }
+
 
     public String getUml(){
         StringBuilder resultat = new StringBuilder();

@@ -1,13 +1,12 @@
 package MVC;
 
+import Classes.Attribut;
 import Classes.ClasseComplete;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
 public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
     private ContextMenu contextMenu;
@@ -36,7 +35,51 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
         //ACTION a implémenter
         //
-        ajouterAttribut.setOnAction(e -> System.out.println("Ajouter un Attribut"));
+        ajouterAttribut.setOnAction(e -> {
+            if (contextMenu.getOwnerNode() instanceof VueClasse) {
+                VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
+                ClasseComplete classeComplete = vueClasse.getClasseComplete();
+
+                // Créer la boîte de dialogue pour ajouter un attribut
+                Dialog<Attribut> dialog = new Dialog<>();
+                dialog.setTitle("Ajouter un Attribut");
+                dialog.setHeaderText("Entrez les détails de l'attribut");
+
+                // Créer les champs de saisie
+                TextField nomField = new TextField();
+                nomField.setPromptText("Nom de l'attribut");
+
+                TextField typeField = new TextField();
+                typeField.setPromptText("Type de l'attribut");
+
+                CheckBox accessibleCheckBox = new CheckBox("Accessible");
+
+                // Créer un layout
+                VBox vbox = new VBox(nomField, typeField, accessibleCheckBox);
+                dialog.getDialogPane().setContent(vbox);
+
+                // Ajouter les boutons
+                ButtonType ajouterButtonType = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
+                dialog.getDialogPane().getButtonTypes().addAll(ajouterButtonType, ButtonType.CANCEL);
+
+                // Gestion de l'événement pour le bouton "Ajouter"
+                dialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == ajouterButtonType) {
+                        String nom = nomField.getText();
+                        String type = typeField.getText();
+                        String acces = accessibleCheckBox.isSelected() ? "+" : "-";
+                        return new Attribut(nom, acces, type);
+                    }
+                    return null;
+                });
+
+                // Afficher la boîte de dialogue et récupérer le résultat
+                dialog.showAndWait().ifPresent(nouvelAttribut -> {
+                    classeComplete.ajoutAttribut(nouvelAttribut);
+                    model.notifierObservateurs(); // Notifier les observateurs après ajout
+                });
+            }
+        });
         //
         //
 
@@ -64,7 +107,7 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
         //ACTION a implémenter
         //
-        ajouterAttribut.setOnAction(e -> System.out.println("Ajouter une méthode"));
+        ajouterMethodes.setOnAction(e -> System.out.println("Ajouter une méthode"));
         //
         //
 
