@@ -39,14 +39,20 @@ public class VueClasse extends VBox implements Observateur{
         if (light) {
             p_label.setBorder(Border.stroke(Color.WHITE));
             label.setStroke(Color.WHITE);
+            label.setStrokeWidth(0.8);
             attribut.setStroke(Color.WHITE);
+            attribut.setStrokeWidth(0.8);
             methode.setStroke(Color.WHITE);
+            methode.setStrokeWidth(0.8);
         }
         else{
             p_label.setBorder(Border.stroke(Color.BLACK));
             label.setStroke(Color.BLACK);
+            label.setStrokeWidth(0.2);
             attribut.setStroke(Color.BLACK);
+            attribut.setStrokeWidth(0.2);
             methode.setStroke(Color.BLACK);
+            methode.setStrokeWidth(0.2);
         }
         p_label.getChildren().add(label);
         label.relocate(0,0);
