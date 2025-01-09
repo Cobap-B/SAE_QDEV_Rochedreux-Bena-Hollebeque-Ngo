@@ -36,7 +36,7 @@ public class Controleur_Classe_Boutton implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (event.isPrimaryButtonDown()) {
+        if (event.isSecondaryButtonDown()) {
             if (!(event.getSource() instanceof VueClasse)) {
                 // Afficher le menu contextuel pour ajouter une classe
                 contextMenu.show((javafx.scene.Node) event.getSource(), event.getScreenX(), event.getScreenY());
