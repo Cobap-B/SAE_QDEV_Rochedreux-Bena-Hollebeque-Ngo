@@ -38,7 +38,7 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "Exporter PNG":
+            case "Exporter PNG plantUML":
                 try {
                     m.saveUML();
                     m.savePNG();

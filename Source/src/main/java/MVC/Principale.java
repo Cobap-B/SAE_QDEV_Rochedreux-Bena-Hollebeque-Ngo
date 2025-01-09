@@ -43,7 +43,7 @@ public class Principale extends Application {
         ToolBar toolbar = new ToolBar();
 
         MenuItem exporterUML = new MenuItem("Exporter plantUML");
-        MenuItem exporterPNG = new MenuItem("Exporter PNG");
+        MenuItem exporterPNG = new MenuItem("Exporter PNG plantUML");
         MenuItem exporterDiagramme = new MenuItem("Exporter Diagramme");
 
         Menu fichier = new Menu("Fichier");

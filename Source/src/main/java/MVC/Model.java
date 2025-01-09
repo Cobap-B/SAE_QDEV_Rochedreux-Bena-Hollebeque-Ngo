@@ -125,7 +125,7 @@ public class Model implements Sujet{
 
                 // Déplace le fichier vers le dossier de sortie
                 if (fichierImage.renameTo(fichierDestination)) {
-                    logs.add("\n Le diagramme a été exporté en format PNG\n" + "Image générée : " + fichierDestination.getAbsolutePath());
+                    logs.add("\n Le diagramme a été exporté en format PNG plantUML\n" + "Image générée : " + fichierDestination.getAbsolutePath());
                 } else {
                     logs.add("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
                 }
