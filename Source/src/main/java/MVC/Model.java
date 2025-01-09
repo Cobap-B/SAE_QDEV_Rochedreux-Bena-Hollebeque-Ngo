@@ -58,10 +58,8 @@ public class Model implements Sujet{
     }
 
     public void effacer_D(){
-        save();
         if(!diagramme.isEmpty()){diagramme = new ArrayList<>();}
         logs.add("Diagramme effacé");
-        load();
         notifierObservateurs();
     }
 
@@ -136,12 +134,10 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
-    public void save(){
+    public void save(String dir){
         try{
-            File dir = new File("diagramme");
-            dir.mkdirs();
             FileOutputStream fileOutputStream
-                    = new FileOutputStream("diagramme/save.pipotam");
+                    = new FileOutputStream(dir);
             ObjectOutputStream objectOutputStream
                     = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(diagramme);
@@ -150,12 +146,13 @@ public class Model implements Sujet{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        notifierObservateurs();
     }
 
-    public void load(){
+    public void load(String path){
         try{
             FileInputStream fileInputStream
-                    = new FileInputStream("diagramme/save.pipotam");
+                    = new FileInputStream(path);
             ObjectInputStream objectInputStream
                     = new ObjectInputStream(fileInputStream);
             diagramme = (ArrayList<ClasseComplete>) objectInputStream.readObject();
@@ -163,6 +160,7 @@ public class Model implements Sujet{
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        notifierObservateurs();
     }
 
     public ArrayList<DependanceFleche> getDependances(ClasseComplete c){
