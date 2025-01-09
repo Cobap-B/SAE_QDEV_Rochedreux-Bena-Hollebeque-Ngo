@@ -62,7 +62,6 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
                     fileChooser.setSelectedExtensionFilter(filter);
                     File saveFile = fileChooser.showSaveDialog(w);
                     if(saveFile != null) {
-                        System.out.println(saveFile.getAbsolutePath() + " " + saveFile.getName());
                         m.save(saveFile.getAbsolutePath());
                     }
                 }
