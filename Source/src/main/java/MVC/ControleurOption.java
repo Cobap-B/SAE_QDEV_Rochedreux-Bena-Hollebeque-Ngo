@@ -3,6 +3,7 @@ package MVC;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 
 public class ControleurOption implements EventHandler<ActionEvent> {
     private Model model;
@@ -13,12 +14,20 @@ public class ControleurOption implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        Button b = (Button) actionEvent.getSource();
-
-        switch (b.getText()){
-            case "Effacer Diagramme":
-                model.effacer_D();
-                break;
+        if(actionEvent.getSource().getClass().getSimpleName().equals("ColorPicker")){
+            ColorPicker colorPicker = (ColorPicker) actionEvent.getSource();
+            model.changerColor(colorPicker.getValue().getRed(), colorPicker.getValue().getGreen(), colorPicker.getValue().getBlue());
         }
+        else {
+            Button b = (Button) actionEvent.getSource();
+            switch (b.getText()){
+                case "Effacer Diagramme":
+                    model.effacer_D();
+                    break;
+            }
+        }
+
+
+
     }
 }

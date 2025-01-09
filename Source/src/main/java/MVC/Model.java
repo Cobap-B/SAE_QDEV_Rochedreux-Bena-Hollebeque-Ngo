@@ -3,6 +3,7 @@ package MVC;
 import Classes.*;
 
 
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -12,7 +13,6 @@ import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 public class Model implements Sujet{
     /**
@@ -22,6 +22,7 @@ public class Model implements Sujet{
     private ArrayList<String> logs;
     private ArrayList<ClasseComplete> diagramme;
     private Dossier arbre;
+    private Color couleur;
 
 
     public Model(){
@@ -29,6 +30,7 @@ public class Model implements Sujet{
         diagramme = new ArrayList<>();
         observateurs = new ArrayList<>();
         arbre = null;
+        couleur = new Color(204,255,204);
     }
 
     public void ouvrirDossier(String path){
@@ -48,6 +50,7 @@ public class Model implements Sujet{
     public void ajouter_Classe_D(ClasseComplete c, double x, double y){
         if (!diagramme.contains(c)){
             c.setCo(x, y, 10000, 10000);
+            c.setColor(couleur);
             diagramme.add(c);
             logs.add("Ajout de la classe " + c.getNom());
         }else{
@@ -178,6 +181,18 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    public void changerColor(double r, double g, double b){
+        couleur = new Color((float)r, (float)g, (float)b);
+        for(ClasseComplete c : diagramme){
+            c.setColor(couleur);
+        }
+        notifierObservateurs();
+    }
+
+    public Color getCouleur(){
+        return couleur;
+    }
+
     public ArrayList<DependanceFleche> getDependances(ClasseComplete c){
         ArrayList<DependanceFleche> dep = new ArrayList<>();
 
@@ -196,7 +211,7 @@ public class Model implements Sujet{
             if (att.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
                     if (att.getType().equals(classeComplete.getNom())){
-                        dep.add(new DependanceFleche(classeComplete, "Base"));
+                        dep.add(new DependanceFleche(classeComplete, "Base", "1",att.getNombre(),att.getNom()));
                     }
                 }
             }

@@ -14,6 +14,8 @@ public class Dependance implements Serializable {
         this.visibilite = true;
     }
 
+
+
     public String getDepend() {
         return depend;
     }

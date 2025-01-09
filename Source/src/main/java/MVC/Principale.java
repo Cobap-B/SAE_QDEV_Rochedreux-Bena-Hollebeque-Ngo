@@ -64,9 +64,11 @@ public class Principale extends Application {
         effacer.setOnAction(option);
         Button retour = new Button("Retour arrière (Ctrl+Z)");
         Button creer = new Button("Créer nouvelle classe");
+        ColorPicker colorPicker = new ColorPicker(Color.web("ccffcc"));
+        colorPicker.setOnAction(option);
 
         menu.getMenus().addAll(fichier);
-        toolbar.getItems().addAll(menu, effacer,retour,creer);
+        toolbar.getItems().addAll(menu, effacer,retour,creer, colorPicker);
 //        bp.setTop(menu);
         bp.setTop(toolbar);
 
