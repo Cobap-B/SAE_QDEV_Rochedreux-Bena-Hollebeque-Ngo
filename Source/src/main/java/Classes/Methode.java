@@ -1,5 +1,7 @@
 package Classes;
 
+import net.sourceforge.plantuml.argon2.blake2.Blake2b;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -47,13 +49,16 @@ public class Methode {
     public String toString() {
         String s = (getAcces() +" " + getNom());
         s+= "(";
-        if (getParametres().size()>1){
+        if (getParametres().size()>0){
             //Boucle pour les paramètre
-            for (Parametre parametre : getParametres()) {
-                s+=(parametre.getType() +" "+parametre.getNom());
-                s+=",";
+            for (int i = 0; i < parametres.size(); i++) {
+                Parametre parametre = parametres.get(i);
+                s+= parametre.getType() +" "+ parametre.getNom();
+                if (i < parametres.size() - 1) {
+                    s+=", ";
+                }
+
             }
-            s= s.substring(0, s.length()-1);
         }
         s+=(")"+" : "+ getType_retour()+"\n");
         return s;

@@ -111,7 +111,24 @@ public class Introspection {
 
         ArrayList<Parametre> param = new ArrayList<>();
         for (Parameter p : m.getParameters()) {
-            param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
+            String paramType = p.getType().getSimpleName(); // Type de base
+            Type genericParamType = p.getParameterizedType();
+
+            if (genericParamType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericParamType;
+                String typeString = paramType + "<";
+                Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                for (int i = 0; i < typeArguments.length; i++) {
+                    String typeName = typeArguments[i].getTypeName();
+                    typeString += typeName.substring(typeName.lastIndexOf('.') + 1);
+                    if (i < typeArguments.length - 1) {
+                        typeString += ", ";
+                    }
+                }
+                typeString += ">";
+                paramType = typeString; // Mettre à jour le type du paramètre
+            }
+            param.add(new Parametre(p.getName(), paramType));
         }
 
         //Vérifier si l'attribut est une collection
