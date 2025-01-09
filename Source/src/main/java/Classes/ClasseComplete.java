@@ -30,6 +30,10 @@ public class ClasseComplete implements Serializable {
         attributs.add(a);
     }
 
+    public void ajoutMethode(Methode m){
+        methodes.add(m);
+    }
+
 
     public String getUml(){
         StringBuilder resultat = new StringBuilder();
