@@ -153,8 +153,11 @@ public class VueDiagramme extends Pane implements Observateur{
             //Angle de c à classComplete au niveau de 0
             double angle = Math.atan2(dify,difx);
 
-
-            fleches.add(new Fleche(dependanceFleche.getString(), c1x, c1y, c2x, c2y,distance, angle, classeComplete, c));
+            if (dependanceFleche.getNom() != null){
+                fleches.add(new Fleche(dependanceFleche.getString(), c1x, c1y, c2x, c2y,distance, angle, classeComplete, c, dependanceFleche.getCardinalite1(), dependanceFleche.getCardinalite2(), dependanceFleche.getNom()));
+            }else{
+                fleches.add(new Fleche(dependanceFleche.getString(), c1x, c1y, c2x, c2y,distance, angle, classeComplete, c));
+            }
 
 
         }
