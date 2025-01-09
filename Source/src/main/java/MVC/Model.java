@@ -121,6 +121,29 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+
+
+    public void ajouter_squelette_Classe(String nom, String type, ArrayList<Attribut> attributs, ArrayList<Methode> methodes, ArrayList<Dependance> dependances, double x, double y) {
+        ClasseComplete classe = new ClasseComplete(nom, type, attributs, methodes, dependances);
+        if (!diagramme.contains(classe)) {
+            classe.setCo(x, y, 10000, 10000); // Définir les coordonnées et tailles par défaut
+            diagramme.add(classe);
+            logs.add("Classe " + nom + " ajoutée au diagramme.");
+        } else {
+            logs.add("La classe " + nom + " existe déjà dans le diagramme.");
+        }
+        notifierObservateurs(); // Met à jour les observateurs
+    }
+
+
+
+
+
+
+
+
+
+
     public ArrayList<ClasseComplete> getDependances(ClasseComplete c){
         ArrayList<ClasseComplete> dep = new ArrayList<>();
 

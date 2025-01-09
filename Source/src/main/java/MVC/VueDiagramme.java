@@ -18,12 +18,20 @@ public class VueDiagramme extends Pane implements Observateur{
     public VueDiagramme(Model m){
         c = new Canvas();
         model = m;
+
+        model.enregistrerObservateur(this);
+
+
         this.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
             this.setWidth(newBounds.getWidth());
             this.setHeight(newBounds.getHeight());
             c.setHeight(getHeight());
             c.setWidth(getWidth());
 
+
+            // Ajouter le contrôleur pour gérer le clic droit
+            Controleur_Classe_Boutton controleurCanvas = new Controleur_Classe_Boutton(model);
+            this.setOnMousePressed(controleurCanvas);
 
         });
 
