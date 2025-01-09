@@ -9,9 +9,9 @@ public class Fleche {
     private double distance;
     private  double angle;
 
-    private ClasseComplete destination;
+    private ClasseComplete destination, depart;
 
-    public Fleche(String type, double departX, double departY, double finX, double finY, double distance, double angle, ClasseComplete c) {
+    public Fleche(String type, double departX, double departY, double finX, double finY, double distance, double angle, ClasseComplete c, ClasseComplete c2) {
         this.type = type;
         this.departX = departX;
         this.departY = departY;
@@ -20,6 +20,7 @@ public class Fleche {
         this.distance = distance;
         this.angle = angle;
         this.destination = c;
+        this.depart = c2;
     }
 
     public double getDistance() {
@@ -44,6 +45,14 @@ public class Fleche {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public ClasseComplete getDestination() {
+        return destination;
+    }
+
+    public ClasseComplete getDepart() {
+        return depart;
     }
 
     public double getDepartX() {
