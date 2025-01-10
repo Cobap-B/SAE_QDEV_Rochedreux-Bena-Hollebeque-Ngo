@@ -51,7 +51,9 @@ public class ClasseComplete implements Serializable {
             //Ajoute le abstract ou le interface
             resultat.append(this.type+" ");
         }
-        resultat.append("class "+nom+"{\n");
+        if (this.type.equals("interface")) resultat.append(nom+"{\n");  //Ajoute le class ou non
+        else resultat.append("class "+nom+"{\n");
+
 
         attributs.forEach(attribut -> {
             if (TypePrimitif(attribut.getType())) {
@@ -65,9 +67,19 @@ public class ClasseComplete implements Serializable {
         resultat.append("}\n");
 
 
+
+
         attributs.forEach(attribut -> {
-            //Non type primitif donc un objet
-            if (!TypePrimitif(attribut.getType())) {
+            String[] cont  = attribut.getType().split("<");
+            if (cont.length>1) {
+                cont[1] = cont[1].substring(0, cont[1].length() - 1);
+                for (String s : cont[1].split(",")) {
+                    if (!TypePrimitif(s)) {
+                        resultat.append(this.nom + "\"1\" --> " +"\""+ attribut.getNombre() +"\"" + s +" : "+attribut.getNom() +"\n");
+                    }
+                }
+            }//Non type primitif donc un objet
+            else if (!TypePrimitif(attribut.getType())) {
                 resultat.append(this.nom + "\"1\" --> " +"\""+ attribut.getNombre() +"\"" + attribut.getType() +" : "+attribut.getNom() +"\n");
             }
         });
