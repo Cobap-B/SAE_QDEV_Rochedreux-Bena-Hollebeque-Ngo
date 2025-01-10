@@ -1,0 +1,18 @@
+Membre	            Tâches principales
+
+Tout le monde
+
+HUGOB	           Generation de squelette de classe .java + ajout de méthodes et d'attributs dans le .java
+                   Creation d'une classe à partir du diagramme (affichage)
+
+Arthur	           Changer la couleur du diagramme
+                   sauvegarde d'une captude d'écran du diagramme
+                   sauvegarde d'un diagramme dans un format (.pipotam) que l'on peut load
+
+Kevin              Ajout de méthodes et et attributs dans la classe dans l'affichage du classe du diagramme
+                   Gestion des attributs des classes et les parametres des méthodes : visualisation du type de collections
+
+HugoR               Retour arrière dans une pile d'instruction,
+                    Gestion de plusieurs fleches de dépendances qui se superposées
+                    cardinalité des dépendances
+                    Optimisation du frame rate

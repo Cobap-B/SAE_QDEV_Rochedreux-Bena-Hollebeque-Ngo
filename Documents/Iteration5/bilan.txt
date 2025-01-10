@@ -1,0 +1,32 @@
+Bilan de l'application
+L'application permet de gérer et manipuler des classes dans un diagramme UML avec génération de code Java
+
+Fonctionnalités principales :
+
+Gestion des attributs :
+Affichage avec nom type et accessibilité (public/private), mise à jour automatique des fichiers .java
+Ajout dans un fichier .java
+
+Gestion des méthodes :
+Affichage avec nom, type de retour, accessibilité, paramètres, et génération dans le fichier .java
+Ajout dans un fichier.java
+
+Dépendances :
+Affichage ou masquage des relations entre classes avec des flèches
+Cardinalité des dépendances
+
+Gestion des classes :
+Suppression d'une classe du diagramme
+Deplacement des classes sur le diagramme
+
+Génération de code :
+Mise à jour automatique et bien organisée des fichiers .java après chaque modification
+
+Interface contextuelle :
+Menu clic droit pour accéder rapidement aux actions principales sur les classes
+Menu clic droit pour créer une classe sur le diagramme
+
+Autres :
+Changement du couleur
+Retour arrière
+Effacer tout le diagramme
