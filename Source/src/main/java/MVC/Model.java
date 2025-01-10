@@ -232,6 +232,7 @@ public class Model implements Sujet{
             classe.setCo(x, y, 10000, 10000); // Définir les coordonnées et tailles par défaut
             diagramme.add(classe);
             ajouter_Log("Classe " + nom + " ajoutée au diagramme.");
+            classe.setColor(this.couleur);
         } else {
             ajouter_Log("La classe " + nom + " existe déjà dans le diagramme.");
         }
