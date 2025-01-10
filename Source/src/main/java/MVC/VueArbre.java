@@ -75,7 +75,8 @@ public class VueArbre extends TreeView<String> implements Observateur{
 
         for (FichierComposite fichier : dossier.files) {
             // on ne prend que les .class ou les dossiers sans .idea
-            if ((fichier instanceof Dossier && !fichier.getName().equals(".idea")) || fichier.getName().endsWith(".class")) {
+
+            if ((fichier instanceof Dossier && !fichier.getName().equals(".idea")) || fichier.getName().endsWith(".class") && !fichier.getName().equals("module-info.class")) {
 
                 // TreeItem pour chaque fichier ou dossier
                 TreeItemFile item = new TreeItemFile(fichier);
