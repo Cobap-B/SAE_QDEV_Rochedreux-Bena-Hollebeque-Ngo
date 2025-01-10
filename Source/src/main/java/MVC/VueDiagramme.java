@@ -1,24 +1,21 @@
 package MVC;
 
 import Classes.ClasseComplete;
-import Classes.Dependance;
 import Classes.DependanceFleche;
 import Classes.Fleche;
+import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class VueDiagramme extends Pane implements Observateur{
 
-    Canvas c;
+    Canvas canvas;
     Model model;
     public VueDiagramme(Model m){
-        c = new Canvas();
+        canvas = new Canvas();
         model = m;
 
         model.enregistrerObservateur(this);
@@ -27,48 +24,56 @@ public class VueDiagramme extends Pane implements Observateur{
         this.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
             this.setWidth(newBounds.getWidth());
             this.setHeight(newBounds.getHeight());
-            c.setHeight(getHeight());
-            c.setWidth(getWidth());
-
-
-            // Ajouter le contrôleur pour gérer le clic droit
-            Controleur_Classe_Boutton controleurCanvas = new Controleur_Classe_Boutton(model);
-            this.setOnMousePressed(controleurCanvas);
-
+            canvas.setHeight(getHeight());
+            canvas.setWidth(getWidth());
         });
 
 
+        // Ajouter le contrôleur pour gérer le clic droit
+        Controleur_Classe_Boutton controleurCanvas = new Controleur_Classe_Boutton(model);
+        canvas.setOnMousePressed(controleurCanvas);
 
-    };
+
+
+    }
     @Override
     public void actualiser(Sujet s) {
-        GraphicsContext gc = c.getGraphicsContext2D();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
         this.getChildren().clear();
         model = (Model) s;
 
-        this.getChildren().add(c);
-        gc.clearRect(0, 0, c.getWidth(), c.getHeight());
+        this.getChildren().add(canvas);
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
 
-
         ArrayList<Fleche> fleches = new ArrayList<>();
         for (ClasseComplete classeComplete : model.getDiagramme()) {
-
-            ArrayList<DependanceFleche> dependances = model.getDependances(classeComplete);
-            fleches.addAll(createFleches(classeComplete,dependances, gc));
-
             VueClasse vue = new VueClasse(classeComplete);
             vue.relocate(classeComplete.getX(), classeComplete.getY());
             this.getChildren().add(vue);
 
-            vue.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
-                //OBLIGATOIRE pour obtenir la taille
+            Runnable r = () -> {};
+
+            //Si jamais c'est la dernière classe et bien c'est elle qui lorsque j'aurais ca taille vas dessiner les flèches... c'est un peu compliqué
+            if (model.getDiagramme().indexOf(classeComplete) == model.getDiagramme().size()-1){
+                r = () -> {
+                    //Le permet de calculer si les flèches ce supperpose ou non
+                    calculerFleche(fleches, gc);
+                };
+            }
+
+            //Creer un listenenr pour obtenir les tailles des vbox car ont les get seulement après les avoirs afficher
+            TwoTimeChangeListener<Bounds> oneTimeListener = new TwoTimeChangeListener<>((observable, oldBounds, newBounds) -> {
+                // Mettre à jour les tailles
                 classeComplete.setTailleX(newBounds.getWidth());
                 classeComplete.setTailleY(newBounds.getHeight());
-            });
+            }, r);
+
+            vue.layoutBoundsProperty().addListener(oneTimeListener);
+
 
             ControleurClasseDrag controleurClasseDrag = new ControleurClasseDrag(model, classeComplete, this);
 
@@ -77,11 +82,22 @@ public class VueDiagramme extends Pane implements Observateur{
             vue.setOnMouseDragged(controleurClasseDrag);
 
             vue.setOnMouseClicked(new ControleurBoutonDroit(model));
+
+        }
+    }
+
+
+    public void calculerFleche(ArrayList<Fleche> fleches, GraphicsContext gc){
+        //La fonction est trigger lorsqu'on possède enfin les tailles de toutes les classes donc on calcule les flèches
+        for (ClasseComplete classeComplete : model.getDiagramme()) {
+            ArrayList<DependanceFleche> dependances = model.getDependances(classeComplete);
+            fleches.addAll(createFleches(classeComplete,dependances, gc));
         }
 
+        //Ici c'est pour calculer lorsque les flcèhes se supperpose ou non
         //J'ai pas le courage d'expliquer tous les calculs....... my bad
         boolean pas_fin = true;
-        while (pas_fin) {
+        while (pas_fin) {       //Tant que deux fleches ne sont pas bonnes on rebouge
             pas_fin = false;
             for (Fleche flech1 : fleches) {
                 for (Fleche flech2 : fleches) {

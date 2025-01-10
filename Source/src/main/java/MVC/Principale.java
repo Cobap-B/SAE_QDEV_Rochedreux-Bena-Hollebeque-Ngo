@@ -63,8 +63,12 @@ public class Principale extends Application {
         Button effacer = new Button("Effacer Diagramme");
         effacer.setOnAction(option);
         Button retour = new Button("Retour arrière (Ctrl+Z)");
+        retour.setOnAction(option);
         ColorPicker colorPicker = new ColorPicker(Color.web("ccffcc"));
         colorPicker.setOnAction(option);
+
+        //Pour les events de Key
+        scene.setOnKeyPressed(new ControleurKeyEvent(m));
 
         menu.getMenus().addAll(fichier);
         toolbar.getItems().addAll(menu, effacer,retour, colorPicker);
@@ -95,8 +99,8 @@ public class Principale extends Application {
 
         bp.setCenter(diagramme_interface);
 
-        ControleurBoutonDroit boutondroit = new ControleurBoutonDroit(m);
-        diagramme_interface.setOnMouseClicked(boutondroit);
+        //ControleurBoutonDroit boutondroit = new ControleurBoutonDroit(m);
+        //diagramme_interface.setOnMouseClicked(boutondroit);
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<ClasseComplete> classes = m.getDiagramme();

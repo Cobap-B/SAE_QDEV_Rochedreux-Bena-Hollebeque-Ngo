@@ -6,6 +6,7 @@ import Classes.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.WritableImage;
@@ -24,6 +25,9 @@ public class Model implements Sujet{
     private Dossier arbre;
     private Color couleur;
 
+    private final Stack<byte[]> ctrlZ;
+
+    private final int TailleCtrlZ = 20;
 
     public Model(){
         logs = new ArrayList<>();
@@ -31,11 +35,12 @@ public class Model implements Sujet{
         observateurs = new ArrayList<>();
         arbre = null;
         couleur = new Color(204,255,204);
+        ctrlZ = new Stack<>();
     }
 
     public void ouvrirDossier(String path){
         arbre = new Dossier(path);
-        logs.add("Ouverture du dossier " + path);
+        ajouter_Log("Ouverture du dossier " + path);
 
         notifierObservateurs();
     }
@@ -47,27 +52,72 @@ public class Model implements Sujet{
     public void ajoutMethode(ClasseComplete c, Methode m){
         //Rien
     }
+
     public void ajouter_Classe_D(ClasseComplete c, double x, double y){
         if (!diagramme.contains(c)){
+            retour_save();
             c.setCo(x, y, 10000, 10000);
             c.setColor(couleur);
             diagramme.add(c);
-            logs.add("Ajout de la classe " + c.getNom());
+            ajouter_Log("Ajout de la classe " + c.getNom());
         }else{
-            logs.add("Déjà dans le diagramme " + c.getNom());
+            ajouter_Log("Déjà dans le diagramme " + c.getNom());
         }
         notifierObservateurs();
 
     }
 
     public void effacer_D(){
+        retour_save();
         if(!diagramme.isEmpty()){diagramme = new ArrayList<>();}
-        logs.add("Diagramme effacé");
+        ajouter_Log("Diagramme effacé");
         notifierObservateurs();
     }
 
     public void ajouter_Log(String s){
         logs.add(s);
+    }
+
+    public void retour_save(){
+
+
+        try {
+            ArrayList<ClasseComplete> clone = new ArrayList<>(diagramme);
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
+            objectStream.writeObject(clone);
+            objectStream.flush();
+
+            byte[] serializedData = byteStream.toByteArray();
+            ctrlZ.add(serializedData);
+            if(ctrlZ.size()>TailleCtrlZ){
+                ctrlZ.removeFirst();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void retour_arriere(){
+        try {
+
+            if (!ctrlZ.isEmpty()){
+                byte[] serializedData = ctrlZ.pop();
+
+                ByteArrayInputStream byteInputStream = new ByteArrayInputStream(serializedData);
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteInputStream);
+
+                ArrayList<ClasseComplete> deserialized = (ArrayList<ClasseComplete>) objectInputStream.readObject();
+
+                diagramme = deserialized;
+                notifierObservateurs();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void saveUML() throws IOException{
@@ -80,7 +130,7 @@ public class Model implements Sujet{
         }
         writer.write("@enduml \n");
         writer.close();
-        logs.add("Le diagramme a été exporté en format source PlantUML");
+        ajouter_Log("Le diagramme a été exporté en format source PlantUML");
         notifierObservateurs();
     }
 
@@ -90,7 +140,7 @@ public class Model implements Sujet{
         WritableImage image = v.snapshot(null, null);
         File file = new File("diagramme/output.png");
         ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-        logs.add("Le diagramme a été exporté en PNG");
+        ajouter_Log("Le diagramme a été exporté en PNG");
         notifierObservateurs();
     }
 
@@ -106,7 +156,7 @@ public class Model implements Sujet{
             // Crée le dossier si nécessaire
             boolean dossierCree = dossierSortie.mkdirs();
             if (!dossierCree) {
-                logs.add("Impossible de créer le dossier de sortie.");
+                ajouter_Log("Impossible de créer le dossier de sortie.");
                 return;
             }
         }
@@ -126,13 +176,13 @@ public class Model implements Sujet{
 
                 // Déplace le fichier vers le dossier de sortie
                 if (fichierImage.renameTo(fichierDestination)) {
-                    logs.add("\n Le diagramme a été exporté en format PNG plantUML\n" + "Image générée : " + fichierDestination.getAbsolutePath());
+                    ajouter_Log("\n Le diagramme a été exporté en format PNG plantUML\n" + "Image générée : " + fichierDestination.getAbsolutePath());
                 } else {
-                    logs.add("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
+                    ajouter_Log("Impossible de déplacer le fichier généré : " + fichierImage.getAbsolutePath());
                 }
             }
         } catch (IOException e) {
-            logs.add("Erreur lors de la génération de l'image UML : " + e.getMessage());
+            ajouter_Log("Erreur lors de la génération de l'image UML : " + e.getMessage());
         }
         notifierObservateurs();
     }
@@ -142,11 +192,12 @@ public class Model implements Sujet{
     public void ajouter_squelette_Classe(String nom, String type, ArrayList<Attribut> attributs, ArrayList<Methode> methodes, ArrayList<Dependance> dependances, double x, double y) {
         ClasseComplete classe = new ClasseComplete(nom, type, attributs, methodes, dependances);
         if (!diagramme.contains(classe)) {
+            retour_save();
             classe.setCo(x, y, 10000, 10000); // Définir les coordonnées et tailles par défaut
             diagramme.add(classe);
-            logs.add("Classe " + nom + " ajoutée au diagramme.");
+            ajouter_Log("Classe " + nom + " ajoutée au diagramme.");
         } else {
-            logs.add("La classe " + nom + " existe déjà dans le diagramme.");
+            ajouter_Log("La classe " + nom + " existe déjà dans le diagramme.");
         }
         notifierObservateurs(); // Met à jour les observateurs
     }
@@ -174,6 +225,7 @@ public class Model implements Sujet{
             ObjectInputStream objectInputStream
                     = new ObjectInputStream(fileInputStream);
             diagramme = (ArrayList<ClasseComplete>) objectInputStream.readObject();
+            ctrlZ.clear();
             objectInputStream.close();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);

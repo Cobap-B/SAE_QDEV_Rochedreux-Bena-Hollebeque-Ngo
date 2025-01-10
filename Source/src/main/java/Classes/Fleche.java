@@ -210,7 +210,9 @@ public class Fleche {
 
 
         double offset = 10;
-        double decal = 20;
+        double decal = distance/5;
+        if (decal>20) decal = 20;
+        else if (decal < 4) decal = 4;
         double perpAngle = angle + Math.PI / 2; // Angle perpendiculaire
 
         gc.fillText(cardinalite1,

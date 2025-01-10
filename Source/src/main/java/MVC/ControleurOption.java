@@ -24,6 +24,9 @@ public class ControleurOption implements EventHandler<ActionEvent> {
                 case "Effacer Diagramme":
                     model.effacer_D();
                     break;
+                case "Retour arrière (Ctrl+Z)":
+                    model.retour_arriere();
+                    break;
             }
         }
 

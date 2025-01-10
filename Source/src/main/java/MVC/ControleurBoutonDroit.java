@@ -27,6 +27,7 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
 
+                model.retour_save();
                 classeComplete.setVisible_Attributs(afficherAttributs.isSelected());
                 model.notifierObservateurs();
             }
@@ -71,6 +72,7 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
                 // Afficher la boîte de dialogue et récupérer le résultat
                 dialog.showAndWait().ifPresent(nouvelAttribut -> {
+                    model.retour_save();
                     classeComplete.ajoutAttribut(nouvelAttribut);
                     try{
                         //ajouter dans le .java
@@ -97,6 +99,8 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
             if (contextMenu.getOwnerNode() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
+
+                model.retour_save();
                 classeComplete.setVisible_Methodes(afficherMethodes.isSelected());
                 model.notifierObservateurs();
             }
@@ -161,6 +165,7 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
                 // Afficher la boîte de dialogue et récupérer le résultat
                 dialog.showAndWait().ifPresent(nouvelleMethode -> {
+                    model.retour_save();
                     classeComplete.ajoutMethode(nouvelleMethode);
 
                     try {
@@ -186,11 +191,10 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
             if (contextMenu.getOwnerNode() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
+
+                model.retour_save();
                 classeComplete.setVisible_Dependances(afficherDependances.isSelected());
                 model.notifierObservateurs();
-                System.out.println("Affichage des dependances : " + classeComplete.isVisible_Dependances());
-                System.out.println(afficherDependances.isSelected());
-
             }
         });
 
@@ -209,6 +213,8 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
             if (contextMenu.getOwnerNode() instanceof VueClasse) {
                 VueClasse vueClasse = (VueClasse) contextMenu.getOwnerNode();
                 ClasseComplete classeComplete = vueClasse.getClasseComplete();
+
+                model.retour_save();
                 if(model.getDiagramme().contains(classeComplete)){
                     model.getDiagramme().remove(classeComplete);
                 }

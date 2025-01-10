@@ -12,7 +12,6 @@ public class ControleurClasseDrag implements EventHandler<MouseEvent> {
     //private VueClasse vueClasse;
     private VueDiagramme vd;
 
-    //double startx, starty;
     double difx, dify;
     public ControleurClasseDrag(Model m, ClasseComplete c, VueDiagramme v){
         this.model = m;
@@ -29,15 +28,15 @@ public class ControleurClasseDrag implements EventHandler<MouseEvent> {
         double MY = vd.getHeight();
         //Verification si clic gauche pour drag
         if (mouseEvent.getButton().name().equals("PRIMARY")){
-            if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_RELEASED)){
+            if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_RELEASED)){;
                 //Deplacement de la classe
                 classeComplete.setCo(mouseEvent.getSceneX()-250-difx , mouseEvent.getSceneY()-40-dify, MX - classeComplete.getTailleX(), MY - classeComplete.getTailleY());
             }else if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_DRAGGED)){
                 //Lorsque drag
                 classeComplete.setCo(mouseEvent.getSceneX()- 250 -difx, mouseEvent.getSceneY()- 40 -dify, MX - classeComplete.getTailleX(), MY - classeComplete.getTailleY());
             }else if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)){
-                //startx = mouseEvent.getSceneX() - vueClasse.getTranslateX();
-                //starty = mouseEvent.getSceneY() - vueClasse.getTranslateY();
+                model.retour_save(); //Sauvegarde l'etat avant de modifier les positions
+
                 difx = mouseEvent.getSceneX() - classeComplete.getX() - 250;
                 dify = mouseEvent.getSceneY() - classeComplete.getY() - 40;
             }

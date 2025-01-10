@@ -1,0 +1,106 @@
+@startuml 
+abstract class FichierComposite{
++ getFile() : String
++ FichierComposite(String arg) : void
+}
+FichierComposite --|> File
+class Dossier{
++ getFile() : String
+- getFileExtension(File arg) : String
++ Dossier(String arg) : void
+}
+Dossier"1" --> "*"FichierComposite : files
+Dossier --|> FichierComposite
+class Methode{
+- String nom
+- String acces
+- String type_retour
+- boolean visibilite
++ toString() : String
++ getNom() : String
++ isVisibilite() : boolean
++ getType_retour() : String
++ getParametres() : ArrayList<Parametre>
++ setVisibilite(boolean arg) : void
++ getAcces() : String
++ Methode(String arg0, String arg1, String arg2, ArrayList arg) : void
+}
+Methode"1" --> "*"Parametre : parametres
+Methode ..|> Serializable
+class Parametre{
+- String nom
+- String type
++ getType() : String
++ getNom() : String
++ Parametre(String arg0, String arg) : void
+}
+Parametre ..|> Serializable
+class Introspection{
+}
+class Fleche{
+- String type
+- double departX
+- double departY
+- double finX
+- double finY
+- double distance
+- double angle
+- String cardinalite1
+- String cardinalite2
+- String nom
+}
+Fleche"1" --> "1"ClasseComplete : destination
+Fleche"1" --> "1"ClasseComplete : depart
+class DependanceFleche{
+- String string
+- String cardinalite1
+- String cardinalite2
+- String nom
+}
+DependanceFleche"1" --> "1"ClasseComplete : classeComplete
+class Dependance{
+- String depend
+- String type
+- boolean visibilite
++ getType() : String
++ getDepend() : String
++ isVisibilite() : boolean
++ setVisibilite(boolean arg) : void
++ Dependance(String arg0, String arg) : void
+}
+Dependance ..|> Serializable
+class ClasseComplete{
+- String nom
+- String type
+- double X
+- double Y
+- double tailleX
+- double tailleY
+}
+ClasseComplete"1" --> "1"Color : color
+ClasseComplete"1" --> "*"Attribut : attributs
+ClasseComplete"1" --> "*"Methode : methodes
+ClasseComplete"1" --> "*"Dependance : dependances
+ClasseComplete ..|> Serializable
+class Attribut{
+- String nom
+- String type
+- String acces
+- String nombre
+- boolean visibilite
++ toString() : String
++ getType() : String
++ getNombre() : String
++ getNom() : String
++ isVisibilite() : boolean
++ setVisibilite(boolean arg) : void
++ setAcces(String arg) : void
++ getAcces() : String
++ setNombre(String arg) : void
++ setNom(String arg) : void
++ setType(String arg) : void
++ Attribut(String arg0, String arg1, String arg) : void
++ Attribut(String arg0, String arg1, String arg2, String arg) : void
+}
+Attribut ..|> Serializable
+@enduml 
