@@ -13,6 +13,13 @@ public class ControleurClasseDrag implements EventHandler<MouseEvent> {
     private VueDiagramme vd;
 
     double difx, dify;
+
+    /**
+     *
+     * @param m
+     * @param c
+     * @param v
+     */
     public ControleurClasseDrag(Model m, ClasseComplete c, VueDiagramme v){
         this.model = m;
         this.classeComplete = c;
@@ -21,7 +28,10 @@ public class ControleurClasseDrag implements EventHandler<MouseEvent> {
     }
 
 
-
+    /**
+     * Permet de bouger une classe du diagramme en la glissant avec la souris
+     * @param mouseEvent
+     */
     @Override
     public void handle(MouseEvent mouseEvent) {
         double MX = vd.getWidth();

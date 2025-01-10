@@ -5,12 +5,24 @@ public class DependanceFleche {
     private String string;
     private String cardinalite1, cardinalite2, nom;
 
-
+    /**
+     *
+     * @param classeComplete
+     * @param string
+     */
     public DependanceFleche(ClasseComplete classeComplete, String string) {
         this.classeComplete = classeComplete;
         this.string = string;
     }
 
+    /**
+     *
+     * @param classeComplete
+     * @param string
+     * @param car1
+     * @param car2
+     * @param name
+     */
     public DependanceFleche(ClasseComplete classeComplete, String string, String car1, String car2, String name) {
         this.classeComplete = classeComplete;
         this.string = string;

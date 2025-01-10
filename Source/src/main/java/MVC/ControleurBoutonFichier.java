@@ -16,13 +16,22 @@ public class ControleurBoutonFichier implements EventHandler<ActionEvent> {
     private Model m;
     private VueDiagramme v;
 
+    /**
+     *
+     * @param w
+     * @param model
+     * @param v
+     */
     public ControleurBoutonFichier(Window w, Model model, VueDiagramme v) {
         this.w = w;
         this.m = model;
         this.v = v;
     }
 
-
+    /**
+     * Gere les differents boutons presents dans le bouton fichier
+     * @param actionEvent
+     */
     @Override
     public void handle(ActionEvent actionEvent) {
         MenuItem b = (MenuItem) actionEvent.getSource();

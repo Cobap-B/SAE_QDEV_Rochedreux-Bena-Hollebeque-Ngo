@@ -16,7 +16,14 @@ public class ClasseComplete implements Serializable {
     private ArrayList<Methode> methodes;
     private ArrayList<Dependance> dependances;
 
-
+    /**
+     *
+     * @param nom
+     * @param type
+     * @param attributs
+     * @param methodes
+     * @param dependances
+     */
     public ClasseComplete(String nom, String type, ArrayList<Attribut> attributs, ArrayList<Methode> methodes, ArrayList<Dependance> dependances){
         this.nom = nom;
         this.type = type;
@@ -34,7 +41,10 @@ public class ClasseComplete implements Serializable {
         methodes.add(m);
     }
 
-
+    /**
+     *
+     * @return Le code PlantUML du diagramme
+     */
     public String getUml(){
         StringBuilder resultat = new StringBuilder();
         if (!this.type.equals("class")){
@@ -79,6 +89,12 @@ public class ClasseComplete implements Serializable {
     }
 
     //pour vérifier qu'un attribut est un type primitif de java, si ce n'est pas le cas alors il ya dépendance d'une autre classe
+
+    /**
+     *
+     * @param type
+     * @return true si l'attribut est primitif
+     */
     private boolean TypePrimitif(String type) {
         String[] typesPrimitifs = {"int", "double", "float", "char", "boolean", "long", "short", "byte", "void", "String"};
 
@@ -98,7 +114,10 @@ public class ClasseComplete implements Serializable {
         return this.color;
     }
 
-
+    /**
+     *
+     * @return L'attribut sous forme de string
+     */
     public String getTextAttribut(){
         String s = "";
         for (Attribut attribut : attributs) {
@@ -109,6 +128,10 @@ public class ClasseComplete implements Serializable {
         return s;
     }
 
+    /**
+     *
+     * @return La methode sous forme de string
+     */
     public String getTextMethode(){
         String s = "";
         for (Methode m : methodes) {
@@ -198,6 +221,13 @@ public class ClasseComplete implements Serializable {
         return Y;
     }
 
+    /**
+     * Sert a bouger la classe dans le diagramme
+     * @param x
+     * @param y
+     * @param mx
+     * @param my
+     */
     public void setCo(double x, double y, double mx, double my) {
         X = x;
         Y = y;

@@ -13,6 +13,13 @@ public class Methode implements Serializable {
     private boolean visibilite;
     private ArrayList<Parametre> parametres;
 
+        /**
+         *
+         * @param nom
+         * @param acces
+         * @param type_retour
+         * @param parametres
+         */
     public Methode(String nom, String acces, String type_retour, ArrayList<Parametre> parametres) {
         this.nom = nom;
         this.acces = acces;

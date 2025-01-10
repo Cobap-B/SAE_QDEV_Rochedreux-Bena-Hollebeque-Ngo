@@ -16,7 +16,18 @@ public class Fleche {
 
     private String cardinalite1, cardinalite2, nom;
 
-
+    /**
+     *
+     * @param type
+     * @param departX
+     * @param departY
+     * @param finX
+     * @param finY
+     * @param distance
+     * @param angle
+     * @param c
+     * @param c2
+     */
     public Fleche(String type, double departX, double departY, double finX, double finY, double distance, double angle, ClasseComplete c, ClasseComplete c2) {
         this.type = type;
         this.departX = departX;
@@ -28,6 +39,22 @@ public class Fleche {
         this.destination = c;
         this.depart = c2;
     }
+
+    /**
+     *
+     * @param type
+     * @param departX
+     * @param departY
+     * @param finX
+     * @param finY
+     * @param distance
+     * @param angle
+     * @param c
+     * @param c2
+     * @param car1
+     * @param car2
+     * @param name
+     */
     public Fleche(String type, double departX, double departY, double finX, double finY, double distance, double angle, ClasseComplete c, ClasseComplete c2, String car1, String car2, String name) {
         this.type = type;
         this.departX = departX;
@@ -108,7 +135,10 @@ public class Fleche {
     }
 
 
-
+    /**
+     * Permet de dessiner la fleche
+     * @param gc
+     */
     public void draw(GraphicsContext gc){
 
         finX = departX + distance * Math.cos(angle);
@@ -146,6 +176,12 @@ public class Fleche {
                 break;
         }
     }
+
+    /**
+     *
+     * @param gc
+     * @param size
+     */
     private void drawHeritage(GraphicsContext gc, double size) {
 
         gc.strokeLine(departX, departY, departX + (distance-10) * Math.cos(angle),departY + (distance-10) * Math.sin(angle));
@@ -169,6 +205,11 @@ public class Fleche {
         );
     }
 
+    /**
+     *
+     * @param gc
+     * @param size
+     */
     private void drawInterface(GraphicsContext gc, double size) {
 
         gc.setLineDashes(10, 5);
@@ -192,6 +233,11 @@ public class Fleche {
         );
     }
 
+    /**
+     *
+     * @param gc
+     * @param size
+     */
     private void drawFleche(GraphicsContext gc, double size) {
 
 

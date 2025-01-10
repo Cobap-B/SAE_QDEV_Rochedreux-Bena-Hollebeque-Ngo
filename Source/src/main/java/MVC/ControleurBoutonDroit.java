@@ -15,6 +15,10 @@ import java.util.ArrayList;
 public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
     private ContextMenu contextMenu;
 
+    /**
+     * Creer un menu de clic droit
+     * @param model
+     */
     public ControleurBoutonDroit(Model model) {
         this.contextMenu = new ContextMenu();
 
@@ -218,6 +222,10 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
     }
 
+    /**
+     * Afficher le menu apres un clic droit
+     * @param mouseEvent
+     */
     @Override
     public void handle(MouseEvent mouseEvent) {
         if (mouseEvent.getButton().name().equals("SECONDARY")) {

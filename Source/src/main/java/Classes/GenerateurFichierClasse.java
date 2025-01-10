@@ -7,6 +7,13 @@ import java.io.IOException;
 
 public class GenerateurFichierClasse {
 
+    /**
+     * Permet de generer un squelette de classe java
+     * @param nomClasse
+     * @param type
+     * @param repertoire
+     * @throws IOException
+     */
     public static void genererFichierClasse(String nomClasse, String type, String repertoire) throws IOException {
 
         //gérer les types de class

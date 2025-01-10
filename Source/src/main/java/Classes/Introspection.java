@@ -11,6 +11,11 @@ import java.util.Objects;
 
 public class Introspection {
 
+    /**
+     *
+     * @param c
+     * @return la classe completement chargee de la classe c
+     */
     public static ClasseComplete creerClasseComplete(Classe c){
         Class <?> classee = null;
         try {

@@ -17,10 +17,18 @@ import java.io.File;
 public class ControleurArbre implements EventHandler<MouseEvent> {
     private Model model;
 
+    /**
+     *
+     * @param m
+     */
     public ControleurArbre(Model m){
         this.model = m;
     }
 
+    /**
+     * Permet de prendre une classe de l'arbre en la glissant
+     * @param mouseEvent
+     */
     @Override
     public void handle(MouseEvent mouseEvent) {
         Node node = mouseEvent.getPickResult().getIntersectedNode();

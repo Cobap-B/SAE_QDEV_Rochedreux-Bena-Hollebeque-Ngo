@@ -6,7 +6,11 @@ public class Parametre implements Serializable {
     private String nom;
     private String type;
 
-
+    /**
+     *
+     * @param nom
+     * @param type
+     */
     public Parametre(String nom, String type) {
         this.nom = nom;
         this.type = type;

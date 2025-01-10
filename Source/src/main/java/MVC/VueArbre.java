@@ -14,12 +14,21 @@ public class VueArbre extends TreeView<String> implements Observateur{
     private final Image image_dossier = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/dossier.png")));
     private final Image image_classe = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/classe.png")));
 
+    /**
+     *
+     * @param model
+     */
     public VueArbre(Model model) {
         this.m = model;
         this.setRoot(new TreeItem<>("Aucun dossier chargé"));
         this.nomArbre = "";
     }
 
+    /**
+     * Change la taille de l'image
+     * @param image
+     * @return
+     */
     private ImageView Image_resize(Image image) {
         // on adapte l'image pour qu'elle soit pas trop grande
         ImageView imageView = new ImageView(image);
@@ -28,6 +37,10 @@ public class VueArbre extends TreeView<String> implements Observateur{
         return imageView;
     }
 
+    /**
+     * Afficher l'arbre du dossier
+     * @param s
+     */
     @Override
     public void actualiser(Sujet s) {
         if(m.getArbre() != null){
@@ -52,6 +65,11 @@ public class VueArbre extends TreeView<String> implements Observateur{
         }
     }
 
+    /**
+     * Remplit l'arboressence de fichiers
+     * @param dossier
+     * @param parent
+     */
     private void remplirArborescence(Dossier dossier, TreeItem<String> parent) {
         boolean contient_fichier_class = false;
 

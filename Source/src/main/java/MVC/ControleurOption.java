@@ -8,10 +8,18 @@ import javafx.scene.control.ColorPicker;
 public class ControleurOption implements EventHandler<ActionEvent> {
     private Model model;
 
+    /**
+     *
+     * @param m
+     */
     public ControleurOption(Model m){
         this.model = m;
     }
 
+    /**
+     * Gere differentes options du menu du haut
+     * @param actionEvent
+     */
     @Override
     public void handle(ActionEvent actionEvent) {
         if(actionEvent.getSource().getClass().getSimpleName().equals("ColorPicker")){
