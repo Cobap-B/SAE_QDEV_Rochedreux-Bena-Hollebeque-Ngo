@@ -94,8 +94,6 @@ public class Model implements Sujet{
      * Sauvegarde l'action
      */
     public void retour_save(){
-
-
         try {
             ArrayList<ClasseComplete> clone = new ArrayList<>(diagramme);
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -313,9 +311,19 @@ public class Model implements Sujet{
         for (Attribut att : c.getAttributs()) {
             if (att.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
-                    if (att.getType().equals(classeComplete.getNom())){
+                    String[] cont  = att.getType().split("<");
+                    if (cont.length>1){
+                        cont[1] = cont[1].substring(0, cont[1].length() - 1);
+                        for (String s : cont[1].split(",")) {
+                            if (s.equals(classeComplete.getNom())){
+                                dep.add(new DependanceFleche(classeComplete, "Base", "1",att.getNombre(),att.getNom()));
+                            }
+                        }
+                    }else if (att.getType().equals(classeComplete.getNom())){
                         dep.add(new DependanceFleche(classeComplete, "Base", "1",att.getNombre(),att.getNom()));
                     }
+
+
                 }
             }
         }

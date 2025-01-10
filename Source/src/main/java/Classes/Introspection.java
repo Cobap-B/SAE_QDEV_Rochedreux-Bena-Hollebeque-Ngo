@@ -170,7 +170,24 @@ public class Introspection {
         }
         ArrayList<Parametre> param = new ArrayList<>();
         for (Parameter p : m.getParameters()) {
-            param.add(new Parametre(p.getName(), p.getType().getSimpleName()));
+            String paramType = p.getType().getSimpleName(); // Type de base
+            Type genericParamType = p.getParameterizedType();
+
+            if (genericParamType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericParamType;
+                String typeString = paramType + "<";
+                Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                for (int i = 0; i < typeArguments.length; i++) {
+                    String typeName = typeArguments[i].getTypeName();
+                    typeString += typeName.substring(typeName.lastIndexOf('.') + 1);
+                    if (i < typeArguments.length - 1) {
+                        typeString += ", ";
+                    }
+                }
+                typeString += ">";
+                paramType = typeString; // Mettre à jour le type du paramètre
+            }
+            param.add(new Parametre(p.getName(), paramType));
         }
 
         //On creer notre attribut avec un * car c'est une collection
@@ -201,17 +218,25 @@ public class Introspection {
             Type genericType = f.getGenericType(); //On prend le type generic de l'attribut
             if (genericType instanceof ParameterizedType) {
                 //Si collection
-
+                String fielType = f.getType().getSimpleName();
                 //On le force a être un ParameterizedType donc un attribut qui possède des Class en attributs : collection
                 ParameterizedType parameterizedType = (ParameterizedType) genericType;
                 Type[] typeArguments = parameterizedType.getActualTypeArguments();
+
+                String typeString = fielType + "<";
+
                 //Ici on obtient la liste de ses attributs tout simplement
-                for (Type typeArgument : typeArguments) {
-                    tp = typeArgument.getTypeName().substring(typeArgument.getTypeName().indexOf('.')+1);
+                for (int i = 0; i < typeArguments.length; i++) {
                     //On prend seulement le nom car c'est ce que l'on veut
                     //On creer notre attribut avec un * car c'est une collection
-                    attributs.add(new Attribut(f.getName(), ac, tp, "*"));
+                    String typeName = typeArguments[i].getTypeName();
+                    typeString += typeName.substring(typeName.lastIndexOf('.') + 1);
+                    if (i < typeArguments.length - 1) {
+                        typeString += ", ";
+                    }
+                    typeString += ">";
                 }
+                attributs.add(new Attribut(f.getName(), ac, typeString, "*"));
 
 
             }else{ //Si non collection
