@@ -31,17 +31,21 @@ public class ControleurArbre implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent mouseEvent) {
-        Node node = mouseEvent.getPickResult().getIntersectedNode();
-        TreeView tv = (TreeView) mouseEvent.getSource();
+        try {
+            Node node = mouseEvent.getPickResult().getIntersectedNode();
+            TreeView tv = (TreeView) mouseEvent.getSource();
 
-        Dragboard db = node.startDragAndDrop(TransferMode.ANY);
-        ClipboardContent content = new ClipboardContent();
-        if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
-            TreeItemFile item = (TreeItemFile) tv.getSelectionModel().getSelectedItem();
-            content.putString(item.getF().getAbsolutePath());
-            db.setContent(content);
-            mouseEvent.consume();
+            Dragboard db = node.startDragAndDrop(TransferMode.ANY);
+            ClipboardContent content = new ClipboardContent();
+            if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
+                TreeItemFile item = (TreeItemFile) tv.getSelectionModel().getSelectedItem();
+                content.putString(item.getF().getAbsolutePath());
+                db.setContent(content);
+                mouseEvent.consume();
+            }
         }
+        catch (ClassCastException e){
 
+        }
     }
 }

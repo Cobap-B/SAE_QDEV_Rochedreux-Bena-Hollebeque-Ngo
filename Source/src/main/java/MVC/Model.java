@@ -283,6 +283,7 @@ public class Model implements Sujet{
      * @param b
      */
     public void changerColor(double r, double g, double b){
+        this.retour_save();
         couleur = new Color((float)r, (float)g, (float)b);
         for(ClasseComplete c : diagramme){
             c.setColor(couleur);
