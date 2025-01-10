@@ -1,15 +1,13 @@
 package MVC;
 
-import Classes.Attribut;
-import Classes.ClasseComplete;
-import Classes.Methode;
-import Classes.Parametre;
+import Classes.*;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
@@ -61,7 +59,7 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 ButtonType ajouterButtonType = new ButtonType("Ajouter", ButtonBar.ButtonData.OK_DONE);
                 dialog.getDialogPane().getButtonTypes().addAll(ajouterButtonType, ButtonType.CANCEL);
 
-                // Gestion de l'événement pour le bouton "Ajouter"
+                // Gestion de l'évenement pour le bouton Ajouter
                 dialog.setResultConverter(dialogButton -> {
                     if (dialogButton == ajouterButtonType) {
                         String nom = nomAttribut.getText();
@@ -80,6 +78,12 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 dialog.showAndWait().ifPresent(nouvelAttribut -> {
                     model.retour_save();
                     classeComplete.ajoutAttribut(nouvelAttribut);
+                    try{
+                        //ajouter dans le .java
+                        GenerateurFichierClasse.ajouterAttribut(classeComplete.getNom(), "Source/classGenerer", GenerateurFichierClasse.convertirAccessibilite(nouvelAttribut.getAcces()), nouvelAttribut.getType(), nouvelAttribut.getNom());
+                    }catch (IOException e2){
+                        e2.printStackTrace();
+                    }
                     model.notifierObservateurs();
                 });
             }
@@ -145,13 +149,13 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
 
 
                         if (!param.trim().isEmpty()) {
-                            String[] parametresArray = param.split(","); // Séparer par des virgules
+                            String[] parametresArray = param.split(",");
                             for (String p : parametresArray) {
-                                String[] parts = p.trim().split(" "); // Séparer le type et le nom
+                                String[] parts = p.trim().split(" ");
                                 if (parts.length == 2) {
-                                    String typeParam = parts[0]; // Type du paramètre
-                                    String nomParam = parts[1]; // Nom du paramètre
-                                    listeParametres.add(new Parametre(nomParam, typeParam)); // Créer un nouvel objet Parametre
+                                    String typeParam = parts[0];
+                                    String nomParam = parts[1];
+                                    listeParametres.add(new Parametre(nomParam, typeParam));
                                 } else {
                                     System.out.println("Format de paramètre incorrect : " + param);
                                 }
@@ -167,6 +171,13 @@ public class ControleurBoutonDroit implements EventHandler<MouseEvent> {
                 dialog.showAndWait().ifPresent(nouvelleMethode -> {
                     model.retour_save();
                     classeComplete.ajoutMethode(nouvelleMethode);
+
+                    try {
+                        GenerateurFichierClasse.ajouterMethode(classeComplete.getNom(), "Source/classGenerer", GenerateurFichierClasse.convertirAccessibilite(nouvelleMethode.getAcces()), nouvelleMethode.getType_retour(), nouvelleMethode.getNom(), nouvelleMethode.getParametres());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                     model.notifierObservateurs();
                 });
             }
