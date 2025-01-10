@@ -10,6 +10,12 @@ public class Attribut implements Serializable {
     private String nombre;
     private boolean visibilite;
 
+    /**
+     *
+     * @param nom
+     * @param acces
+     * @param type
+     */
     public Attribut(String nom, String acces, String type) {
         this.nom = nom;
         this.type = type;
@@ -17,6 +23,13 @@ public class Attribut implements Serializable {
         this.visibilite = true;
     }
 
+    /**
+     *
+     * @param nom
+     * @param acces
+     * @param type
+     * @param nb
+     */
     public Attribut(String nom, String acces, String type, String nb) {
         this.nom = nom;
         this.type = type;
@@ -24,6 +37,7 @@ public class Attribut implements Serializable {
         this.nombre = nb;
         this.visibilite = true;
     }
+
 
     public String getNom() {
         return nom;

@@ -14,6 +14,11 @@ public class VueDiagramme extends Pane implements Observateur{
 
     Canvas canvas;
     Model model;
+
+    /**
+     * Crée le diagramme de classe
+     * @param m
+     */
     public VueDiagramme(Model m){
         canvas = new Canvas();
         model = m;
@@ -36,6 +41,11 @@ public class VueDiagramme extends Pane implements Observateur{
 
 
     }
+
+    /**
+     * Affiche le diagramme de classe et l'actualise
+     * @param s
+     */
     @Override
     public void actualiser(Sujet s) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -86,7 +96,11 @@ public class VueDiagramme extends Pane implements Observateur{
         }
     }
 
-
+    /**
+     * Calcule les dimensions et angles des fleches
+     * @param fleches
+     * @param gc
+     */
     public void calculerFleche(ArrayList<Fleche> fleches, GraphicsContext gc){
         //La fonction est trigger lorsqu'on possède enfin les tailles de toutes les classes donc on calcule les flèches
         for (ClasseComplete classeComplete : model.getDiagramme()) {
@@ -148,6 +162,13 @@ public class VueDiagramme extends Pane implements Observateur{
         }
     }
 
+    /**
+     * Crée les fleches
+     * @param c
+     * @param dep
+     * @param gc
+     * @return La liste des fleches
+     */
     public ArrayList<Fleche> createFleches(ClasseComplete c, ArrayList<DependanceFleche> dep, GraphicsContext gc){
         ArrayList<Fleche> fleches = new ArrayList<>();
 

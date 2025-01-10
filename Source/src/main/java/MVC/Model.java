@@ -29,6 +29,9 @@ public class Model implements Sujet{
 
     private final int TailleCtrlZ = 20;
 
+    /**
+     * Cree le modele
+     */
     public Model(){
         logs = new ArrayList<>();
         diagramme = new ArrayList<>();
@@ -38,6 +41,10 @@ public class Model implements Sujet{
         ctrlZ = new Stack<>();
     }
 
+    /**
+     * Ouvre un dossier
+     * @param path
+     */
     public void ouvrirDossier(String path){
         arbre = new Dossier(path);
         ajouter_Log("Ouverture du dossier " + path);
@@ -45,14 +52,12 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
-
-    public void ajoutAttribut(ClasseComplete c,  Attribut a) {
-        //Rien
-    }
-    public void ajoutMethode(ClasseComplete c, Methode m){
-        //Rien
-    }
-
+    /**
+     * Ajoute une classe complete au diagramme
+     * @param c
+     * @param x
+     * @param y
+     */
     public void ajouter_Classe_D(ClasseComplete c, double x, double y){
         if (!diagramme.contains(c)){
             retour_save();
@@ -67,6 +72,9 @@ public class Model implements Sujet{
 
     }
 
+    /**
+     * Efface tout le diagramme
+     */
     public void effacer_D(){
         retour_save();
         if(!diagramme.isEmpty()){diagramme = new ArrayList<>();}
@@ -74,13 +82,18 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    /**
+     * Ecrit dans les logs
+     * @param s
+     */
     public void ajouter_Log(String s){
         logs.add(s);
     }
 
+    /**
+     * Sauvegarde l'action
+     */
     public void retour_save(){
-
-
         try {
             ArrayList<ClasseComplete> clone = new ArrayList<>(diagramme);
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -99,6 +112,9 @@ public class Model implements Sujet{
 
     }
 
+    /**
+     * Permet de retourner en arriere avec ctrl + z
+     */
     public void retour_arriere(){
         try {
 
@@ -120,6 +136,10 @@ public class Model implements Sujet{
 
     }
 
+    /**
+     * Permet de generer un code PlantUML du diagramme
+     * @throws IOException
+     */
     public void saveUML() throws IOException{
         File dir = new File("diagramme");
         dir.mkdirs();
@@ -134,6 +154,11 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    /**
+     * Permet de sauvegarder une image du diagramme
+     * @param v
+     * @throws IOException
+     */
     public void saveDiagramme(VueDiagramme v) throws IOException{
         File dir = new File("diagramme");
         dir.mkdirs();
@@ -144,7 +169,9 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
-
+    /**
+     * Permet de generer une image PlantUML du diagramme
+     */
     public void savePNG(){
         // Chemin vers le fichier texte contenant le diagramme UML
         File fichierUml = new File("diagramme/diagramme.txt");
@@ -188,7 +215,16 @@ public class Model implements Sujet{
     }
 
 
-
+    /**
+     * Permet d'ajouter un squelette de classe
+     * @param nom
+     * @param type
+     * @param attributs
+     * @param methodes
+     * @param dependances
+     * @param x
+     * @param y
+     */
     public void ajouter_squelette_Classe(String nom, String type, ArrayList<Attribut> attributs, ArrayList<Methode> methodes, ArrayList<Dependance> dependances, double x, double y) {
         ClasseComplete classe = new ClasseComplete(nom, type, attributs, methodes, dependances);
         if (!diagramme.contains(classe)) {
@@ -202,7 +238,10 @@ public class Model implements Sujet{
         notifierObservateurs(); // Met à jour les observateurs
     }
 
-
+    /**
+     * Permet de sauvegarder le diagramme
+     * @param dir
+     */
     public void save(String dir){
         try{
             FileOutputStream fileOutputStream
@@ -218,6 +257,10 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    /**
+     * Permet de charger un diagramme
+     * @param path
+     */
     public void load(String path){
         try{
             FileInputStream fileInputStream
@@ -233,7 +276,14 @@ public class Model implements Sujet{
         notifierObservateurs();
     }
 
+    /**
+     * Permet de changer la couleur du diagramme
+     * @param r
+     * @param g
+     * @param b
+     */
     public void changerColor(double r, double g, double b){
+        this.retour_save();
         couleur = new Color((float)r, (float)g, (float)b);
         for(ClasseComplete c : diagramme){
             c.setColor(couleur);
@@ -262,9 +312,19 @@ public class Model implements Sujet{
         for (Attribut att : c.getAttributs()) {
             if (att.isVisibilite()){
                 for (ClasseComplete classeComplete : diagramme) {
-                    if (att.getType().equals(classeComplete.getNom())){
+                    String[] cont  = att.getType().split("<");
+                    if (cont.length>1){
+                        cont[1] = cont[1].substring(0, cont[1].length() - 1);
+                        for (String s : cont[1].split(",")) {
+                            if (s.equals(classeComplete.getNom())){
+                                dep.add(new DependanceFleche(classeComplete, "Base", "1",att.getNombre(),att.getNom()));
+                            }
+                        }
+                    }else if (att.getType().equals(classeComplete.getNom())){
                         dep.add(new DependanceFleche(classeComplete, "Base", "1",att.getNombre(),att.getNom()));
                     }
+
+
                 }
             }
         }

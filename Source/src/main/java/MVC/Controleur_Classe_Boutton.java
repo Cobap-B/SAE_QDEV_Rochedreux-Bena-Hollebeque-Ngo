@@ -20,7 +20,10 @@ public class Controleur_Classe_Boutton implements EventHandler<MouseEvent> {
     private double X_menu;
     private double Y_menu;
 
-
+    /**
+     *
+     * @param model
+     */
     public Controleur_Classe_Boutton(Model model) {
         this.model = model;
 
@@ -34,6 +37,10 @@ public class Controleur_Classe_Boutton implements EventHandler<MouseEvent> {
         contextMenu.getItems().add(ajouterClasse);
     }
 
+    /**
+     * Controleur de la fonctionalite pour creer un squelette de classe
+     * @param event
+     */
     @Override
     public void handle(MouseEvent event) {
         if (event.isSecondaryButtonDown()) {

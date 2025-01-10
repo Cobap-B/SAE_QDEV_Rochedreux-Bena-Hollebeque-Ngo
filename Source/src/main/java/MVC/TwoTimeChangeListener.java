@@ -17,7 +17,12 @@ public class TwoTimeChangeListener<T> implements ChangeListener<T> {
         count = 0;
     }
 
-
+    /**
+     *
+     * @param observable
+     * @param oldValue
+     * @param newValue
+     */
     @Override
     public void changed(ObservableValue<? extends T> observable, T oldValue, T newValue) {
         // Appeler le listener

@@ -5,7 +5,13 @@ import java.util.*;
 
 public class GenerateurFichierClasse {
 
-    // Créer le squelette de la classe (en-tête)
+    /**
+     * Permet de generer un squelette de classe java
+     * @param nomClasse
+     * @param type
+     * @param repertoire
+     * @throws IOException
+     */
     public static void genererFichierClasse(String nomClasse, String type, String repertoire) throws IOException {
         if (!type.equals("class") && !type.equals("abstract") && !type.equals("interface")) {
             throw new IllegalArgumentException("Erreur : Utilisez 'class', 'abstract' ou 'interface' pour le typage");

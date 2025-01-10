@@ -9,6 +9,11 @@ public class Dossier extends FichierComposite{
 
     public List<FichierComposite> files =new ArrayList<>();
 
+    /**
+     *
+     * @param file
+     * @return l'extension du fichier
+     */
     private String getFileExtension(File file) {
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
@@ -17,6 +22,11 @@ public class Dossier extends FichierComposite{
         }
         return name.substring(lastIndexOf);
     }
+
+    /**
+     *
+     * @param pathname
+     */
     public Dossier(String pathname) {
         super(pathname);
 

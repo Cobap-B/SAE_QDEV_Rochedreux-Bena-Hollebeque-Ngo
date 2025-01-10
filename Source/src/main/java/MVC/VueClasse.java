@@ -22,6 +22,10 @@ public class VueClasse extends VBox implements Observateur{
         return classeComplete;
     }
 
+    /**
+     * Crée une VBox qui affiche une classe dans le diagramme
+     * @param c
+     */
     public VueClasse(ClasseComplete c){
         classeComplete = c;
         double r = classeComplete.getColor().getRed();

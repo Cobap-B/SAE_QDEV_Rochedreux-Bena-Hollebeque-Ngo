@@ -10,10 +10,18 @@ import javafx.scene.paint.Color;
 public class ControleurDiagrammeDrag implements EventHandler<DragEvent> {
     private Model model;
 
+    /**
+     *
+     * @param m
+     */
     public ControleurDiagrammeDrag(Model m){
         this.model = m;
     }
 
+    /**
+     * Gere la fin du drag and drop, ajoute la classe qu'on a glissé au diagramme
+     * @param event
+     */
     @Override
     public void handle(DragEvent event) {
         if (event.getGestureSource() != event.getTarget() &&
